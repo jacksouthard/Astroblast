@@ -831,9 +831,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTerrain: 1
-  objectSpawnBuffer: 50
-  objectDespawnDst: 50
-  activeObjects: []
+  objectSpawnBuffer: 10
+  objectDespawnDst: 30
   dstPerTeir: 300
   chunksPerTeir: 1
   backgroundPrefabs:
@@ -851,9 +850,10 @@ MonoBehaviour:
   sidePieceSpawnIntervals: 15
   initialSidePieceCount: 3
   initialSidePieceY: -10
+  crystalHeightRange: 7
   farthestY: 0
-  astroid0: {fileID: 1090120317141148, guid: d2bb06cb273224e30832d3b9288ef4b7, type: 2}
-  astroid1: {fileID: 1489274951603916, guid: 9bfe4915a48d147b4bea30efc926c2ab, type: 2}
+  astroid: {fileID: 1022439322555394, guid: a16e1064bec1a4064956bc8b5b27e94f, type: 2}
+  crystal: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}
 --- !u!4 &1900455384
 Transform:
   m_ObjectHideFlags: 0

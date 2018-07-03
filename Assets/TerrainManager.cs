@@ -10,8 +10,6 @@ public class TerrainManager : MonoBehaviour {
 	public float objectSpawnBuffer;
 	public float objectDespawnDst;
 	List<LevelChunk> allLevelChunks = new List<LevelChunk>();
-	[HideInInspector]
-	public List<GameObject> activeObjects = new List<GameObject>();
 
 	[Header("Teirs")]
 	public float dstPerTeir;
@@ -41,6 +39,7 @@ public class TerrainManager : MonoBehaviour {
 	public float sidePieceSpawnIntervals;
 	public float initialSidePieceCount;
 	public float initialSidePieceY;
+	public float crystalHeightRange;
 	Transform lastSidePiece = null;
 
 	[HideInInspector]
@@ -160,8 +159,6 @@ public class TerrainManager : MonoBehaviour {
 			// flip background
 			background.transform.localScale = new Vector3 (-background.transform.localScale.x, background.transform.localScale.y, 1f);
 		}
-
-		activeObjects.Add (background);
 	} 
 
 	void CreateNextSidePiece () {
@@ -174,13 +171,19 @@ public class TerrainManager : MonoBehaviour {
 		GameObject prefab = sidePiecePrefabs [Random.Range (0, sidePiecePrefabs.Length)];
 
 		for (int sign = -1; sign <= 1; sign += 2) {
+
 			Vector3 newSpawnPos = new Vector3 (sidePieceX * sign, spawnPos.y, spawnPos.z);
 			GameObject piece = (GameObject)Instantiate (prefab, newSpawnPos, Quaternion.identity, transform);
 			lastSidePiece = piece.transform;
 
 			piece.transform.localScale = new Vector3 (piece.transform.localScale.x * -sign, piece.transform.localScale.y, 1f);
 
-			activeObjects.Add (piece);
+			int crystalCount = Random.Range (0, 2);
+			for (int i = 0; i < crystalCount; i++) {
+				Vector3 crystalSpawnPos = new Vector3 (newSpawnPos.x, newSpawnPos.y + Random.Range (-crystalHeightRange, crystalHeightRange), newSpawnPos.z + 0.1f);
+				Quaternion spawnRot = Quaternion.Euler (0f, 0f, sign * 90f);
+				GameObject newCrystal = Instantiate (crystal, crystalSpawnPos, spawnRot, transform);
+			}
 		}
 	}
 
@@ -193,9 +196,8 @@ public class TerrainManager : MonoBehaviour {
 	
 		foreach (var levelObject in chunk.levelObjects) {
 			Vector3 spawnPos = new Vector3 (levelObject.pos.x * xFlipSign, levelObject.pos.y + curChunkY, 1f);
-			Quaternion spawnRot = Quaternion.Euler (0f, 0f, Random.Range (0f, 360f));
+			Quaternion spawnRot = Quaternion.Euler (0f, 0f, Random.Range (0f, 0f));
 			GameObject GO = (GameObject)Instantiate (levelObject.prefab, spawnPos, spawnRot, transform);
-			activeObjects.Add (GO);
 		}
 
 		curChunkY += chunk.chunkSize;
@@ -214,15 +216,15 @@ public class TerrainManager : MonoBehaviour {
 	void TestForObjectDespawns () {
 		float despawnMargin = farthestY - objectDespawnDst;
 		List<GameObject> objectsToDelete = new List<GameObject> ();
-		for (int i = 0; i < activeObjects.Count; i++) {
-			if (activeObjects [i] != null) {
-				if (activeObjects [i].transform.position.y < despawnMargin) {
-					objectsToDelete.Add (activeObjects [i].gameObject);
+		for (int i = 0; i < transform.childCount; i++) {
+			Transform child = transform.GetChild (i);
+			if (child != null) {
+				if (child.position.y < despawnMargin) {
+					objectsToDelete.Add (child.gameObject);
 				}
 			}
 		}
 		foreach (var GO in objectsToDelete) {
-			activeObjects.Remove (GO);
 			Destroy (GO);
 
 		}
@@ -234,10 +236,9 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	void ClearObjects () {
-		for (int i = 0; i < activeObjects.Count; i++) {
-			Destroy (activeObjects[i]);
+		for (int i = 0; i < transform.childCount; i++) {
+			Destroy (transform.GetChild(i));
 		}
-		activeObjects.Clear ();
 	}
 
 	[System.Serializable]
@@ -264,17 +265,17 @@ public class TerrainManager : MonoBehaviour {
 
 	// level chunks
 	[Header("Object Prefabs")]
-	public GameObject astroid0;
-	public GameObject astroid1;
+	public GameObject astroid;
+	public GameObject crystal;
 
 	void BuildLevelChunks () {
 		List<LevelObject> levelObjects = new List<LevelObject> ();
 
 		// new chunk ID: -1
 		// objects
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, 4f), _prefab: astroid1));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, 15f), _prefab: astroid0));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, 23f), _prefab: astroid1));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, 4f), _prefab: astroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, 15f), _prefab: astroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, 23f), _prefab: astroid));
 		// build chunk
 		allLevelChunks.Add (new LevelChunk (_chunkSize: 27, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();

@@ -98,7 +98,14 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D other) {
-		if (!isDead && other.gameObject.tag == "Rock" && other.relativeVelocity.magnitude > minKillVelocity) {
+		bool hitDamagingObject = false;
+		if (other.gameObject.tag == "Rock" && other.relativeVelocity.magnitude > minKillVelocity) {
+			hitDamagingObject = true;
+		} else if (other.gameObject.tag == "Alien") {
+			hitDamagingObject = true;
+		}
+
+		if (hitDamagingObject && !isDead) {
             isDead = true;
 			leaking = true;
 

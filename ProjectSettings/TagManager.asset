@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Rock
+  - Bullet
+  - Alien
   layers:
   - Default
   - TransparentFX

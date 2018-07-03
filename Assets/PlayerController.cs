@@ -11,11 +11,17 @@ public class PlayerController : MonoBehaviour {
 	float weaponMoveDstToBodyForce = 0.8f;
 
     public float minKillVelocity;
-    public GameObject deathExplosion;
 	public Transform[] arms;
 
 	Vector2 lastWeaponAngle = Vector2.right;
-    bool isDead;
+   
+	// death
+	bool isDead;
+	bool leaking = false;
+	Transform deathEffect;
+	Vector2 leakDirection;
+	public float leakForce;
+	public float leakTime;
 
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
@@ -27,10 +33,21 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetMouseButton (0)) {
-			Vector2 angleVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-			PositionWeapon (angleVector.normalized);
-			gun.TryFire ();
+		if (isDead) {
+			if (leaking) {
+				rb.AddRelativeForce (-leakDirection * leakForce * Time.deltaTime);
+				leakTime -= Time.deltaTime;
+				if (leakTime <= 0f) {
+					leaking = false;
+					deathEffect.GetComponent<ParticleSystem> ().Stop ();
+				}
+			}
+		} else {
+			if (Input.GetMouseButton (0)) {
+				Vector2 angleVector = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
+				PositionWeapon (angleVector.normalized);
+				gun.TryFire ();
+			}
 		}
 	}
 
@@ -83,12 +100,22 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D other) {
 		if (!isDead && other.gameObject.tag == "Rock" && other.relativeVelocity.magnitude > minKillVelocity) {
             isDead = true;
-            Instantiate(deathExplosion, transform.position, Quaternion.identity);
-            gameObject.SetActive(false);
+			leaking = true;
+
+			// camera changes
+			Camera.main.GetComponent<CameraController>().PlayerDied();
+
+			// init leak effect
+			deathEffect = transform.Find ("DeathParticles");
+			leakDirection = (other.transform.position - transform.position).normalized;
+			deathEffect.GetComponent<ParticleSystem> ().Play ();
+			var leakAngle = Mathf.Atan2(leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
+			deathEffect.rotation = Quaternion.AngleAxis(leakAngle, Vector3.forward);
+
             GameController.instance.OnPlayerDeath();
         }
     }
-
+		
 	public void EquipWeapon (int weaponIndex) {
 		if (weaponMount.childCount > 0) {
 			// destory any current weapons

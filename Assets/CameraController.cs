@@ -26,4 +26,12 @@ public class CameraController : MonoBehaviour {
 
 		background.position = new Vector3 (0f, transform.position.y, background.position.z);
 	}
+
+	public void PlayerDied () {
+		Camera.main.backgroundColor = Color.red;
+		Light[] allLights = FindObjectsOfType<Light> ();
+		foreach (var light in allLights) {
+			light.enabled = false;
+		}
+	}
 }

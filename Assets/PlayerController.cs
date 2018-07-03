@@ -10,14 +10,17 @@ public class PlayerController : MonoBehaviour {
 	Rigidbody2D rb;
 	float weaponMoveDstToBodyForce = 0.8f;
 
+    public float minKillVelocity;
 	public Transform[] arms;
 
 	Vector2 lastWeaponAngle = Vector2.right;
+    bool isDead;
 
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		weaponMount = transform.Find ("WeaponMount");
 		gun = GetComponentInChildren<GunController> ();
+        isDead = false;
 	}
 	
 	void Update () {
@@ -73,6 +76,13 @@ public class PlayerController : MonoBehaviour {
 	public void ProjectileFire (float knockback) {
 		rb.AddForce (lastWeaponAngle * -knockback);
 	}
+
+    void OnCollisionEnter2D(Collision2D other) {
+        if (!isDead && other.gameObject.tag == "Rock" && rb.velocity.magnitude > minKillVelocity) {
+            isDead = true;
+            GameController.instance.OnPlayerDeath();
+        }
+    }
 
 //	public void EquipWeapon (int weaponIndex) {
 //		GameObject weaponPrefab = WeaponManager.instance

@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour {
 		weaponMount = transform.Find ("WeaponMount");
 		gun = GetComponentInChildren<GunController> ();
         isDead = false;
+
+		EquipWeapon (0);
 	}
 	
 	void Update () {
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D other) {
-        if (!isDead && other.gameObject.tag == "Rock" && rb.velocity.magnitude > minKillVelocity) {
+		if (!isDead && other.gameObject.tag == "Rock" && other.relativeVelocity.magnitude > minKillVelocity) {
             isDead = true;
             Instantiate(deathExplosion, transform.position, Quaternion.identity);
             gameObject.SetActive(false);
@@ -87,7 +89,13 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-//	public void EquipWeapon (int weaponIndex) {
-//		GameObject weaponPrefab = WeaponManager.instance
-//	}
+	public void EquipWeapon (int weaponIndex) {
+		if (weaponMount.childCount > 0) {
+			// destory any current weapons
+			Destroy (weaponMount.GetChild(0));
+		}
+		WeaponManager.WeaponData weaponData = WeaponManager.instance.GetDataFromIndex (weaponIndex);
+		GameObject newWeapon = Instantiate (weaponData.prefab, weaponMount);
+		gun = newWeapon.GetComponent<GunController> ();
+	}
 }

@@ -14,6 +14,10 @@ public class WeaponManager : MonoBehaviour {
 	void Start () {
 		
 	}
+
+	public WeaponData GetDataFromIndex (int index) {
+		return weapons [index];
+	}
 		
 	[System.Serializable]
 	public class WeaponData {

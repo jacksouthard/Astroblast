@@ -51,3 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2adcd9f8bec4c1787c03385e2f156b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapons:
+  - prefab: {fileID: 1114760905528406, guid: 2db1ed98883c84e6e8782f1d3cd579be, type: 2}
+    sprite: {fileID: 21300000, guid: eb702788bd3464016bb774cc68195b1e, type: 3}
+    name: Pistol

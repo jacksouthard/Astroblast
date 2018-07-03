@@ -31,7 +31,8 @@ public class GunController : MonoBehaviour {
 
 	void Fire () {
 		GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation);
-		newProjectile.GetComponent<Rigidbody2D> ().AddRelativeForce (Vector2.right * speed);
+		Rigidbody2D rb = newProjectile.GetComponent<Rigidbody2D> ();
+		rb.AddRelativeForce (Vector2.right * speed);
 		Destroy (newProjectile, lifetime);
 
 		pc.ProjectileFire (knockback);

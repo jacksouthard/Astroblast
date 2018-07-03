@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	float weaponMoveDstToBodyForce = 0.8f;
 
     public float minKillVelocity;
+    public GameObject deathExplosion;
 	public Transform[] arms;
 
 	Vector2 lastWeaponAngle = Vector2.right;
@@ -80,6 +81,8 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D other) {
         if (!isDead && other.gameObject.tag == "Rock" && rb.velocity.magnitude > minKillVelocity) {
             isDead = true;
+            Instantiate(deathExplosion, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
             GameController.instance.OnPlayerDeath();
         }
     }

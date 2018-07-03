@@ -4,7 +4,10 @@ using UnityEngine;
 using System.IO;
 
 public class TerrainManager : MonoBehaviour {
+	public static TerrainManager instance;
+
 	public bool spawnTerrain;
+	bool shouldUpdate = true;
 
 	[Header("Chunks")]
 	public float objectSpawnBuffer;
@@ -44,15 +47,16 @@ public class TerrainManager : MonoBehaviour {
 
 	[HideInInspector]
 	public float farthestY = 0f;
-	Transform player;
+	Transform mainCam;
 	float curChunkY = 0f;
 
 	void Awake () {
+		instance = this;
 		BuildLevelChunks ();
 	}
 
 	void Start () {
-		player = GameObject.Find ("Player").transform;
+		mainCam = Camera.main.transform;
 
 		maxTeir = Mathf.FloorToInt (allLevelChunks.Count / chunksPerTeir);
 
@@ -61,8 +65,8 @@ public class TerrainManager : MonoBehaviour {
 	}
 		
 	void Update () {
-		if (player.transform.position.y > farthestY) {
-			farthestY = player.transform.position.y;
+		if (mainCam.transform.position.y > farthestY && shouldUpdate) {
+			farthestY = mainCam.transform.position.y;
 
 			if (teir < maxTeir) {
 				if (farthestY > (teir + 1) * dstPerTeir) {
@@ -99,12 +103,16 @@ public class TerrainManager : MonoBehaviour {
 		}
 	}
 
+	public void StopUpdating () {
+		shouldUpdate = false;
+	}
+
 	public void ResetTerrain () {
 		ClearObjects ();
 
 //		initialStarX += player.position.y;
-		initialBackgroundY += player.position.y;
-		initialSidePieceY += player.position.y;
+		initialBackgroundY += mainCam.position.y;
+		initialSidePieceY += mainCam.position.y;
 
 		farthestY = 0f;
 		curChunkY = 0f;
@@ -196,8 +204,7 @@ public class TerrainManager : MonoBehaviour {
 	
 		foreach (var levelObject in chunk.levelObjects) {
 			Vector3 spawnPos = new Vector3 (levelObject.pos.x * xFlipSign, levelObject.pos.y + curChunkY, 1f);
-			Quaternion spawnRot = Quaternion.Euler (0f, 0f, Random.Range (0f, 0f));
-			GameObject GO = (GameObject)Instantiate (levelObject.prefab, spawnPos, spawnRot, transform);
+			GameObject GO = (GameObject)Instantiate (levelObject.prefab, spawnPos, Quaternion.identity, transform);
 		}
 
 		curChunkY += chunk.chunkSize;

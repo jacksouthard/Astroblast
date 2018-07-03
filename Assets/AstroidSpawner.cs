@@ -15,6 +15,7 @@ public class AstroidSpawner : MonoBehaviour {
 
 	void Start () {
 		GameObject newAstroid = Instantiate (astroids [Random.Range (0, astroids.Length)], transform);
+		transform.rotation = Quaternion.Euler (0f, 0f, Random.Range (0f, 360f));
 
 		size = Random.Range (minSize, maxSize);
 		newAstroid.transform.localScale = new Vector3 (size, size, 1f);
@@ -74,8 +75,9 @@ public class AstroidSpawner : MonoBehaviour {
 		Vector2 dir = (startPos - endPos).normalized;
 		var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 		Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+		Quaternion adjustedRot = Quaternion.Euler (rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z + transform.eulerAngles.z);
 
-		return new EdgePositionData (transformedPoint, rot);
+		return new EdgePositionData (transformedPoint, adjustedRot);
 	}
 
 	public int GetAdjacentVertIndex (int index) {

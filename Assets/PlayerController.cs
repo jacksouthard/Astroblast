@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour {
             isDead = true;
 			leaking = true;
 
-			// camera changes
+			// broadcast death
 			Camera.main.GetComponent<CameraController>().PlayerDied();
 
 			// init leak effect

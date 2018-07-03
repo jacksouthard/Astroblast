@@ -6,8 +6,14 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
     public static GameController instance;
 
+    public GameObject gameOverScreen;
+
     void Awake() {
         instance = this;
+    }
+
+    void Start() {
+        gameOverScreen.SetActive(false);
     }
 
     public void OnPlayerDeath() {
@@ -16,10 +22,10 @@ public class GameController : MonoBehaviour {
 
     IEnumerator GameOverSequence() {
         yield return new WaitForSeconds(1f); //TODO: link this with the death particle system?
-        EndGame();
+        gameOverScreen.SetActive(true);
     }
 
-    void EndGame() {
+    public void EndGame() {
         SceneManager.LoadScene(0);
     }
 }

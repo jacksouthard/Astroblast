@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunController : MonoBehaviour {
 	PlayerController pc;
 	Transform bulletSpawn;
+    GameObject muzzleFlash;
 
 	public GameObject projectile;
 	public float speed;
@@ -18,6 +19,9 @@ public class GunController : MonoBehaviour {
 	void Start () {
 		pc = GetComponentInParent<PlayerController> ();
 		bulletSpawn = transform.Find ("BulletSpawn");
+        muzzleFlash = transform.Find ("MuzzleFlash").gameObject;
+
+        muzzleFlash.SetActive(false);
 	}
 
 	public void TryFire () {
@@ -36,6 +40,8 @@ public class GunController : MonoBehaviour {
 		Destroy (newProjectile, lifetime);
 
 		pc.ProjectileFire (knockback);
+
+        StartCoroutine(ShowMuzzleFlash());
 	}
 	
 	void Update () {
@@ -46,4 +52,10 @@ public class GunController : MonoBehaviour {
 			}
 		}
 	}
+
+    IEnumerator ShowMuzzleFlash() {
+        muzzleFlash.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        muzzleFlash.SetActive(false);
+    }
 }

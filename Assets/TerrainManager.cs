@@ -167,9 +167,9 @@ public class TerrainManager : MonoBehaviour {
 	void CreateNextSidePiece () {
 		Vector3 spawnPos;
 		if (lastSidePiece == null) {
-			spawnPos = new Vector3 (sidePieceX, initialSidePieceY, 10f);
+			spawnPos = new Vector3 (sidePieceX, initialSidePieceY, 0f);
 		} else {
-			spawnPos = new Vector3 (sidePieceX, lastSidePiece.position.y + sidePieceSpawnIntervals, 10f);
+			spawnPos = new Vector3 (sidePieceX, lastSidePiece.position.y + sidePieceSpawnIntervals, 0f);
 		}
 		GameObject prefab = sidePiecePrefabs [Random.Range (0, sidePiecePrefabs.Length)];
 

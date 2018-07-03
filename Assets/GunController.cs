@@ -15,11 +15,15 @@ public class GunController : MonoBehaviour {
 	float timeUntilFire = 0f;
 	bool canFire = true;
 
+    Rigidbody2D rb;
+
 	// Use this for initialization
 	void Start () {
 		pc = GetComponentInParent<PlayerController> ();
 		bulletSpawn = transform.Find ("BulletSpawn");
         muzzleFlash = transform.Find ("MuzzleFlash").gameObject;
+
+        rb = GetComponentInParent<Rigidbody2D>();
 
         muzzleFlash.SetActive(false);
 	}
@@ -35,8 +39,9 @@ public class GunController : MonoBehaviour {
 
 	void Fire () {
 		GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation);
-		Rigidbody2D rb = newProjectile.GetComponent<Rigidbody2D> ();
-		rb.AddRelativeForce (Vector2.right * speed);
+		Rigidbody2D projectileRb = newProjectile.GetComponent<Rigidbody2D> ();
+        projectileRb.velocity = rb.velocity;
+        projectileRb.AddRelativeForce (Vector2.right * speed);
 		Destroy (newProjectile, lifetime);
 
 		pc.ProjectileFire (knockback);

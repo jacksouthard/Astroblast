@@ -34,6 +34,7 @@ public class TerrainManager : MonoBehaviour {
 
 	[HideInInspector]
 	public float farthestY = 0f;
+	public float extractionY;
 	Transform mainCam;
 	float curChunkY = 0f;
 	float objectActiveRange = 5f;
@@ -72,10 +73,14 @@ public class TerrainManager : MonoBehaviour {
 //			}
 
 			// side pieces are generated dynamically based on where the player is
-			if (lastSidePiece == null) {
-				CreateNextSidePiece ();
-			} else if ((farthestY + (objectSpawnBuffer * direction)) * direction > lastSidePiece.position.y * direction) {
-				CreateNextSidePiece ();
+			if (direction == -1 && farthestY < extractionY) { // dont spawn side pieces below(?) extraction point
+
+			} else {
+				if (lastSidePiece == null) {
+					CreateNextSidePiece ();
+				} else if ((farthestY + (objectSpawnBuffer * direction)) * direction > lastSidePiece.position.y * direction) {
+					CreateNextSidePiece ();
+				}
 			}
 
 			TestForObjectDespawns ();

@@ -763,6 +763,11 @@ Prefab:
       propertyPath: leakDrain
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 50522086054690548, guid: 7d6fb8a547de54f26ba53f60eaca7be4,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d6fb8a547de54f26ba53f60eaca7be4, type: 2}
   m_IsPrefabParent: 0
@@ -862,6 +867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseFollowSpeed: 2
+  xRange: 12
   stopTime: 3
   flipTime: 2
 --- !u!1 &1827534992
@@ -1047,6 +1053,7 @@ MonoBehaviour:
   initialSidePieceY: -10
   crystalHeightRange: 7
   farthestY: 0
+  extractionY: -50
   astroid: {fileID: 1022439322555394, guid: a16e1064bec1a4064956bc8b5b27e94f, type: 2}
   crystal: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}
 --- !u!4 &1900455384

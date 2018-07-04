@@ -159,6 +159,10 @@ public class PlayerController : MonoBehaviour {
 		isDead = true;
 		Camera.main.GetComponent<CameraController>().PlayerDied();
 		GameController.instance.OnPlayerDeath();
+
+		if (leaking) {
+			StopLeak ();
+		}
 	}
 		
 	public void EquipWeapon (int weaponIndex) {

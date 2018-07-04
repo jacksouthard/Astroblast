@@ -21,13 +21,15 @@ public class ShootingAlien : BasicAlien {
 		base.Awaken (); // plays awaken animation
 	}
 
-	void Update () {
+    protected override void AlienUpdate () {
 		if (state == State.awakening) {
 			awakenTime -= Time.deltaTime;
 			if (awakenTime <= 0f) { // finished awakeneing
 				state = State.awakened;
 			}
 		}
+
+        base.AlienUpdate();
 	}
 
 	protected override void TripAttack () {

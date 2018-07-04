@@ -18,7 +18,7 @@ public class LeapingAlien : BasicAlien {
 		base.Awaken (); // plays awaken animation
 	}
 
-	void Update () {
+    protected override void AlienUpdate () {
 		if (state == State.awakening) {
 			leapDelay -= Time.deltaTime;
 			if (leapDelay <= 0f) {
@@ -27,6 +27,8 @@ public class LeapingAlien : BasicAlien {
 		} else if (state == State.attacking && active) {
 			MoveTowardsTarget ();
 		}
+
+        base.AlienUpdate();
 	}
 
 	void MoveTowardsTarget () {

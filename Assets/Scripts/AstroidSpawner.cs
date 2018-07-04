@@ -39,6 +39,8 @@ public class AstroidSpawner : MonoBehaviour {
 			Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
 			GameObject prefab = alienPrefabs [Random.Range (0, alienPrefabs.Length)];
 			GameObject newAlien = Instantiate (prefab, spawnPos3d, data.rotation, persistantObjects);
+
+            newAlien.GetComponent<BasicAlien>().InitPos(this, data.anchorIndex);
 		}
 
 		// spawn potential crystals
@@ -63,7 +65,7 @@ public class AstroidSpawner : MonoBehaviour {
 			anchorIndex = Random.Range (0, verts.Length);
 		}
 		usedIndexes.Add (anchorIndex);
-		int adjacentIndex = GetAdjacentVertIndex (anchorIndex);
+		int adjacentIndex = GetAdjacentVertIndex (anchorIndex, 1);
 		return GetPosBetweenVerts (anchorIndex, adjacentIndex, 0.5f);
 	}
 
@@ -81,23 +83,25 @@ public class AstroidSpawner : MonoBehaviour {
 		Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
 		Quaternion adjustedRot = Quaternion.Euler (rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z + transform.eulerAngles.z);
 
-		return new EdgePositionData (transformedPoint, adjustedRot);
+		return new EdgePositionData (startIndex, transformedPoint, adjustedRot);
 	}
 
-	public int GetAdjacentVertIndex (int index) {
-		if (index >= verts.Length - 1) {
-			return 0;
-		} else {
-			return index + 1;
-		}
+    public float GetDistBetweenVerts(int startIndex, int endIndex) {
+        return Vector2.Distance(verts[startIndex], verts[endIndex]);
+    }
+
+	public int GetAdjacentVertIndex (int index, int dir) {
+        return (index + verts.Length + dir) % verts.Length;
 	}
 
 	public struct EdgePositionData {
+        public int anchorIndex;
 		public Vector2 point;
 		public Quaternion rotation;
 
-		public EdgePositionData (Vector2 _point, Quaternion _rotation) {
-			point = _point;
+		public EdgePositionData (int _anchorIndex, Vector2 _point, Quaternion _rotation) {
+            anchorIndex = _anchorIndex;
+            point = _point;
 			rotation = _rotation;
 		}
 	}

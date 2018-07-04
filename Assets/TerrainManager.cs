@@ -14,20 +14,6 @@ public class TerrainManager : MonoBehaviour {
 	public float objectDespawnDst;
 	List<LevelChunk> allLevelChunks = new List<LevelChunk>();
 
-	[Header("Teirs")]
-	public float dstPerTeir;
-	public int chunksPerTeir;
-	int teir = 0;
-	int maxTeir;
-
-//	[Header("Stars")]
-//	public GameObject starPrefab;
-//	public float starParalaxScale;
-//	public float starSpawnIntervals;
-//	public float initialStarCount;
-//	public float initialStarX;
-//	Transform lastStar = null;
-
 	[Header("Background Objects")]
 	public GameObject[] backgroundPrefabs;
 	public float backgroundParalaxScale;
@@ -58,8 +44,6 @@ public class TerrainManager : MonoBehaviour {
 	void Start () {
 		mainCam = Camera.main.transform;
 
-		maxTeir = Mathf.FloorToInt (allLevelChunks.Count / chunksPerTeir);
-
 		// spawn initial chunks
 		ResetTerrain();
 	}
@@ -67,13 +51,6 @@ public class TerrainManager : MonoBehaviour {
 	void Update () {
 		if (mainCam.transform.position.y > farthestY && shouldUpdate) {
 			farthestY = mainCam.transform.position.y;
-
-			if (teir < maxTeir) {
-				if (farthestY > (teir + 1) * dstPerTeir) {
-					teir++;
-					print ("Increasing difficutly to teir " + teir);
-				}
-			}
 
 			if (spawnTerrain) {
 				if (farthestY + objectSpawnBuffer > curChunkY) {
@@ -110,7 +87,6 @@ public class TerrainManager : MonoBehaviour {
 	public void ResetTerrain () {
 		ClearObjects ();
 
-//		initialStarX += player.position.y;
 		initialBackgroundY += mainCam.position.y;
 		initialSidePieceY += mainCam.position.y;
 
@@ -123,10 +99,6 @@ public class TerrainManager : MonoBehaviour {
 			}
 		}
 
-//		for (int i = 0; i < initialStarCount; i++) {
-//			CreateNextStar ();
-//		}
-//
 		for (int i = 0; i < initialBackgroundCount; i++) {
 			CreateNextBackground ();
 		}
@@ -136,20 +108,6 @@ public class TerrainManager : MonoBehaviour {
 		}
 	}
 
-//	void CreateNextStar () {
-//		Vector3 spawnPos;
-//		if (lastStar == null) {
-//			spawnPos = new Vector3 (initialStarX, Random.Range (-50, 30), 50f);
-//		} else {
-//			spawnPos = new Vector3 (lastStar.position.x + starSpawnIntervals, Random.Range (-50, 30), 50f);
-//		}
-//		GameObject star = (GameObject)Instantiate (starPrefab, spawnPos, Quaternion.identity, transform);
-//		star.GetComponent<Paralax> ().Init (spawnPos, starParalaxScale);
-//		lastStar = star.transform;
-//
-//		activeObjects.Add (star);
-//	}
-//
 	void CreateNextBackground () {
 		
 		Vector3 spawnPos;
@@ -211,11 +169,7 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	LevelChunk GetChunk () {
-		int maxIndex = Mathf.Clamp ((teir * chunksPerTeir) + 1, 0, allLevelChunks.Count - 1);
-		int random = Random.Range (0, maxIndex + 1);
-
-//		print ("Max Index: " + maxIndex + " Random: " + random);
-
+		int random = Random.Range (0, allLevelChunks.Count);
 
 		return allLevelChunks [random];
 	}

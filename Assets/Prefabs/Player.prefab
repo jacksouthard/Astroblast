@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 198052506108776716}
   - component: {fileID: 199250837032513182}
   m_Layer: 0
-  m_Name: DeathParticles
+  m_Name: LeakEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,12 +307,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponDistance: 0.54
-  minKillVelocity: 5
+  minKillVelocity: 10
   arms:
   - {fileID: 4899905126348060}
   - {fileID: 4827098403328662}
-  leakForce: 5000
-  leakTime: 3
+  baseDrain: 0.1
+  leakDrain: 5
+  hitWhileLeakingDrain: 20
+  oxygenText: {fileID: 0}
+  leakForce: 8000
 --- !u!198 &198052506108776716
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -373,7 +376,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 812830433
+  randomSeed: 314502999
   InitialModule:
     serializedVersion: 3
     enabled: 1

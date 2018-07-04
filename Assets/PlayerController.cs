@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 	public float weaponDistance;
@@ -16,14 +17,24 @@ public class PlayerController : MonoBehaviour {
 	Vector2 lastWeaponAngle = Vector2.right;
    
 	// death
-	bool isDead;
+	[Header("Oxygen")]
+	float oxygen = 100f;
+	public float baseDrain;
+	public float leakDrain;
+	public float hitWhileLeakingDrain;
+	public Text oxygenText;
+
+	// leaks
 	bool leaking = false;
-	Transform deathEffect;
+	ParticleSystem leakEffect;
 	Vector2 leakDirection;
 	public float leakForce;
-	public float leakTime;
+
+	// death
+	bool isDead;
 
 	void Start () {
+		leakEffect = transform.Find("LeakEffect").GetComponent<ParticleSystem> ();
 		rb = GetComponent<Rigidbody2D> ();
 		weaponMount = transform.Find ("WeaponMount");
 		gun = GetComponentInChildren<GunController> ();
@@ -33,22 +44,36 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (isDead) {
+		if (!isDead) {
+			// leaking
+			float amountToRemove = baseDrain;
 			if (leaking) {
 				rb.AddRelativeForce (-leakDirection * leakForce * Time.deltaTime);
-				leakTime -= Time.deltaTime;
-				if (leakTime <= 0f) {
-					leaking = false;
-					deathEffect.GetComponent<ParticleSystem> ().Stop ();
-				}
+				amountToRemove += leakDrain;
 			}
-		} else {
+			RemoveOxygen (amountToRemove * Time.deltaTime);
+
+			if (oxygen <= 0f) {
+				Die ();
+			}
+
+			// shooting
 			if (Input.GetMouseButton (0)) {
 				Vector2 angleVector = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
 				PositionWeapon (angleVector.normalized);
 				gun.TryFire ();
 			}
+			if (Input.GetKeyDown (KeyCode.P)) {
+				// temp for patching leaks
+				StopLeak();
+			}
 		}
+	}
+
+	void RemoveOxygen (float value) {
+		oxygen -= value;
+		oxygen = Mathf.Clamp (oxygen, 0f, 100f);
+		oxygenText.text = "" + (int)oxygen + "%";
 	}
 
 	void PositionWeapon (Vector2 angleVector) {
@@ -111,19 +136,28 @@ public class PlayerController : MonoBehaviour {
     }
 
 	public void HitByDamagingObject (Transform damagingObject) {
+		if (!leaking) {
+			leaking = true;
+
+			// start leak effect
+			leakDirection = (damagingObject.position - transform.position).normalized;
+			leakEffect.Play ();
+			var leakAngle = Mathf.Atan2 (leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
+			leakEffect.transform.rotation = Quaternion.AngleAxis (leakAngle, Vector3.forward);
+		} else {
+			// hit while already leaking
+			RemoveOxygen (hitWhileLeakingDrain);
+		}
+	}
+
+	void StopLeak () {
+		leaking = false;
+		leakEffect.Stop ();
+	}
+
+	void Die () {
 		isDead = true;
-		leaking = true;
-
-		// broadcast death
 		Camera.main.GetComponent<CameraController>().PlayerDied();
-
-		// init leak effect
-		deathEffect = transform.Find ("DeathParticles");
-		leakDirection = (damagingObject.position - transform.position).normalized;
-		deathEffect.GetComponent<ParticleSystem> ().Play ();
-		var leakAngle = Mathf.Atan2(leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
-		deathEffect.rotation = Quaternion.AngleAxis(leakAngle, Vector3.forward);
-
 		GameController.instance.OnPlayerDeath();
 	}
 		

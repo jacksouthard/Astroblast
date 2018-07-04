@@ -1143,7 +1143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseFollowSpeed: 2
   xRange: 11.5
-  minY: -23
+  minY: -30
   stopTime: 3
   flipTime: 2
 --- !u!1 &1827534992

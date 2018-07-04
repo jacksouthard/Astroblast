@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour {
         isDead = false;
 
 		EquipWeapon (0);
+
+		// enter ship
+		ShipController.instance.PlayerEnter (transform);
 	}
 	
 	void Update () {

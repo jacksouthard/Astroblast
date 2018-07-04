@@ -10,12 +10,21 @@ public class CameraController : MonoBehaviour {
 	public float maxY;
 	Transform target;
 	Transform background;
+	Camera cam;
+
+	// zooming
+	bool zooming = false;
+	float baseZoom = 16;
+	float zoomTime;
+	float zoomTimer;
+	float oldZoom;
+	float targetZoom;
 
 	// slowing to stop
 	public float stopTime;
 	float stopTimer;
 	float targetFollowSpeed = 0.05f;
-	bool frozen = false;
+	bool frozen = true;
 	bool stopping = false;
 
 	// flipping
@@ -24,14 +33,43 @@ public class CameraController : MonoBehaviour {
 	bool flipping = false;
 	int direction = -1;
 
+	void Awake () {
+		cam = GetComponent<Camera> ();
+	}
+
 	void Start () {
-		target = GameObject.Find ("Player").transform;
 		background = GameObject.Find ("Background").transform;
 		farthestY = maxY;
 		transform.position = new Vector3 (transform.position.x, maxY, transform.position.z);
 		curFollowSpeed = baseFollowSpeed;
 	}
 
+	public void StartTracking (Transform _target) {
+		frozen = false;
+		target = _target;
+	}
+
+	public void StopTracking () {
+		frozen = true;
+	}
+
+	public void StartZoom (float _targetZoom, float _time) {
+		targetZoom = _targetZoom;
+		zoomTime = _time;
+		zoomTimer = zoomTime;
+		oldZoom = cam.orthographicSize;
+		zooming = true;
+	}
+
+	public void SetZoom (float zoom) {
+		cam.orthographicSize = zoom;
+	}
+
+	void EndZoom () {
+		cam.orthographicSize = targetZoom;
+		zooming = false;
+	}
+		
 	void Update () {
 		if (stopping) {
 			stopTimer -= Time.deltaTime;
@@ -43,14 +81,13 @@ public class CameraController : MonoBehaviour {
 			}
 		}
 
-		if (flipping) {
-			flipTimer -= Time.deltaTime;
-			if (flipTimer <= 0f) {
-				EndFlip ();
+		if (zooming) {
+			zoomTimer -= Time.deltaTime;
+			if (zoomTimer <= 0f) {
+				EndZoom ();
 			} else {
-				float timeRatio = flipTimer / flipTime;
-				float z = Mathf.Lerp (180f, 0f, timeRatio);
-				transform.rotation = Quaternion.Euler (0f, 0f, z);
+				float timeRatio = zoomTimer / zoomTime;
+				cam.orthographicSize = Mathf.Lerp (targetZoom, oldZoom, timeRatio); 
 			}
 		}
 	}
@@ -99,13 +136,6 @@ public class CameraController : MonoBehaviour {
 	}
 
 	public void SwitchDirections (int newDir) {
-//		flipTimer = flipTime;
-//		flipping = true;
 		direction = newDir;
-	}
-
-	void EndFlip () {
-//		flipping = false;
-//		transform.rotation = Quaternion.Euler (0f, 0f, 180f); // confirm rotation is correct
 	}
 }

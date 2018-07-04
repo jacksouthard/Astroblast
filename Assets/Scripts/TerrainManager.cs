@@ -8,7 +8,7 @@ public class TerrainManager : MonoBehaviour {
 
 	public bool spawnTerrain;
 	bool shouldUpdate = true;
-	int direction = -1; // -1 of going down, 1 if going up
+	public int direction = -1; // -1 of going down, 1 if going up
 
 	[Header("Chunks")]
 	public float initalChunkY;
@@ -135,7 +135,7 @@ public class TerrainManager : MonoBehaviour {
 		} else {
 			spawnPos = new Vector3 (sidePieceX, lastSidePiece.position.y + (sidePieceSpawnIntervals * direction), 0f);
 			if (spawnPos.y > initialSidePieceY) {
-				print ("Tried to spawn side piece in extraction area");
+//				print ("Tried to spawn side piece in extraction area");
 				return;
 			}
 		}

@@ -8,9 +8,10 @@ public class TerrainManager : MonoBehaviour {
 
 	public bool spawnTerrain;
 	bool shouldUpdate = true;
-	int direction = 1; // -1 of going down, 1 if going up
+	int direction = -1; // -1 of going down, 1 if going up
 
 	[Header("Chunks")]
+	public float initalChunkY;
 	public float objectSpawnBuffer;
 	public float objectDespawnDst;
 	List<LevelChunk> allLevelChunks = new List<LevelChunk>();
@@ -32,9 +33,9 @@ public class TerrainManager : MonoBehaviour {
 	public float crystalHeightRange;
 	Transform lastSidePiece = null;
 
-	[HideInInspector]
+//	[HideInInspector]
 	public float farthestY = 0f;
-	public float extractionY;
+	Transform persistantObjects;
 	Transform mainCam;
 	float curChunkY = 0f;
 	float objectActiveRange = 5f;
@@ -46,34 +47,23 @@ public class TerrainManager : MonoBehaviour {
 
 	void Start () {
 		mainCam = Camera.main.transform;
-
+		persistantObjects = GameObject.Find ("PersistantObjects").transform;
 		// spawn initial chunks
 		ResetTerrain();
 	}
 		
 	void Update () {
-		bool update = false;
-		if (mainCam.transform.position.y * direction > farthestY * direction) {
-			update = true;
-		}
+		if (shouldUpdate && mainCam.position.y * direction > farthestY * direction) {
+			farthestY = mainCam.position.y;
 
-		if (update && shouldUpdate) {
-			farthestY = mainCam.transform.position.y;
-
-			if (spawnTerrain && direction == 1) { // chunks only spawn when going into astroid
-				if (farthestY + objectSpawnBuffer > curChunkY) {
+			if (spawnTerrain && direction == -1) { // chunks only spawn when going into astroid
+				if (farthestY - objectSpawnBuffer < curChunkY) {
 					ExpressNextChunk ();
 				}
 			}
-
-//			if (lastBackground == null) {
-//				CreateNextBackground ();
-//			} else if (farthestY + objectSpawnBuffer > lastBackground.position.y) {
-//				CreateNextBackground ();
-//			}
-
+				
 			// side pieces are generated dynamically based on where the player is
-			if (farthestY > extractionY) { // dont spawn side pieces below(?) extraction point
+			if (farthestY < initialSidePieceY) { // dont spawn side pieces above extraction point
 				if (lastSidePiece == null) {
 					CreateNextSidePiece ();
 				} else if ((farthestY + (objectSpawnBuffer * direction)) * direction > lastSidePiece.position.y * direction) {
@@ -94,12 +84,13 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	public void SwitchDirections () {
-		if (direction != 1) { // only flip if going into astroid
-			return;
+		if (direction == 1) {
+			direction = -1;
+		} else {
+			direction = 1;
 		}
-		direction = -1;
 
-		mainCam.GetComponent<CameraController> ().StartFlip ();
+		Camera.main.GetComponent<CameraController> ().SwitchDirections (direction);
 	}
 
 	public void ResetTerrain () {
@@ -107,9 +98,7 @@ public class TerrainManager : MonoBehaviour {
 		curChunkY = 0f;
 
 		if (spawnTerrain) {
-			for (int i = 0; i < 3; i++) {
-				ExpressNextChunk ();
-			}
+//			ExpressNextChunk ();
 		}
 
 //		for (int i = 0; i < initialBackgroundCount; i++) {
@@ -145,7 +134,7 @@ public class TerrainManager : MonoBehaviour {
 			spawnPos = new Vector3 (sidePieceX, initialSidePieceY, 0f);
 		} else {
 			spawnPos = new Vector3 (sidePieceX, lastSidePiece.position.y + (sidePieceSpawnIntervals * direction), 0f);
-			if (spawnPos.y < extractionY) {
+			if (spawnPos.y > initialSidePieceY) {
 				print ("Tried to spawn side piece in extraction area");
 				return;
 			}
@@ -161,11 +150,14 @@ public class TerrainManager : MonoBehaviour {
 
 			piece.transform.localScale = new Vector3 (piece.transform.localScale.x * -sign, piece.transform.localScale.y, 1f);
 
-			int crystalCount = Random.Range (0, 2);
-			for (int i = 0; i < crystalCount; i++) {
-				Vector3 crystalSpawnPos = new Vector3 (newSpawnPos.x, newSpawnPos.y + Random.Range (-crystalHeightRange, crystalHeightRange), newSpawnPos.z + 0.1f);
-				Quaternion spawnRot = Quaternion.Euler (0f, 0f, sign * 90f);
-				GameObject newCrystal = Instantiate (crystal, crystalSpawnPos, spawnRot, transform);
+			// crystals are persistant so only generated when going down
+			if (direction == -1) {
+				int crystalCount = Random.Range (0, 2);
+				for (int i = 0; i < crystalCount; i++) {
+					Vector3 crystalSpawnPos = new Vector3 (newSpawnPos.x, newSpawnPos.y + Random.Range (-crystalHeightRange, crystalHeightRange), newSpawnPos.z + 0.1f);
+					Quaternion spawnRot = Quaternion.Euler (0f, 0f, sign * 90f);
+					GameObject newCrystal = Instantiate (crystal, crystalSpawnPos, spawnRot, persistantObjects);
+				}
 			}
 		}
 	}
@@ -178,11 +170,11 @@ public class TerrainManager : MonoBehaviour {
 		}
 	
 		foreach (var levelObject in chunk.levelObjects) {
-			Vector3 spawnPos = new Vector3 (levelObject.pos.x * xFlipSign, levelObject.pos.y + curChunkY, 1f);
+			Vector3 spawnPos = new Vector3 (levelObject.pos.x * xFlipSign, levelObject.pos.y + curChunkY + initalChunkY, 1f);
 			GameObject GO = (GameObject)Instantiate (levelObject.prefab, spawnPos, Quaternion.identity, transform);
 		}
 
-		curChunkY += chunk.chunkSize;
+		curChunkY -= chunk.chunkSize;
 	}
 
 	LevelChunk GetChunk () {
@@ -249,9 +241,9 @@ public class TerrainManager : MonoBehaviour {
 
 		// new chunk ID: -1
 		// objects
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, 4f), _prefab: astroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, 15f), _prefab: astroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, 23f), _prefab: astroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, -4f), _prefab: astroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, -15f), _prefab: astroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -23f), _prefab: astroid));
 		// build chunk
 		allLevelChunks.Add (new LevelChunk (_chunkSize: 27, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();

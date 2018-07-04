@@ -55,7 +55,7 @@ public class AstroidSpawner : MonoBehaviour {
 		for (int i = 0; i < crystalCount; i++) {
 			EdgePositionData data = GetRandomSpawnPoint ();
 			Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
-			GameObject newCrystal = Instantiate (crystalPrefab, spawnPos3d, data.rotation, persistantObjects);
+			Instantiate (crystalPrefab, spawnPos3d, data.rotation, persistantObjects);
 		}
 	}
 

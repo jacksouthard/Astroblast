@@ -5,9 +5,9 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 	public float baseFollowSpeed = 2f;
 	float curFollowSpeed;
-	float farthestY;
+	public float farthestY;
 	public float xRange;
-	public float minY;
+	public float maxY;
 	Transform target;
 	Transform background;
 
@@ -22,13 +22,13 @@ public class CameraController : MonoBehaviour {
 	public float flipTime;
 	float flipTimer;
 	bool flipping = false;
-	int direction = 1;
+	int direction = -1;
 
 	void Start () {
 		target = GameObject.Find ("Player").transform;
 		background = GameObject.Find ("Background").transform;
-		farthestY = minY;
-		transform.position = new Vector3 (transform.position.x, minY, transform.position.z);
+		farthestY = maxY;
+		transform.position = new Vector3 (transform.position.x, maxY, transform.position.z);
 		curFollowSpeed = baseFollowSpeed;
 	}
 
@@ -66,7 +66,7 @@ public class CameraController : MonoBehaviour {
 
 	void MoveCam () {
 		float x = Mathf.Clamp (target.position.x, -xRange, xRange);
-		float y = Mathf.Clamp (farthestY, minY, Mathf.Infinity);
+		float y = Mathf.Clamp (farthestY, -Mathf.Infinity, maxY);
 		Vector3 newPosition = new Vector3 (x, y, transform.position.z);
 		transform.position = Vector3.Slerp(transform.position, newPosition, curFollowSpeed * Time.deltaTime);
 
@@ -98,14 +98,14 @@ public class CameraController : MonoBehaviour {
 		stopping = false;
 	}
 
-	public void StartFlip () {
-		flipTimer = flipTime;
-		flipping = true;
-		direction = -1;
+	public void SwitchDirections (int newDir) {
+//		flipTimer = flipTime;
+//		flipping = true;
+		direction = newDir;
 	}
 
 	void EndFlip () {
-		flipping = false;
-		transform.rotation = Quaternion.Euler (0f, 0f, 180f); // confirm rotation is correct
+//		flipping = false;
+//		transform.rotation = Quaternion.Euler (0f, 0f, 180f); // confirm rotation is correct
 	}
 }

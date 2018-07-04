@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Alien
   - ActiveZone
+  - Ship
   layers:
   - Default
   - TransparentFX

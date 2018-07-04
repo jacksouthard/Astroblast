@@ -103,9 +103,6 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	public void ResetTerrain () {
-//		initialBackgroundY += mainCam.position.y;
-		initialSidePieceY += mainCam.position.y;
-
 		farthestY = 0f;
 		curChunkY = 0f;
 

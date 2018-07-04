@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 	public float baseFollowSpeed = 2f;
 	float curFollowSpeed;
-	float farthestY = 0f;
+	float farthestY;
 	public float xRange;
 	public float minY;
 	Transform target;
@@ -27,6 +27,8 @@ public class CameraController : MonoBehaviour {
 	void Start () {
 		target = GameObject.Find ("Player").transform;
 		background = GameObject.Find ("Background").transform;
+		farthestY = minY;
+		transform.position = new Vector3 (transform.position.x, minY, transform.position.z);
 		curFollowSpeed = baseFollowSpeed;
 	}
 

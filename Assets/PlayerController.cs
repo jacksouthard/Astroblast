@@ -106,22 +106,26 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (hitDamagingObject && !isDead) {
-            isDead = true;
-			leaking = true;
-
-			// broadcast death
-			Camera.main.GetComponent<CameraController>().PlayerDied();
-
-			// init leak effect
-			deathEffect = transform.Find ("DeathParticles");
-			leakDirection = (other.transform.position - transform.position).normalized;
-			deathEffect.GetComponent<ParticleSystem> ().Play ();
-			var leakAngle = Mathf.Atan2(leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
-			deathEffect.rotation = Quaternion.AngleAxis(leakAngle, Vector3.forward);
-
-            GameController.instance.OnPlayerDeath();
+			HitByDamagingObject (other.transform);
         }
     }
+
+	public void HitByDamagingObject (Transform damagingObject) {
+		isDead = true;
+		leaking = true;
+
+		// broadcast death
+		Camera.main.GetComponent<CameraController>().PlayerDied();
+
+		// init leak effect
+		deathEffect = transform.Find ("DeathParticles");
+		leakDirection = (damagingObject.position - transform.position).normalized;
+		deathEffect.GetComponent<ParticleSystem> ().Play ();
+		var leakAngle = Mathf.Atan2(leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
+		deathEffect.rotation = Quaternion.AngleAxis(leakAngle, Vector3.forward);
+
+		GameController.instance.OnPlayerDeath();
+	}
 		
 	public void EquipWeapon (int weaponIndex) {
 		if (weaponMount.childCount > 0) {

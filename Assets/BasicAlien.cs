@@ -6,6 +6,7 @@ public class BasicAlien : MonoBehaviour {
 	protected enum State {
 		idle,
 		awakening,
+		awakened,
 		attacking
 	};
 	protected State state = State.idle;
@@ -32,9 +33,13 @@ public class BasicAlien : MonoBehaviour {
 			if (state == State.idle) {
 				target = coll.transform;
 				Awaken ();
+			} else if (state == State.awakened) {
+				TripAttack (); // for shooting enemies
 			}
 		}
 	}
+
+	protected virtual void TripAttack () {}
 
 	protected virtual void Awaken () {
 		anim.SetTrigger ("Awaken");

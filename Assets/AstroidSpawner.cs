@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AstroidSpawner : MonoBehaviour {
 	public GameObject[] astroids;
-	public GameObject alienPrefab;
+	public GameObject[] alienPrefabs;
 	public GameObject crystalPrefab;
 	public float minSize;
 	public float maxSize;
@@ -25,16 +25,17 @@ public class AstroidSpawner : MonoBehaviour {
 		// spawn potential aliens
 		int alienCount = 0;
 		int random = Random.Range (0, 100);
-		if (random < 7) {
+		if (random < 15) {
 			alienCount = 2;
-		} else if (random < 30) {
+		} else if (random < 50) {
 			alienCount = 1;
 		}
 
 		for (int i = 0; i < alienCount; i++) {
 			EdgePositionData data = GetRandomSpawnPoint ();
 			Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
-			GameObject newAlien = Instantiate (alienPrefab, spawnPos3d, data.rotation, transform.parent);
+			GameObject prefab = alienPrefabs [Random.Range (0, alienPrefabs.Length)];
+			GameObject newAlien = Instantiate (prefab, spawnPos3d, data.rotation, transform.parent);
 		}
 
 		// spawn potential crystals

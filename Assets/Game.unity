@@ -627,7 +627,7 @@ Prefab:
     - target: {fileID: 114431132584546808, guid: 7d6fb8a547de54f26ba53f60eaca7be4,
         type: 2}
       propertyPath: minKillVelocity
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d6fb8a547de54f26ba53f60eaca7be4, type: 2}
@@ -892,7 +892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTerrain: 1
-  objectSpawnBuffer: 10
+  objectSpawnBuffer: 15
   objectDespawnDst: 30
   dstPerTeir: 300
   chunksPerTeir: 1

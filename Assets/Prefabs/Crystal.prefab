@@ -93,5 +93,5 @@ MonoBehaviour:
     type: 2}
   maxSprouts: 3
   sproutMaxAngle: 30
-  minSproutLength: 0.6
-  maxSproutLength: 1
+  minSproutLength: 0.4
+  maxSproutLength: 0.8

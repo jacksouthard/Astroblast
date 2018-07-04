@@ -311,7 +311,7 @@ MonoBehaviour:
   arms:
   - {fileID: 4899905126348060}
   - {fileID: 4827098403328662}
-  baseDrain: 0.1
+  baseDrain: 0.3
   leakDrain: 20
   hitWhileLeakingDrain: 20
   oxygenText: {fileID: 0}

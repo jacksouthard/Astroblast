@@ -48,6 +48,7 @@ public class ShipController : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D coll) {
 		if (coll.gameObject.tag == "Player") {
 			if (TerrainManager.instance.direction == 1) {
+				player.GetComponent<PlayerController> ().EnteringShip ();
 				PlayerEnter (player);
 //				camCon.StartTracking (transform);
 				camCon.StartZoom (22f, 2f);

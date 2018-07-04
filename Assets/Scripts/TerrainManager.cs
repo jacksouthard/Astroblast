@@ -16,13 +16,11 @@ public class TerrainManager : MonoBehaviour {
 	public float objectDespawnDst;
 	List<LevelChunk> allLevelChunks = new List<LevelChunk>();
 
-	[Header("Background Objects")]
-	public GameObject[] backgroundPrefabs;
-	public float backgroundParalaxScale;
-	public float backgroundSpawnIntervals;
-	public float initialBackgroundCount;
-	public float initialBackgroundY;
-	Transform lastBackground = null;
+	[Header("Wall Objects")]
+	public GameObject[] wallPrefabs;
+	public int maxWallObjects;
+	public float wallObjectSpawnRange;
+	public float wallObjectZ;
 
 	[Header("Side Pieces")]
 	public GameObject[] sidePiecePrefabs;
@@ -30,7 +28,6 @@ public class TerrainManager : MonoBehaviour {
 	public float sidePieceSpawnIntervals;
 	public float initialSidePieceCount;
 	public float initialSidePieceY;
-	public float crystalHeightRange;
 	Transform lastSidePiece = null;
 
 //	[HideInInspector]
@@ -110,24 +107,6 @@ public class TerrainManager : MonoBehaviour {
 		}
 	}
 
-	void CreateNextBackground () {
-		Vector3 spawnPos;
-		if (lastBackground == null) {
-			spawnPos = new Vector3 (0f, initialBackgroundY, 20f);
-		} else {
-			spawnPos = new Vector3 (0f, lastBackground.position.y + backgroundSpawnIntervals, 20f);
-		}
-		GameObject backgroundPrefab = backgroundPrefabs[Random.Range (0, backgroundPrefabs.Length)];
-		GameObject background = (GameObject)Instantiate (backgroundPrefab, spawnPos, Quaternion.identity, transform);
-		background.GetComponent<Paralax> ().Init (spawnPos, backgroundParalaxScale);
-		lastBackground = background.transform;
-
-		if (Random.value > 0.5f) {
-			// flip background
-			background.transform.localScale = new Vector3 (-background.transform.localScale.x, background.transform.localScale.y, 1f);
-		}
-	} 
-
 	void CreateNextSidePiece () {
 		Vector3 spawnPos;
 		if (lastSidePiece == null) {
@@ -150,15 +129,25 @@ public class TerrainManager : MonoBehaviour {
 
 			piece.transform.localScale = new Vector3 (piece.transform.localScale.x * -sign, piece.transform.localScale.y, 1f);
 
-			// crystals are persistant so only generated when going down
+			// wall objects are persistant so only generated when going down
 			if (direction == -1) {
-				int crystalCount = Random.Range (0, 2);
-				for (int i = 0; i < crystalCount; i++) {
-					Vector3 crystalSpawnPos = new Vector3 (newSpawnPos.x, newSpawnPos.y + Random.Range (-crystalHeightRange, crystalHeightRange), newSpawnPos.z + 0.1f);
-					Quaternion spawnRot = Quaternion.Euler (0f, 0f, sign * 90f);
-					GameObject newCrystal = Instantiate (crystal, crystalSpawnPos, spawnRot, persistantObjects);
-				}
+				CreateWallObjects (spawnPos.y, sign);
 			}
+		}
+	}
+
+	void CreateWallObjects (float anchorY, int sideSign) {
+		int objectCount = Random.Range (0, maxWallObjects + 1);
+		for (int i = 0; i < objectCount; i++) {
+			GameObject prefab = wallPrefabs [Random.Range (0, wallPrefabs.Length)];
+			Vector3 spawnPos = new Vector3 (sidePieceX * sideSign, anchorY + Random.Range (-wallObjectSpawnRange, wallObjectSpawnRange), wallObjectZ);
+
+			float yRot = 0f;
+			if (Random.value > 0.5f) {
+				yRot = 180f;
+			}
+			Quaternion spawnRot = Quaternion.Euler (0f, yRot, sideSign * 90f);
+			Instantiate (prefab, spawnPos, spawnRot, persistantObjects);
 		}
 	}
 
@@ -171,7 +160,7 @@ public class TerrainManager : MonoBehaviour {
 	
 		foreach (var levelObject in chunk.levelObjects) {
 			Vector3 spawnPos = new Vector3 (levelObject.pos.x * xFlipSign, levelObject.pos.y + curChunkY + initalChunkY, 1f);
-			GameObject GO = (GameObject)Instantiate (levelObject.prefab, spawnPos, Quaternion.identity, transform);
+			Instantiate (levelObject.prefab, spawnPos, Quaternion.identity, transform);
 		}
 
 		curChunkY -= chunk.chunkSize;
@@ -233,19 +222,28 @@ public class TerrainManager : MonoBehaviour {
 
 	// level chunks
 	[Header("Object Prefabs")]
-	public GameObject astroid;
+	public GameObject smoothAstroid;
+	public GameObject spikyAstroid;
 	public GameObject crystal;
 
 	void BuildLevelChunks () {
 		List<LevelObject> levelObjects = new List<LevelObject> ();
 
-		// new chunk ID: -1
 		// objects
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, -4f), _prefab: astroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, -15f), _prefab: astroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -23f), _prefab: astroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, -4f), _prefab: smoothAstroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, -13f), _prefab: smoothAstroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -19f), _prefab: smoothAstroid));
 		// build chunk
-		allLevelChunks.Add (new LevelChunk (_chunkSize: 27, _levelObjects: new List<LevelObject> (levelObjects)));
+		allLevelChunks.Add (new LevelChunk (_chunkSize: 23, _levelObjects: new List<LevelObject> (levelObjects)));
+		levelObjects.Clear ();
+
+		// objects
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -2f), _prefab: spikyAstroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (6f, -11f), _prefab: spikyAstroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -13f), _prefab: spikyAstroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-1f, -21f), _prefab: smoothAstroid));
+		// build chunk
+		allLevelChunks.Add (new LevelChunk (_chunkSize: 26, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();
 	}
 }

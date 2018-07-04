@@ -181,6 +181,85 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lethal: 1
   minVelocity: 0
+--- !u!1 &300355904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 300355905}
+  - component: {fileID: 300355906}
+  - component: {fileID: 300355907}
+  m_Layer: 9
+  m_Name: WarningLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &300355905
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300355904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.393, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1437515745}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &300355906
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300355904}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Intensity: 40
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!114 &300355907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300355904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62d4830a69e544a7b1916cfc1b774b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTime: 0.25
+  offTime: 0.1
 --- !u!1 &368161987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,7 +1135,7 @@ GameObject:
   - component: {fileID: 991249801}
   - component: {fileID: 991249800}
   - component: {fileID: 991249802}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship
   m_TagString: Ship
   m_Icon: {fileID: 0}
@@ -1220,7 +1299,7 @@ Transform:
   m_GameObject: {fileID: 1043649140}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.96}
-  m_LocalScale: {x: 45, y: 40, z: 1}
+  m_LocalScale: {x: 45, y: 45, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1348,6 +1427,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!4 &1437515745 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4900035982628748, guid: 7d6fb8a547de54f26ba53f60eaca7be4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1369627884}
 --- !u!1 &1510606137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,24 +1985,24 @@ MonoBehaviour:
   initalChunkY: -30
   objectSpawnBuffer: 15
   objectDespawnDst: 30
-  backgroundPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  backgroundParalaxScale: 0.5
-  backgroundSpawnIntervals: 25
-  initialBackgroundCount: 5
-  initialBackgroundY: -10
+  wallPrefabs:
+  - {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}
+  - {fileID: 1742543816036516, guid: 691531c1c2e9542e6b8f888a1f1bc0ad, type: 2}
+  - {fileID: 1070027937785930, guid: edae800a42bbb4d8d83683212bf4ab9e, type: 2}
+  maxWallObjects: 2
+  wallObjectSpawnRange: 5
+  wallObjectZ: 0.1
   sidePiecePrefabs:
   - {fileID: 1096771626076446, guid: 1123dd9f6ba3842e98514e4d744fa527, type: 2}
   sidePieceX: 12
   sidePieceSpawnIntervals: 15
   initialSidePieceCount: 3
   initialSidePieceY: -22.5
-  crystalHeightRange: 7
   farthestY: 0
-  astroid: {fileID: 1022439322555394, guid: a16e1064bec1a4064956bc8b5b27e94f, type: 2}
+  smoothAstroid: {fileID: 1022439322555394, guid: a16e1064bec1a4064956bc8b5b27e94f,
+    type: 2}
+  spikyAstroid: {fileID: 1022439322555394, guid: c8dacdae66ae94b9db68c145e6d2d744,
+    type: 2}
   crystal: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}
 --- !u!4 &1900455384
 Transform:
@@ -2060,7 +2144,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1981169671}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 19.08, z: 10}
+  m_LocalPosition: {x: 0, y: 20.9, z: 10}
   m_LocalScale: {x: 30, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 1766057860}

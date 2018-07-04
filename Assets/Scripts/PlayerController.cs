@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 
 	// leaks
 	bool leaking = false;
+	LightFlicker warningLight;
 	ParticleSystem leakEffect;
 	Vector2 leakDirection;
 	public float leakForce;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Start () {
 		oxygenText.enabled = false;
+		warningLight = GetComponentInChildren<LightFlicker> ();
 		leakEffect = transform.Find("LeakEffect").GetComponent<ParticleSystem> ();
 		rb = GetComponent<Rigidbody2D> ();
 		weaponMount = transform.Find ("WeaponMount");
@@ -45,6 +47,10 @@ public class PlayerController : MonoBehaviour {
 
 		// enter ship
 		ShipController.instance.PlayerEnter (transform);
+	}
+
+	public void EnteringShip () {
+		oxygenText.enabled = false;
 	}
 
 	public void EjectedFromShip () {
@@ -159,6 +165,7 @@ public class PlayerController : MonoBehaviour {
 			leaking = true;
 
 			// start leak effect
+			warningLight.StartFlicker();
 			leakDirection = (damagingObject.position - transform.position).normalized;
 			leakEffect.Play ();
 			var leakAngle = Mathf.Atan2 (leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
@@ -171,6 +178,7 @@ public class PlayerController : MonoBehaviour {
 
 	void StopLeak () {
 		leaking = false;
+		warningLight.StopFlicker ();
 		leakEffect.Stop ();
 	}
 

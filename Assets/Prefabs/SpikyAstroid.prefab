@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114748423835824588}
   - component: {fileID: 114939849107018246}
   m_Layer: 0
-  m_Name: Astroid
+  m_Name: SpikyAstroid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,16 +53,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   astroids:
-  - {fileID: 1090120317141148, guid: d2bb06cb273224e30832d3b9288ef4b7, type: 2}
-  - {fileID: 1489274951603916, guid: 9bfe4915a48d147b4bea30efc926c2ab, type: 2}
-  alienPrefabs:
-  - {fileID: 1336862633254428, guid: 509f56b1ff436439289c917d78db040c, type: 2}
-  - {fileID: 1218411777221514, guid: 4a6bc76cfdbe34d41966b87c954160c3, type: 2}
+  - {fileID: 1299888090128188, guid: a35b3fb7607e24827a51ff8ca542323a, type: 2}
+  alienPrefabs: []
   crystalPrefab: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4,
     type: 2}
-  minSize: 1.3
-  maxSize: 1.8
-  persistantObjects: {fileID: 0}
+  minSize: 1.5
+  maxSize: 1.9
 --- !u!114 &114939849107018246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -75,4 +71,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lethal: 0
-  minVelocity: 15
+  minVelocity: 2

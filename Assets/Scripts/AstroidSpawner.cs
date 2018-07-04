@@ -26,22 +26,25 @@ public class AstroidSpawner : MonoBehaviour {
 
 		verts = newAstroid.GetComponent<PolygonCollider2D> ().points;
 
-		// spawn potential aliens
-		int alienCount = 0;
-		int random = Random.Range (0, 100);
-		if (random < 15) {
-			alienCount = 2;
-		} else if (random < 50) {
-			alienCount = 1;
-		}
+		int random;
+		if (alienPrefabs.Length != 0) {
+			// spawn potential aliens
+			int alienCount = 0;
+			random = Random.Range (0, 100);
+			if (random < 15) {
+				alienCount = 2;
+			} else if (random < 50) {
+				alienCount = 1;
+			}
+			
+			for (int i = 0; i < alienCount; i++) {
+				EdgePositionData data = GetRandomSpawnPoint ();
+				Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
+				GameObject prefab = alienPrefabs [Random.Range (0, alienPrefabs.Length)];
+				GameObject newAlien = Instantiate (prefab, spawnPos3d, data.rotation, persistantObjects);
 
-		for (int i = 0; i < alienCount; i++) {
-			EdgePositionData data = GetRandomSpawnPoint ();
-			Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
-			GameObject prefab = alienPrefabs [Random.Range (0, alienPrefabs.Length)];
-			GameObject newAlien = Instantiate (prefab, spawnPos3d, data.rotation, persistantObjects);
-
-            newAlien.GetComponent<BasicAlien>().InitPos(this, data.anchorIndex);
+				newAlien.GetComponent<BasicAlien> ().InitPos (this, data.anchorIndex);
+			}
 		}
 
 		// spawn potential crystals

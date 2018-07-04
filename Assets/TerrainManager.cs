@@ -35,6 +35,7 @@ public class TerrainManager : MonoBehaviour {
 	public float farthestY = 0f;
 	Transform mainCam;
 	float curChunkY = 0f;
+	float objectActiveRange = 5f;
 
 	void Awake () {
 		instance = this;
@@ -199,6 +200,14 @@ public class TerrainManager : MonoBehaviour {
 	void ClearObjects () {
 		for (int i = 0; i < transform.childCount; i++) {
 			Destroy (transform.GetChild(i));
+		}
+	}
+
+	public bool ShouldBeActive (float y) {
+		if (Mathf.Abs (y - mainCam.position.y) < objectActiveRange) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 

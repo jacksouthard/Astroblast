@@ -24,7 +24,7 @@ public class LeapingAlien : BasicAlien {
 			if (leapDelay <= 0f) {
 				Leap ();
 			}
-		} else if (state == State.attacking) {
+		} else if (state == State.attacking && active) {
 			MoveTowardsTarget ();
 		}
 	}

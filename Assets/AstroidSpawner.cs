@@ -10,10 +10,13 @@ public class AstroidSpawner : MonoBehaviour {
 	public float maxSize;
 	float size;
 
+	public Transform persistantObjects; // container for aliens and astroids which dont despawn when they leave the screen on the way down
+
 	Vector2[] verts;
 	List<int> usedIndexes = new List<int> (); // so 2 things dont spawn on the same side
 
 	void Start () {
+		transform.parent = persistantObjects;
 		GameObject newAstroid = Instantiate (astroids [Random.Range (0, astroids.Length)], transform);
 		transform.rotation = Quaternion.Euler (0f, 0f, Random.Range (0f, 360f));
 
@@ -35,7 +38,7 @@ public class AstroidSpawner : MonoBehaviour {
 			EdgePositionData data = GetRandomSpawnPoint ();
 			Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
 			GameObject prefab = alienPrefabs [Random.Range (0, alienPrefabs.Length)];
-			GameObject newAlien = Instantiate (prefab, spawnPos3d, data.rotation, transform.parent);
+			GameObject newAlien = Instantiate (prefab, spawnPos3d, data.rotation, persistantObjects);
 		}
 
 		// spawn potential crystals
@@ -50,7 +53,7 @@ public class AstroidSpawner : MonoBehaviour {
 		for (int i = 0; i < crystalCount; i++) {
 			EdgePositionData data = GetRandomSpawnPoint ();
 			Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
-			GameObject newCrystal = Instantiate (crystalPrefab, spawnPos3d, data.rotation, transform.parent);
+			GameObject newCrystal = Instantiate (crystalPrefab, spawnPos3d, data.rotation, persistantObjects);
 		}
 	}
 

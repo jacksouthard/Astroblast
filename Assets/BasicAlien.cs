@@ -10,6 +10,7 @@ public class BasicAlien : MonoBehaviour {
 		attacking
 	};
 	protected State state = State.idle;
+	protected bool active = true;
 
 	public int health;
 
@@ -36,7 +37,28 @@ public class BasicAlien : MonoBehaviour {
 			} else if (state == State.awakened) {
 				TripAttack (); // for shooting enemies
 			}
+		} else if (coll.tag == "ActiveZone") {
+			if (!active) {
+				Activate ();
+			}
 		}
+	}
+
+	void OnTriggerExit2D (Collider2D coll) {
+		if (coll.tag == "ActiveZone") {
+			if (active) {
+				Deactivate ();
+			}
+		}
+	}
+
+	protected virtual void Activate () {
+		active = true;
+	}
+
+	protected virtual void Deactivate () {
+		active = false;
+		rb.velocity = Vector2.zero;
 	}
 
 	protected virtual void TripAttack () {}

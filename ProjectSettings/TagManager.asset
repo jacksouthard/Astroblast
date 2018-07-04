@@ -7,6 +7,7 @@ TagManager:
   - Rock
   - Bullet
   - Alien
+  - ActiveZone
   layers:
   - Default
   - TransparentFX

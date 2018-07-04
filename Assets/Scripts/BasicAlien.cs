@@ -35,11 +35,6 @@ public class BasicAlien : MonoBehaviour {
 
 	void Start () {
 		Initiated ();
-
-        if (canWalk) {
-            dir = (Random.Range(0, 2) * 2) - 1; //either -1 or 1
-            curRatio = 0.5f; //aliens start at the midpoint between vertices
-        }
 	}
 
     public void InitPos(AstroidSpawner astroid, int startingIndex) {
@@ -54,7 +49,9 @@ public class BasicAlien : MonoBehaviour {
             curIndex = curAstroid.GetAdjacentVertIndex(startingIndex, 1);
         }
 
-        curEdgeDist = curAstroid.GetDistBetweenVerts(startingIndex, nextIndex);
+        dir = (Random.Range(0, 2) * 2) - 1; //either -1 or 1
+        curRatio = 0.5f; //aliens start at the midpoint between vertices
+        curEdgeDist = curAstroid.GetDistBetweenVerts(curIndex, nextIndex);
     }
 
 	protected virtual void Initiated () {}
@@ -70,10 +67,11 @@ public class BasicAlien : MonoBehaviour {
     }
 
     void Walk() {
-        curRatio += Time.deltaTime * curEdgeDist * walkSpeed;
+        curRatio += Time.deltaTime / curEdgeDist * walkSpeed;
         if (curRatio >= 1) {
             curRatio -= 1;
             curIndex = nextIndex;
+            curEdgeDist = curAstroid.GetDistBetweenVerts(curIndex, nextIndex);
         }
 
         AstroidSpawner.EdgePositionData edgePositionData = curAstroid.GetPosBetweenVerts(curIndex, nextIndex, curRatio);

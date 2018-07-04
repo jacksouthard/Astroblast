@@ -73,9 +73,7 @@ public class TerrainManager : MonoBehaviour {
 //			}
 
 			// side pieces are generated dynamically based on where the player is
-			if (direction == -1 && farthestY < extractionY) { // dont spawn side pieces below(?) extraction point
-
-			} else {
+			if (farthestY > extractionY) { // dont spawn side pieces below(?) extraction point
 				if (lastSidePiece == null) {
 					CreateNextSidePiece ();
 				} else if ((farthestY + (objectSpawnBuffer * direction)) * direction > lastSidePiece.position.y * direction) {
@@ -105,7 +103,7 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	public void ResetTerrain () {
-		initialBackgroundY += mainCam.position.y;
+//		initialBackgroundY += mainCam.position.y;
 		initialSidePieceY += mainCam.position.y;
 
 		farthestY = 0f;
@@ -117,9 +115,9 @@ public class TerrainManager : MonoBehaviour {
 			}
 		}
 
-		for (int i = 0; i < initialBackgroundCount; i++) {
-			CreateNextBackground ();
-		}
+//		for (int i = 0; i < initialBackgroundCount; i++) {
+//			CreateNextBackground ();
+//		}
 
 		for (int i = 0; i < initialSidePieceCount; i++) {
 			CreateNextSidePiece ();
@@ -150,7 +148,12 @@ public class TerrainManager : MonoBehaviour {
 			spawnPos = new Vector3 (sidePieceX, initialSidePieceY, 0f);
 		} else {
 			spawnPos = new Vector3 (sidePieceX, lastSidePiece.position.y + (sidePieceSpawnIntervals * direction), 0f);
+			if (spawnPos.y < extractionY) {
+				print ("Tried to spawn side piece in extraction area");
+				return;
+			}
 		}
+
 		GameObject prefab = sidePiecePrefabs [Random.Range (0, sidePiecePrefabs.Length)];
 
 		for (int sign = -1; sign <= 1; sign += 2) {

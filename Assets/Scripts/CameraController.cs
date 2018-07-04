@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour {
 	float curFollowSpeed;
 	float farthestY = 0f;
 	public float xRange;
+	public float minY;
 	Transform target;
 	Transform background;
 
@@ -63,7 +64,8 @@ public class CameraController : MonoBehaviour {
 
 	void MoveCam () {
 		float x = Mathf.Clamp (target.position.x, -xRange, xRange);
-		Vector3 newPosition = new Vector3 (x, farthestY, transform.position.z);
+		float y = Mathf.Clamp (farthestY, minY, Mathf.Infinity);
+		Vector3 newPosition = new Vector3 (x, y, transform.position.z);
 		transform.position = Vector3.Slerp(transform.position, newPosition, curFollowSpeed * Time.deltaTime);
 
 		background.position = new Vector3 (0f, transform.position.y, background.position.z);

@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 61728450604647498}
   - component: {fileID: 61500501455933628}
   - component: {fileID: 95995695077320880}
+  - component: {fileID: 114942081573311784}
   m_Layer: 0
   m_Name: Alien0
   m_TagString: Alien
@@ -379,11 +380,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  canWalk: 0
+  walkSpeed: 0
   leapForce: 15000
   leapDelay: 1
   acceleration: 10000
   maxSpeed: 5
   rotationSpeed: 5
+--- !u!114 &114942081573311784
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336862633254428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12a5cae9f63d4b8b9b8fa90e356f734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lethal: 0
+  minVelocity: 0
 --- !u!212 &212040707178158926
 SpriteRenderer:
   m_ObjectHideFlags: 1

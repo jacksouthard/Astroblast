@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 	bool isDead;
 
 	void Start () {
+		oxygenText.enabled = false;
 		leakEffect = transform.Find("LeakEffect").GetComponent<ParticleSystem> ();
 		rb = GetComponent<Rigidbody2D> ();
 		weaponMount = transform.Find ("WeaponMount");
@@ -44,6 +45,10 @@ public class PlayerController : MonoBehaviour {
 
 		// enter ship
 		ShipController.instance.PlayerEnter (transform);
+	}
+
+	public void EjectedFromShip () {
+		oxygenText.enabled = true;
 	}
 	
 	void Update () {
@@ -126,14 +131,25 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D other) {
-		bool hitDamagingObject = false;
-		if (other.gameObject.tag == "Rock" && other.relativeVelocity.magnitude > minKillVelocity) {
-			hitDamagingObject = true;
-		} else if (other.gameObject.tag == "Alien") {
-			hitDamagingObject = true;
+		if (isDead) {
+			return;
 		}
 
-		if (hitDamagingObject && !isDead) {
+		bool hitDamagingObject = false;
+		PlayerDamaging possibleDamage = other.collider.GetComponentInParent<PlayerDamaging> ();
+		if (possibleDamage != null) {
+			if (possibleDamage.lethal) {
+				Die ();
+				return;
+			}
+			if (possibleDamage.minVelocity == 0) {
+				hitDamagingObject = true;
+			} else if (other.relativeVelocity.magnitude > possibleDamage.minVelocity) {
+				hitDamagingObject = true;
+			}
+		}
+
+		if (hitDamagingObject) {
 			HitByDamagingObject (other.transform);
         }
     }

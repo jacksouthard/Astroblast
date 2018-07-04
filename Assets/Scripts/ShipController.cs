@@ -64,6 +64,7 @@ public class ShipController : MonoBehaviour {
 	}
 
 	public void PlayerExit () {
+		player.GetComponent<PlayerController> ().EjectedFromShip ();
 		player.gameObject.SetActive (true);
 		player.position = transform.Find ("PlayerSpawn").position;
 		camCon.StartTracking (player);

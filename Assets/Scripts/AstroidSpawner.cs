@@ -10,12 +10,13 @@ public class AstroidSpawner : MonoBehaviour {
 	public float maxSize;
 	float size;
 
-	public Transform persistantObjects; // container for aliens and astroids which dont despawn when they leave the screen on the way down
+	Transform persistantObjects; // container for aliens and astroids which dont despawn when they leave the screen on the way down
 
 	Vector2[] verts;
 	List<int> usedIndexes = new List<int> (); // so 2 things dont spawn on the same side
 
 	void Start () {
+		persistantObjects = GameObject.Find ("PersistantObjects").transform;
 		transform.parent = persistantObjects;
 		GameObject newAstroid = Instantiate (astroids [Random.Range (0, astroids.Length)], transform);
 		transform.rotation = Quaternion.Euler (0f, 0f, Random.Range (0f, 360f));

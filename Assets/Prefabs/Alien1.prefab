@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 61334287678686032}
   - component: {fileID: 61616365322463692}
   - component: {fileID: 95472740712211644}
+  - component: {fileID: 114741075216307166}
   m_Layer: 0
   m_Name: Alien1
   m_TagString: Alien
@@ -498,10 +499,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  canWalk: 1
+  walkSpeed: 0.5
   projectile: {fileID: 1336386820458496, guid: 052fba49102ab4fdd9b23fd496367171, type: 2}
   shotSpeed: 1500
   awakenTime: 1.2
   triggerColl: {fileID: 61334287678686032}
+--- !u!114 &114741075216307166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218411777221514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12a5cae9f63d4b8b9b8fa90e356f734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lethal: 0
+  minVelocity: 3
 --- !u!212 &212038802821607056
 SpriteRenderer:
   m_ObjectHideFlags: 1

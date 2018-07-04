@@ -863,6 +863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseFollowSpeed: 2
   stopTime: 3
+  flipTime: 2
 --- !u!1 &1827534992
 GameObject:
   m_ObjectHideFlags: 0

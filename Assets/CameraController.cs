@@ -16,6 +16,12 @@ public class CameraController : MonoBehaviour {
 	bool frozen = false;
 	bool stopping = false;
 
+	// flipping
+	public float flipTime;
+	float flipTimer;
+	bool flipping = false;
+	int direction = 1;
+
 	void Start () {
 		target = GameObject.Find ("Player").transform;
 		background = GameObject.Find ("Background").transform;
@@ -32,11 +38,22 @@ public class CameraController : MonoBehaviour {
 				curFollowSpeed = Mathf.Lerp (targetFollowSpeed, baseFollowSpeed, timeRatio); 
 			}
 		}
+
+		if (flipping) {
+			flipTimer -= Time.deltaTime;
+			if (flipTimer <= 0f) {
+				EndFlip ();
+			} else {
+				float timeRatio = flipTimer / flipTime;
+				float z = Mathf.Lerp (180f, 0f, timeRatio);
+				transform.rotation = Quaternion.Euler (0f, 0f, z);
+			}
+		}
 	}
 
 	void LateUpdate () {
 		if (!frozen) {
-			if (target.position.y > farthestY) {
+			if (target.position.y * direction > farthestY * direction) {
 				farthestY = target.position.y;
 			}
 			MoveCam ();
@@ -73,5 +90,16 @@ public class CameraController : MonoBehaviour {
 		TerrainManager.instance.StopUpdating ();
 		frozen = true;
 		stopping = false;
+	}
+
+	public void StartFlip () {
+		flipTimer = flipTime;
+		flipping = true;
+		direction = -1;
+	}
+
+	void EndFlip () {
+		flipping = false;
+		transform.rotation = Quaternion.Euler (0f, 0f, 180f); // confirm rotation is correct
 	}
 }

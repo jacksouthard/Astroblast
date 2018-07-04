@@ -8,6 +8,7 @@ public class TerrainManager : MonoBehaviour {
 
 	public bool spawnTerrain;
 	bool shouldUpdate = true;
+	int direction = 1; // -1 of going down, 1 if going up
 
 	[Header("Chunks")]
 	public float objectSpawnBuffer;
@@ -50,34 +51,38 @@ public class TerrainManager : MonoBehaviour {
 	}
 		
 	void Update () {
-		if (mainCam.transform.position.y > farthestY && shouldUpdate) {
+		bool update = false;
+		if (mainCam.transform.position.y * direction > farthestY * direction) {
+			update = true;
+		}
+
+		if (update && shouldUpdate) {
 			farthestY = mainCam.transform.position.y;
 
-			if (spawnTerrain) {
+			if (spawnTerrain && direction == 1) { // chunks only spawn when going into astroid
 				if (farthestY + objectSpawnBuffer > curChunkY) {
 					ExpressNextChunk ();
 				}
 			}
 
-//			if (lastStar == null) {
-//				CreateNextStar ();
-			//			} else if (farthestY + objectSpawnBuffer > lastStar.position.x) {
-//				CreateNextStar ();
+//			if (lastBackground == null) {
+//				CreateNextBackground ();
+//			} else if (farthestY + objectSpawnBuffer > lastBackground.position.y) {
+//				CreateNextBackground ();
 //			}
-//
-			if (lastBackground == null) {
-				CreateNextBackground ();
-			} else if (farthestY + objectSpawnBuffer > lastBackground.position.y) {
-				CreateNextBackground ();
-			}
 
+			// side pieces are generated dynamically based on where the player is
 			if (lastSidePiece == null) {
 				CreateNextSidePiece ();
-			} else if (farthestY + objectSpawnBuffer > lastSidePiece.position.y) {
+			} else if ((farthestY + (objectSpawnBuffer * direction)) * direction > lastSidePiece.position.y * direction) {
 				CreateNextSidePiece ();
 			}
 
 			TestForObjectDespawns ();
+		}
+
+		if (Input.GetKeyDown (KeyCode.F)) { // temp
+			SwitchDirections();
 		}
 	}
 
@@ -85,9 +90,16 @@ public class TerrainManager : MonoBehaviour {
 		shouldUpdate = false;
 	}
 
-	public void ResetTerrain () {
-		ClearObjects ();
+	public void SwitchDirections () {
+		if (direction != 1) { // only flip if going into astroid
+			return;
+		}
+		direction = -1;
 
+		mainCam.GetComponent<CameraController> ().StartFlip ();
+	}
+
+	public void ResetTerrain () {
 		initialBackgroundY += mainCam.position.y;
 		initialSidePieceY += mainCam.position.y;
 
@@ -110,7 +122,6 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	void CreateNextBackground () {
-		
 		Vector3 spawnPos;
 		if (lastBackground == null) {
 			spawnPos = new Vector3 (0f, initialBackgroundY, 20f);
@@ -133,7 +144,7 @@ public class TerrainManager : MonoBehaviour {
 		if (lastSidePiece == null) {
 			spawnPos = new Vector3 (sidePieceX, initialSidePieceY, 0f);
 		} else {
-			spawnPos = new Vector3 (sidePieceX, lastSidePiece.position.y + sidePieceSpawnIntervals, 0f);
+			spawnPos = new Vector3 (sidePieceX, lastSidePiece.position.y + (sidePieceSpawnIntervals * direction), 0f);
 		}
 		GameObject prefab = sidePiecePrefabs [Random.Range (0, sidePiecePrefabs.Length)];
 
@@ -176,12 +187,12 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	void TestForObjectDespawns () {
-		float despawnMargin = farthestY - objectDespawnDst;
+		float despawnMargin = farthestY - (objectDespawnDst * direction);
 		List<GameObject> objectsToDelete = new List<GameObject> ();
 		for (int i = 0; i < transform.childCount; i++) {
 			Transform child = transform.GetChild (i);
 			if (child != null) {
-				if (child.position.y < despawnMargin) {
+				if (child.position.y * direction < despawnMargin * direction) {
 					objectsToDelete.Add (child.gameObject);
 				}
 			}
@@ -191,16 +202,6 @@ public class TerrainManager : MonoBehaviour {
 
 		}
 			
-	}
-
-	void SetSeed (int _seed) {
-		Random.InitState (_seed);
-	}
-
-	void ClearObjects () {
-		for (int i = 0; i < transform.childCount; i++) {
-			Destroy (transform.GetChild(i));
-		}
 	}
 
 	public bool ShouldBeActive (float y) {

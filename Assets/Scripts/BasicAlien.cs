@@ -20,8 +20,11 @@ public class BasicAlien : MonoBehaviour {
 
     public bool canWalk;
     public float walkSpeed;
+    public float rotSpeed;
     int curIndex;
     int nextIndex { get { return curAstroid.GetAdjacentVertIndex(curIndex, dir); } }
+    Quaternion goalRot;
+    Quaternion rotOffset; //if the alien is moving backwards, angles must be flipped
     float curEdgeDist;
     float curRatio;
     int dir;
@@ -42,14 +45,17 @@ public class BasicAlien : MonoBehaviour {
             return;
         }
 
+        dir = (Random.Range(0, 2) * 2) - 1; //either -1 or 1
+
         curAstroid = astroid;
         if (dir == 1) {
             curIndex = startingIndex;
+            rotOffset = Quaternion.Euler(0, 0, 0);
         } else {
             curIndex = curAstroid.GetAdjacentVertIndex(startingIndex, 1);
+            rotOffset = Quaternion.Euler(0, 0, 180);
         }
 
-        dir = (Random.Range(0, 2) * 2) - 1; //either -1 or 1
         curRatio = 0.5f; //aliens start at the midpoint between vertices
         curEdgeDist = curAstroid.GetDistBetweenVerts(curIndex, nextIndex);
     }
@@ -70,15 +76,23 @@ public class BasicAlien : MonoBehaviour {
         curRatio += Time.deltaTime / curEdgeDist * walkSpeed;
         if (curRatio >= 1) {
             curRatio -= 1;
-            curIndex = nextIndex;
-            curEdgeDist = curAstroid.GetDistBetweenVerts(curIndex, nextIndex);
+            SwitchSides();
+        }
+        if (curRatio >= 0.8f) {
+            SwitchAngles();
         }
 
-        AstroidSpawner.EdgePositionData edgePositionData = curAstroid.GetPosBetweenVerts(curIndex, nextIndex, curRatio);
-        transform.position = edgePositionData.point;
+        transform.position = curAstroid.GetPosBetweenVerts(curIndex, nextIndex, curRatio).point;
+        transform.rotation = Quaternion.Lerp(transform.rotation, goalRot, Time.deltaTime * rotSpeed);
+    }
 
-        float angleDiff = (dir == 1) ? 0 : 180;
-        transform.rotation = edgePositionData.rotation * Quaternion.Euler(0, 0, angleDiff);
+    void SwitchSides() {
+        curIndex = nextIndex;
+        curEdgeDist = curAstroid.GetDistBetweenVerts(curIndex, nextIndex);
+    }
+
+    void SwitchAngles() {
+        goalRot = curAstroid.GetPosBetweenVerts(nextIndex, curAstroid.GetAdjacentVertIndex(nextIndex, dir), curRatio).rotation * rotOffset; //when quaternions multiply, euler angles add
     }
 
 	void OnTriggerEnter2D (Collider2D coll) {

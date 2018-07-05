@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour {
     public float minKillVelocity;
 	public Transform[] arms;
 
+    public float upperMargin = 2f;
+    float flipHeightThreshold;
+    Transform cam;
+
 	Vector2 lastWeaponAngle = Vector2.right;
    
 	// death
@@ -43,6 +47,9 @@ public class PlayerController : MonoBehaviour {
 		weaponMount = transform.Find ("WeaponMount");
 		gun = GetComponentInChildren<GunController> ();
         isDead = false;
+
+        cam = Camera.main.transform;
+        flipHeightThreshold = Camera.main.orthographicSize - upperMargin;
 
 		EquipWeapon (0);
 
@@ -74,6 +81,10 @@ public class PlayerController : MonoBehaviour {
 				// temp for patching leaks
 				StopLeak();
 			}
+
+            if (TerrainManager.instance.direction == -1 && transform.position.y - cam.position.y > flipHeightThreshold) {
+                TerrainManager.instance.SwitchDirections();
+            }
 		}
 	}
 

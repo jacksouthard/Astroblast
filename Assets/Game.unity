@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db0fb6c492fe4e49833fe11641fa3a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skipEntry: 0
+  skipEntry: 1
   canExit: 0
 --- !u!1 &1030405967
 GameObject:

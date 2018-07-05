@@ -12,9 +12,6 @@ public class GameController : MonoBehaviour {
 
     void Awake() {
         instance = this;
-    }
-
-    void Start() {
         gameOverScreen.SetActive(false);
         shipUI.SetActive(false);
         gameUI.SetActive(false);

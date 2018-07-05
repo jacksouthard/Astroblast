@@ -24,6 +24,7 @@ public class ShipController : MonoBehaviour {
         if (skipEntry) {
             anim.SetTrigger("Hover");
             EnterHover();
+            GameController.instance.ShowShipUI();
         } else {
             anim.SetTrigger("Enter");
             //          camCon.StartTracking (transform);

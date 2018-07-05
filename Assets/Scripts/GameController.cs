@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour {
     public static GameController instance;
 
     public GameObject gameOverScreen;
+    public GameObject shipUI;
+    public GameObject gameUI;
 
     void Awake() {
         instance = this;
@@ -14,6 +16,18 @@ public class GameController : MonoBehaviour {
 
     void Start() {
         gameOverScreen.SetActive(false);
+        shipUI.SetActive(false);
+        gameUI.SetActive(false);
+    }
+
+    public void ShowShipUI() {
+        shipUI.SetActive(true);
+        gameUI.SetActive(false);
+    }
+
+    public void ShowGameUI() {
+        shipUI.SetActive(false);
+        gameUI.SetActive(true);
     }
 
     public void OnPlayerDeath() {

@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour {
 	bool isDead;
 
 	void Start () {
-		oxygenText.enabled = false;
 		warningLight = GetComponentInChildren<LightFlicker> ();
 		leakEffect = transform.Find("LeakEffect").GetComponent<ParticleSystem> ();
 		rb = GetComponent<Rigidbody2D> ();
@@ -51,14 +50,6 @@ public class PlayerController : MonoBehaviour {
 		ShipController.instance.PlayerEnter (transform);
 	}
 
-	public void EnteringShip () {
-		oxygenText.enabled = false;
-	}
-
-	public void EjectedFromShip () {
-		oxygenText.enabled = true;
-	}
-	
 	void Update () {
 		if (!isDead) {
 			// leaking

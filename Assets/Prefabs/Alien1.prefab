@@ -503,7 +503,7 @@ MonoBehaviour:
   walkSpeed: 0.5
   rotSpeed: 2
   projectile: {fileID: 1336386820458496, guid: 052fba49102ab4fdd9b23fd496367171, type: 2}
-  shotSpeed: 2500
+  shotSpeed: 3000
   awakenTime: 1.2
   triggerColl: {fileID: 61334287678686032}
 --- !u!114 &114741075216307166

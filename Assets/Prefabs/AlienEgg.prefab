@@ -196,7 +196,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 2}
   serializedVersion: 2
-  m_Radius: 9
+  m_Radius: 13
 --- !u!58 &58758278406887488
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -243,6 +243,7 @@ MonoBehaviour:
   health: 250
   canWalk: 0
   walkSpeed: 0
+  rotSpeed: 0
   hatchling: {fileID: 1218411777221514, guid: 4a6bc76cfdbe34d41966b87c954160c3, type: 2}
   smallSize: 0.6
   largeSize: 1.2

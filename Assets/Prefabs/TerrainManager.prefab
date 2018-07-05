@@ -91,7 +91,7 @@ MonoBehaviour:
     type: 2}
   crystal: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}
   allWallObjectDifficultyData:
-  - objectIndexes: 00000000
+  - objectIndexes: 000000000000000001000000
   - objectIndexes: 0000000001000000
   - objectIndexes: 0000000002000000
   allWallObjectData:

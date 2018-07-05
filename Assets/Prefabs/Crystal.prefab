@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4128223753994706}
   - component: {fileID: 114017018266140884}
   - component: {fileID: 108542457561295924}
+  - component: {fileID: 58505250546181426}
   m_Layer: 0
   m_Name: Crystal
   m_TagString: Untagged
@@ -41,6 +42,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &58505250546181426
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1514990785414888}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
 --- !u!108 &108542457561295924
 Light:
   m_ObjectHideFlags: 1
@@ -88,10 +104,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5145b01c1cf44e4b117a7225243509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.37543255, g: 0.6195681, b: 0.8235294, a: 1}
   crystalSprout: {fileID: 1268813128345816, guid: b7059c92cab9b454cbb912c71dd59469,
     type: 2}
   maxSprouts: 3
   sproutMaxAngle: 30
   minSproutLength: 0.4
   maxSproutLength: 0.8
+  collectionTime: 0.3
+  allCrystalTeirs:
+  - color: {r: 0.17560555, g: 0.76885813, b: 0.85294116, a: 1}
+    value: 1
+  - color: {r: 0.9264706, g: 0.90448344, b: 0.12943341, a: 1}
+    value: 2
+  - color: {r: 0.9264706, g: 0.48409504, b: 0.19755624, a: 1}
+    value: 3

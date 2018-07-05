@@ -31,7 +31,7 @@ public class ShipController : MonoBehaviour {
 	}
 
 	void Update () {
-		if (canExit && Input.GetKeyDown (KeyCode.Space)) {
+		if (canExit && Input.GetMouseButtonDown (0)) {
 			// temp for exiting ship
 			PlayerExit();
 		}

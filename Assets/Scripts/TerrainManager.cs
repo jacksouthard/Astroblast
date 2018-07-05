@@ -31,12 +31,17 @@ public class TerrainManager : MonoBehaviour {
 	public float initialSidePieceY;
 	Transform lastSidePiece = null;
 
-//	[HideInInspector]
+	[HideInInspector]
 	public float farthestY = 0f;
 	Transform persistantObjects;
 	Transform mainCam;
 	float curChunkY = 0f;
 	float objectActiveRange = 5f;
+
+	// difficulty and scaling
+	bool allTeirsActive = false;
+	int curTeirIndex = 0;
+	Astroid curAstroid;
 
 	void Awake () {
 		instance = this;
@@ -46,6 +51,7 @@ public class TerrainManager : MonoBehaviour {
 	void Start () {
 		mainCam = Camera.main.transform;
 		persistantObjects = GameObject.Find ("PersistantObjects").transform;
+		curAstroid = astroids [0];
 		// spawn initial chunks
 		ResetTerrain();
 	}
@@ -151,6 +157,16 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	void ExpressNextChunk () {
+		if (!allTeirsActive && curChunkY < curAstroid.teirs[curTeirIndex + 1].appearsAfter) {
+			// increase to next teir
+			curTeirIndex++;
+			print ("Moved to teir " + curTeirIndex);
+			if (curTeirIndex >= curAstroid.teirs.Length - 1) {
+				allTeirsActive = true;
+				print ("All teirs now active");
+			}
+
+		}
 		LevelChunk chunk = GetChunk ();
 		int xFlipSign = 1;
 		if (Random.value > 0.5f) {
@@ -166,9 +182,11 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	LevelChunk GetChunk () {
-		int random = Random.Range (0, allLevelChunks.Count);
+		int randTeirID = Random.Range (0, curTeirIndex);
+		int[] chunkIDs = curAstroid.teirs [randTeirID].chunkIDs;
 
-		return allLevelChunks [random];
+		int randChunkID = Random.Range (0, chunkIDs.Length);
+		return allLevelChunks [randChunkID];
 	}
 
 	void TestForObjectDespawns () {
@@ -197,6 +215,25 @@ public class TerrainManager : MonoBehaviour {
 		}
 	}
 
+	// astroids
+	[Header("Astroids")]
+	public Astroid[] astroids;
+
+	[System.Serializable]
+	public class Astroid { 
+		public string name;
+		public Teir[] teirs;
+	}
+
+	// teirs
+	[System.Serializable]
+	public class Teir {
+		public int difficulty;
+		public float appearsAfter;
+		public int[] chunkIDs;
+	}
+
+	// chunks
 	[System.Serializable]
 	public class LevelChunk {
 		public float chunkSize;
@@ -219,7 +256,6 @@ public class TerrainManager : MonoBehaviour {
 		}
 	}
 
-	// level chunks
 	[Header("Object Prefabs")]
 	public GameObject smoothAstroid;
 	public GameObject spikyAstroid;
@@ -228,6 +264,7 @@ public class TerrainManager : MonoBehaviour {
 	void BuildLevelChunks () {
 		List<LevelObject> levelObjects = new List<LevelObject> ();
 
+		// INDEX 0
 		// objects
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, -4f), _prefab: smoothAstroid));
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, -13f), _prefab: smoothAstroid));
@@ -236,6 +273,7 @@ public class TerrainManager : MonoBehaviour {
 		allLevelChunks.Add (new LevelChunk (_chunkSize: 23, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();
 
+		// INDEX 1
 		// objects
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -2f), _prefab: spikyAstroid));
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (6f, -11f), _prefab: spikyAstroid));

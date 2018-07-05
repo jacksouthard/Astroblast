@@ -10,7 +10,7 @@ public class BasicAlien : MonoBehaviour {
 		attacking
 	};
 	protected State state = State.idle;
-	protected bool active = true;
+	protected bool active;
 
 	public int health;
 
@@ -38,6 +38,7 @@ public class BasicAlien : MonoBehaviour {
 
 	void Start () {
 		Initiated ();
+        Activate();
 	}
 
     public void InitPos(AstroidSpawner astroid, int startingIndex) {
@@ -120,10 +121,12 @@ public class BasicAlien : MonoBehaviour {
 
 	protected virtual void Activate () {
 		active = true;
+        anim.SetBool("IsActive", true);
 	}
 
 	protected virtual void Deactivate () {
 		active = false;
+        anim.SetBool("IsActive", false);
 		rb.velocity = Vector2.zero;
 	}
 

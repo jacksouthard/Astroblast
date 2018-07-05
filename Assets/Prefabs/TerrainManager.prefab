@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: 1742543816036516, guid: 691531c1c2e9542e6b8f888a1f1bc0ad, type: 2}
   - {fileID: 1070027937785930, guid: edae800a42bbb4d8d83683212bf4ab9e, type: 2}
   maxWallObjects: 2
-  wallObjectAngleVariance: 15
+  wallObjectAngleVariance: 5
   wallObjectSpawnRange: 5
   wallObjectZ: 0.1
   sidePiecePrefabs:
@@ -71,6 +71,9 @@ MonoBehaviour:
   initialSidePieceCount: 3
   initialSidePieceY: -22.5
   farthestY: 0
+  depthText: {fileID: 0}
+  depthArrow: {fileID: 0}
+  curDifficulty: 0
   astroids:
   - name: Starter
     teirs:
@@ -80,6 +83,12 @@ MonoBehaviour:
     - difficulty: 1
       appearsAfter: -100
       chunkIDs: 01000000
+    - difficulty: 2
+      appearsAfter: -200
+      chunkIDs: 0100000000000000
+    - difficulty: 3
+      appearsAfter: -350
+      chunkIDs: 0100000000000000
   smoothAstroid: {fileID: 1022439322555394, guid: a16e1064bec1a4064956bc8b5b27e94f,
     type: 2}
   spikyAstroid: {fileID: 1022439322555394, guid: c8dacdae66ae94b9db68c145e6d2d744,

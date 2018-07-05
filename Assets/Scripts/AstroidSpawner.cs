@@ -18,9 +18,13 @@ public class AstroidSpawner : MonoBehaviour {
 	Vector2[] verts;
 	List<int> usedIndexes = new List<int> (); // so 2 things dont spawn on the same side
 
-	public void Init (int difficulty = 0) {
+	void Start () {
 		// set difficulty 
-		diffData = allDifficultyData [Mathf.Clamp(difficulty, 0, allDifficultyData.Length)];
+		int difficulty = TerrainManager.instance.curDifficulty;
+		if (difficulty > allDifficultyData.Length - 1) {
+			difficulty = allDifficultyData.Length - 1;
+		}
+		diffData = allDifficultyData [Mathf.Clamp(difficulty, 0, allDifficultyData.Length - 1)];
 		
 		persistantObjects = GameObject.Find ("PersistantObjects").transform;
 		transform.parent = persistantObjects;
@@ -32,7 +36,6 @@ public class AstroidSpawner : MonoBehaviour {
 		newAstroid.transform.localScale = new Vector3 (size, size, 1f);
 		verts = newAstroid.GetComponent<PolygonCollider2D> ().points;
 
-		int random;
 		if (alienPrefabs.Length != 0) {
 			// spawn potential aliens
 			int alienCount = Random.Range (diffData.minAliens, diffData.maxAliens + 1);

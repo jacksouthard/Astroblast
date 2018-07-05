@@ -59,6 +59,27 @@ MonoBehaviour:
     type: 2}
   minSize: 1.5
   maxSize: 1.9
+  allDifficultyData:
+  - alienIDs: 
+    minAliens: 0
+    maxAliens: 0
+    minCrystals: 0
+    maxCrystals: 1
+  - alienIDs: 
+    minAliens: 0
+    maxAliens: 0
+    minCrystals: 1
+    maxCrystals: 2
+  - alienIDs: 
+    minAliens: 0
+    maxAliens: 0
+    minCrystals: 1
+    maxCrystals: 3
+  - alienIDs: 
+    minAliens: 0
+    maxAliens: 0
+    minCrystals: 2
+    maxCrystals: 4
 --- !u!114 &114939849107018246
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -46,6 +46,7 @@ public class TerrainManager : MonoBehaviour {
 	// difficulty and scaling
 	bool allTeirsActive = false;
 	int curTeirIndex = 0;
+	public int curDifficulty;
 	Astroid curAstroid;
 
 	void Awake () {
@@ -160,11 +161,11 @@ public class TerrainManager : MonoBehaviour {
 			GameObject prefab = wallPrefabs [Random.Range (0, wallPrefabs.Length)];
 			Vector3 spawnPos = new Vector3 (sidePieceX * sideSign, anchorY + Random.Range (-wallObjectSpawnRange, wallObjectSpawnRange), wallObjectZ);
 
-			float yRot = 0f;
+			float xRot = 0f;
 			if (Random.value > 0.5f) {
-				yRot = 180f;
+				xRot = 180f;
 			}
-			Quaternion spawnRot = Quaternion.Euler (0f, yRot, (sideSign * 90f) + Random.Range (-wallObjectAngleVariance, wallObjectAngleVariance));
+			Quaternion spawnRot = Quaternion.Euler (xRot, 0f, (sideSign * 90f) + Random.Range (-wallObjectAngleVariance, wallObjectAngleVariance));
 			Instantiate (prefab, spawnPos, spawnRot, persistantObjects);
 		}
 	}
@@ -173,7 +174,8 @@ public class TerrainManager : MonoBehaviour {
 		if (!allTeirsActive && curChunkY < curAstroid.teirs[curTeirIndex + 1].appearsAfter) {
 			// increase to next teir
 			curTeirIndex++;
-			print ("Moved to teir " + curTeirIndex);
+			curDifficulty = curAstroid.teirs [curTeirIndex].difficulty;
+			print ("Moved to teir " + curTeirIndex + " with " + curDifficulty + " difficulty");
 			if (curTeirIndex >= curAstroid.teirs.Length - 1) {
 				allTeirsActive = true;
 				print ("All teirs now active");
@@ -195,10 +197,10 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	LevelChunk GetChunk () {
-		int randTeirID = Random.Range (0, curTeirIndex);
+		int randTeirID = Random.Range (0, curTeirIndex + 1);
 		int[] chunkIDs = curAstroid.teirs [randTeirID].chunkIDs;
 
-		int randChunkID = Random.Range (0, chunkIDs.Length);
+		int randChunkID = chunkIDs[Random.Range (0, chunkIDs.Length)];
 		return allLevelChunks [randChunkID];
 	}
 

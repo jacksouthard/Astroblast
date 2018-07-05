@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class TerrainManager : MonoBehaviour {
 	public static TerrainManager instance;
@@ -38,6 +39,10 @@ public class TerrainManager : MonoBehaviour {
 	float curChunkY = 0f;
 	float objectActiveRange = 5f;
 
+    [Header("UI")]
+    public Text depthText;
+    public Transform depthArrow;
+
 	// difficulty and scaling
 	bool allTeirsActive = false;
 	int curTeirIndex = 0;
@@ -46,6 +51,7 @@ public class TerrainManager : MonoBehaviour {
 	void Awake () {
 		instance = this;
 		BuildLevelChunks ();
+        InitUI();
 	}
 
 	void Start () {
@@ -59,6 +65,7 @@ public class TerrainManager : MonoBehaviour {
 	void Update () {
 		if (shouldUpdate && mainCam.position.y * direction > farthestY * direction) {
 			farthestY = mainCam.position.y;
+            depthText.text = Mathf.Abs(Mathf.RoundToInt(farthestY)).ToString() + "m";
 
 			if (spawnTerrain && direction == -1) { // chunks only spawn when going into astroid
 				if (farthestY - objectSpawnBuffer < curChunkY) {
@@ -91,6 +98,7 @@ public class TerrainManager : MonoBehaviour {
 		// only switch if going down
 		if (direction == -1) {
 			direction = 1;
+            depthArrow.rotation = Quaternion.Euler(0, 0, 180);
 			Camera.main.GetComponent<CameraController> ().SwitchDirections (direction);
 		}
 	}
@@ -111,6 +119,11 @@ public class TerrainManager : MonoBehaviour {
 			CreateNextSidePiece ();
 		}
 	}
+
+    void InitUI() {
+        depthText.text = "0m";
+        depthArrow.rotation = Quaternion.identity;
+    }
 
 	void CreateNextSidePiece () {
 		Vector3 spawnPos;

@@ -21,7 +21,7 @@ public class BasicAlien : MonoBehaviour {
     public bool canWalk;
     public float walkSpeed;
     public float rotSpeed;
-    int curIndex;
+    protected int curIndex;
     int nextIndex { get { return curAstroid.GetAdjacentVertIndex(curIndex, dir); } }
     Quaternion goalRot;
     Quaternion rotOffset; //if the alien is moving backwards, angles must be flipped
@@ -29,7 +29,7 @@ public class BasicAlien : MonoBehaviour {
     float curRatio;
     int dir;
 
-    AstroidSpawner curAstroid;
+	protected AstroidSpawner curAstroid;
 
 	void Awake () {
 		anim = GetComponent<Animator> ();
@@ -42,15 +42,16 @@ public class BasicAlien : MonoBehaviour {
 	}
 
     public void InitPos(AstroidSpawner astroid, int startingIndex) {
-        if (!canWalk) {
+		curAstroid = astroid;
+		curIndex = startingIndex;
+
+		if (!canWalk) {
             return;
         }
 
         dir = (Random.Range(0, 2) * 2) - 1; //either -1 or 1
 
-        curAstroid = astroid;
         if (dir == 1) {
-            curIndex = startingIndex;
             rotOffset = Quaternion.Euler(0, 0, 0);
         } else {
             curIndex = curAstroid.GetAdjacentVertIndex(startingIndex, 1);
@@ -142,6 +143,11 @@ public class BasicAlien : MonoBehaviour {
 			Bullet bullet = coll.gameObject.GetComponent<Bullet> ();
 			bullet.Hit ();
 			TakeDamage (bullet.damage);
+
+			if (state == State.idle) {
+				target = GameObject.Find ("Player").transform;
+				Awaken ();
+			}
 		}
 	}
 

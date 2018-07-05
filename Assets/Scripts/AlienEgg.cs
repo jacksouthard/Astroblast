@@ -28,7 +28,6 @@ public class AlienEgg : BasicAlien {
 		
 	void SpawnHatchling () {
 		GameObject newAlien = Instantiate (hatchling, transform.position, transform.rotation, transform.parent);
-		print (curAstroid);
 		newAlien.GetComponent<BasicAlien> ().InitPos (curAstroid, curIndex);
 	}
 

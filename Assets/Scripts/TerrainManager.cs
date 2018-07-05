@@ -18,7 +18,6 @@ public class TerrainManager : MonoBehaviour {
 	List<LevelChunk> allLevelChunks = new List<LevelChunk>();
 
 	[Header("Wall Objects")]
-	public GameObject[] wallPrefabs;
 	public int maxWallObjects;
 	public float wallObjectAngleVariance;
 	public float wallObjectSpawnRange;
@@ -156,17 +155,24 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	void CreateWallObjects (float anchorY, int sideSign) {
+		WallObjectDifficultyData diffData = allWallObjectDifficultyData[Mathf.Clamp (Random.Range(0, curDifficulty + 1), 0, allWallObjectData.Length - 1)];
+
 		int objectCount = Random.Range (0, maxWallObjects + 1);
 		for (int i = 0; i < objectCount; i++) {
-			GameObject prefab = wallPrefabs [Random.Range (0, wallPrefabs.Length)];
+			WallObjectData objData = allWallObjectData[diffData.objectIndexes [Random.Range (0, diffData.objectIndexes.Length)]];	
+
 			Vector3 spawnPos = new Vector3 (sidePieceX * sideSign, anchorY + Random.Range (-wallObjectSpawnRange, wallObjectSpawnRange), wallObjectZ);
+
+			float size = Random.Range (objData.minScale, objData.maxScale);
+			Vector3 scale = new Vector3 (size, size, 1f);
 
 			float xRot = 0f;
 			if (Random.value > 0.5f) {
 				xRot = 180f;
 			}
 			Quaternion spawnRot = Quaternion.Euler (xRot, 0f, (sideSign * 90f) + Random.Range (-wallObjectAngleVariance, wallObjectAngleVariance));
-			Instantiate (prefab, spawnPos, spawnRot, persistantObjects);
+			GameObject spawn = Instantiate (objData.prefab, spawnPos, spawnRot, persistantObjects);
+			spawn.transform.localScale = scale;
 		}
 	}
 
@@ -297,5 +303,20 @@ public class TerrainManager : MonoBehaviour {
 		// build chunk
 		allLevelChunks.Add (new LevelChunk (_chunkSize: 26, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();
+	}
+
+	// wall objects
+	public WallObjectDifficultyData[] allWallObjectDifficultyData;
+	[System.Serializable]
+	public class WallObjectDifficultyData {
+		public int[] objectIndexes;
+	}
+
+	public WallObjectData[] allWallObjectData;
+	[System.Serializable]
+	public class WallObjectData {
+		public GameObject prefab;
+		public float minScale;
+		public float maxScale;
 	}
 }

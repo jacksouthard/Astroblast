@@ -56,10 +56,6 @@ MonoBehaviour:
   initalChunkY: -30
   objectSpawnBuffer: 15
   objectDespawnDst: 30
-  wallPrefabs:
-  - {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}
-  - {fileID: 1742543816036516, guid: 691531c1c2e9542e6b8f888a1f1bc0ad, type: 2}
-  - {fileID: 1070027937785930, guid: edae800a42bbb4d8d83683212bf4ab9e, type: 2}
   maxWallObjects: 2
   wallObjectAngleVariance: 5
   wallObjectSpawnRange: 5
@@ -94,3 +90,17 @@ MonoBehaviour:
   spikyAstroid: {fileID: 1022439322555394, guid: c8dacdae66ae94b9db68c145e6d2d744,
     type: 2}
   crystal: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}
+  allWallObjectDifficultyData:
+  - objectIndexes: 00000000
+  - objectIndexes: 0000000001000000
+  - objectIndexes: 0000000002000000
+  allWallObjectData:
+  - prefab: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}
+    minScale: 1
+    maxScale: 1
+  - prefab: {fileID: 1742543816036516, guid: 691531c1c2e9542e6b8f888a1f1bc0ad, type: 2}
+    minScale: 1.5
+    maxScale: 3
+  - prefab: {fileID: 1070027937785930, guid: edae800a42bbb4d8d83683212bf4ab9e, type: 2}
+    minScale: 1.5
+    maxScale: 3

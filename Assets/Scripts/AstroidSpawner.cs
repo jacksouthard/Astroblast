@@ -10,35 +10,33 @@ public class AstroidSpawner : MonoBehaviour {
 	public float maxSize;
 	float size;
 
+	public DifficultyData[] allDifficultyData;
+	DifficultyData diffData;
+
 	Transform persistantObjects; // container for aliens and astroids which dont despawn when they leave the screen on the way down
 
 	Vector2[] verts;
 	List<int> usedIndexes = new List<int> (); // so 2 things dont spawn on the same side
 
-	void Start () {
+	public void Init (int difficulty = 0) {
+		// set difficulty 
+		diffData = allDifficultyData [Mathf.Clamp(difficulty, 0, allDifficultyData.Length)];
+		
 		persistantObjects = GameObject.Find ("PersistantObjects").transform;
 		transform.parent = persistantObjects;
+		
+		// spawn astroid
 		GameObject newAstroid = Instantiate (astroids [Random.Range (0, astroids.Length)], transform);
 		transform.rotation = Quaternion.Euler (0f, 0f, Random.Range (0f, 360f));
-
 		size = Random.Range (minSize, maxSize);
 		newAstroid.transform.localScale = new Vector3 (size, size, 1f);
-
 		verts = newAstroid.GetComponent<PolygonCollider2D> ().points;
 
 		int random;
 		if (alienPrefabs.Length != 0) {
 			// spawn potential aliens
-			int alienCount = 0;
-			random = Random.Range (0, 100);
-			if (random < 10) {
-				alienCount = 3;
-			} else if (random < 30) {
-				alienCount = 2;
-			} else if (random < 60) {
-				alienCount = 1;
-			}
-			
+			int alienCount = Random.Range (diffData.minAliens, diffData.maxAliens + 1);
+
 			for (int i = 0; i < alienCount; i++) {
 				EdgePositionData data = GetRandomSpawnPoint ();
 				Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
@@ -50,13 +48,7 @@ public class AstroidSpawner : MonoBehaviour {
 		}
 
 		// spawn potential crystals
-		int crystalCount = 0;
-		random = Random.Range (0, 100);
-		if (random < 10) {
-			crystalCount = 2;
-		} else if (random < 50) {
-			crystalCount = 1;
-		}
+		int crystalCount = Random.Range (diffData.minCrystals, diffData.maxCrystals + 1);
 
 		for (int i = 0; i < crystalCount; i++) {
 			EdgePositionData data = GetRandomSpawnPoint ();
@@ -110,5 +102,14 @@ public class AstroidSpawner : MonoBehaviour {
             point = _point;
 			rotation = _rotation;
 		}
+	}
+
+	[System.Serializable]
+	public class DifficultyData {
+		public int[] alienIDs;
+		public int minAliens;
+		public int maxAliens;
+		public int minCrystals;
+		public int maxCrystals;
 	}
 }

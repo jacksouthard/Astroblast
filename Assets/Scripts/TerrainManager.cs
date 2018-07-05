@@ -19,6 +19,7 @@ public class TerrainManager : MonoBehaviour {
 	[Header("Wall Objects")]
 	public GameObject[] wallPrefabs;
 	public int maxWallObjects;
+	public float wallObjectAngleVariance;
 	public float wallObjectSpawnRange;
 	public float wallObjectZ;
 
@@ -144,7 +145,7 @@ public class TerrainManager : MonoBehaviour {
 			if (Random.value > 0.5f) {
 				yRot = 180f;
 			}
-			Quaternion spawnRot = Quaternion.Euler (0f, yRot, sideSign * 90f);
+			Quaternion spawnRot = Quaternion.Euler (0f, yRot, (sideSign * 90f) + Random.Range (-wallObjectAngleVariance, wallObjectAngleVariance));
 			Instantiate (prefab, spawnPos, spawnRot, persistantObjects);
 		}
 	}

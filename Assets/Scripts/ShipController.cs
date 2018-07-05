@@ -13,10 +13,10 @@ public class ShipController : MonoBehaviour {
 
 	void Awake () {
 		instance = this;
+		camCon = Camera.main.GetComponent<CameraController> ();
 	}
 
 	void Start () {
-		camCon = Camera.main.GetComponent<CameraController> ();
 		camCon.SetZoom (22f);
 
 		anim = GetComponent<Animator> ();

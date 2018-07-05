@@ -31,9 +31,11 @@ public class AstroidSpawner : MonoBehaviour {
 			// spawn potential aliens
 			int alienCount = 0;
 			random = Random.Range (0, 100);
-			if (random < 15) {
+			if (random < 10) {
+				alienCount = 3;
+			} else if (random < 30) {
 				alienCount = 2;
-			} else if (random < 50) {
+			} else if (random < 60) {
 				alienCount = 1;
 			}
 			

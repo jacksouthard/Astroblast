@@ -1906,6 +1906,7 @@ MonoBehaviour:
   - {fileID: 1742543816036516, guid: 691531c1c2e9542e6b8f888a1f1bc0ad, type: 2}
   - {fileID: 1070027937785930, guid: edae800a42bbb4d8d83683212bf4ab9e, type: 2}
   maxWallObjects: 2
+  wallObjectAngleVariance: 15
   wallObjectSpawnRange: 5
   wallObjectZ: 0.1
   sidePiecePrefabs:

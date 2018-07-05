@@ -81,13 +81,11 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	public void SwitchDirections () {
-		if (direction == 1) {
-			direction = -1;
-		} else {
+		// only switch if going down
+		if (direction == -1) {
 			direction = 1;
+			Camera.main.GetComponent<CameraController> ().SwitchDirections (direction);
 		}
-
-		Camera.main.GetComponent<CameraController> ().SwitchDirections (direction);
 	}
 
 	public void ResetTerrain () {

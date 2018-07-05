@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour {
 	float oxygen = 100f;
 	public float baseDrain;
 	public float leakDrain;
+	public float flipThreshold;
+	bool flipQued = false;
 	public float hitWhileLeakingDrain;
 	public Text oxygenText;
 
@@ -86,6 +88,9 @@ public class PlayerController : MonoBehaviour {
 
 	void RemoveOxygen (float value) {
 		oxygen -= value;
+		if (oxygen < flipThreshold) {
+			flipQued = true;
+		}
 		oxygen = Mathf.Clamp (oxygen, 0f, 100f);
 		oxygenText.text = "" + (int)oxygen + "%";
 	}
@@ -180,6 +185,11 @@ public class PlayerController : MonoBehaviour {
 		leaking = false;
 		warningLight.StopFlicker ();
 		leakEffect.Stop ();
+
+		if (flipQued) {
+			flipQued = false;
+			TerrainManager.instance.SwitchDirections ();
+		}
 	}
 
 	void Die () {

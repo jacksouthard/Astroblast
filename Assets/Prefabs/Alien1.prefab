@@ -498,11 +498,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da2960af7c2242c0909fd679797460c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 150
   canWalk: 1
   walkSpeed: 0.5
   projectile: {fileID: 1336386820458496, guid: 052fba49102ab4fdd9b23fd496367171, type: 2}
-  shotSpeed: 1500
+  shotSpeed: 2500
   awakenTime: 1.2
   triggerColl: {fileID: 61334287678686032}
 --- !u!114 &114741075216307166

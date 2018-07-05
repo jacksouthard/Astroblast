@@ -32,11 +32,11 @@ public class LeapingAlien : BasicAlien {
 	}
 
 	void MoveTowardsTarget () {
-		Vector3 dirToTarget = (target.position - transform.position).normalized;
-		dirToTarget = new Vector3 (dirToTarget.x, dirToTarget.y, 0f);
+        Vector3 dirToTarget = (target.position - transform.position).normalized;
+        float angleToTarget = Mathf.Atan2(dirToTarget.y, dirToTarget.x) * Mathf.Rad2Deg;
 
 		// rotate towards target
-		Quaternion toRotation = Quaternion.LookRotation(transform.forward, dirToTarget);
+        Quaternion toRotation = Quaternion.Euler(0, 0, angleToTarget - 90f); //"fowards" is up
 		transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
 		// add force if not traveling max speed

@@ -1885,6 +1885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseFollowSpeed: 4
+  directionalOffset: 6
   farthestY: 0
   xRange: 11.5
   maxY: 0

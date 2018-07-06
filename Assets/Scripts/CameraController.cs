@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 	public float baseFollowSpeed = 2f;
 	float curFollowSpeed;
+	public float directionalOffset;
 	public float farthestY;
 	public float xRange;
 	public float maxY;
@@ -103,7 +104,7 @@ public class CameraController : MonoBehaviour {
 
 	void MoveCam () {
 		float x = Mathf.Clamp (target.position.x, -xRange, xRange);
-		float y = Mathf.Clamp (farthestY, -Mathf.Infinity, maxY);
+		float y = Mathf.Clamp (farthestY, -Mathf.Infinity, maxY) + (directionalOffset * direction);
 		Vector3 newPosition = new Vector3 (x, y, transform.position.z);
 		transform.position = Vector3.Slerp(transform.position, newPosition, curFollowSpeed * Time.deltaTime);
 

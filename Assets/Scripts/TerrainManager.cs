@@ -20,6 +20,7 @@ public class TerrainManager : MonoBehaviour {
 	[Header("Wall Objects")]
 	public int maxWallObjects;
 	public float wallObjectAngleVariance;
+	public float wallObjectMinSpacing;
 	public float wallObjectSpawnRange;
 	public float wallObjectZ;
 
@@ -156,12 +157,26 @@ public class TerrainManager : MonoBehaviour {
 
 	void CreateWallObjects (float anchorY, int sideSign) {
 		WallObjectDifficultyData diffData = allWallObjectDifficultyData[Mathf.Clamp (Random.Range(0, curDifficulty + 1), 0, allWallObjectData.Length - 1)];
+		List<float> usedHeights = new List<float> ();
 
 		int objectCount = Random.Range (0, maxWallObjects + 1);
 		for (int i = 0; i < objectCount; i++) {
 			WallObjectData objData = allWallObjectData[diffData.objectIndexes [Random.Range (0, diffData.objectIndexes.Length)]];	
 
-			Vector3 spawnPos = new Vector3 (sidePieceX * sideSign, anchorY + Random.Range (-wallObjectSpawnRange, wallObjectSpawnRange), wallObjectZ);
+			// find avaiable spawn height
+			float spawnY = Random.Range (-wallObjectSpawnRange, wallObjectSpawnRange);
+			if (usedHeights.Count != 0) {
+				// if is not the first object, check to make sure it does not overlap with other objects
+				int attemps = 0;
+				while (WallObjectSpawnInvalid(spawnY, usedHeights) && attemps <= 5) {
+					spawnY = Random.Range (-wallObjectSpawnRange, wallObjectSpawnRange);
+					attemps++;
+				}
+			}
+			usedHeights.Add (spawnY);
+
+			// spawn object
+			Vector3 spawnPos = new Vector3 (sidePieceX * sideSign, anchorY + spawnY, wallObjectZ);
 
 			float size = Random.Range (objData.minScale, objData.maxScale);
 			Vector3 scale = new Vector3 (size, size, 1f);
@@ -174,6 +189,15 @@ public class TerrainManager : MonoBehaviour {
 			GameObject spawn = Instantiate (objData.prefab, spawnPos, spawnRot, persistantObjects);
 			spawn.transform.localScale = scale;
 		}
+	}
+
+	bool WallObjectSpawnInvalid (float newHeight, List<float> usedHeights) {
+		foreach (float height in usedHeights) {
+			if (Mathf.Abs (height - newHeight) < wallObjectMinSpacing) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void ExpressNextChunk () {
@@ -278,8 +302,8 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	[Header("Object Prefabs")]
-	public GameObject smoothAstroid;
-	public GameObject spikyAstroid;
+	public GameObject smoothRock;
+	public GameObject spikyRock;
 	public GameObject crystal;
 
 	void BuildLevelChunks () {
@@ -287,19 +311,19 @@ public class TerrainManager : MonoBehaviour {
 
 		// INDEX 0
 		// objects
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, -4f), _prefab: smoothAstroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, -13f), _prefab: smoothAstroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -19f), _prefab: smoothAstroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, -4f), _prefab: smoothRock));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, -13f), _prefab: smoothRock));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -19f), _prefab: smoothRock));
 		// build chunk
 		allLevelChunks.Add (new LevelChunk (_chunkSize: 23, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();
 
 		// INDEX 1
 		// objects
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -2f), _prefab: spikyAstroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (6f, -11f), _prefab: spikyAstroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -13f), _prefab: spikyAstroid));
-		levelObjects.Add (new LevelObject (_pos: new Vector2 (-1f, -21f), _prefab: smoothAstroid));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -2f), _prefab: spikyRock));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (6f, -11f), _prefab: spikyRock));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -13f), _prefab: spikyRock));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-1f, -21f), _prefab: smoothRock));
 		// build chunk
 		allLevelChunks.Add (new LevelChunk (_chunkSize: 26, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();

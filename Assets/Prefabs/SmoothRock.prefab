@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114748423835824588}
   - component: {fileID: 114939849107018246}
   m_Layer: 0
-  m_Name: SmoothAstroid
+  m_Name: SmoothRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

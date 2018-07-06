@@ -96,11 +96,11 @@ public class TerrainManager : MonoBehaviour {
 
 	public void SwitchDirections () {
 		// only switch if going down
-		if (direction == -1) {
-			direction = 1;
-            depthArrow.rotation = Quaternion.Euler(0, 0, 180);
-			Camera.main.GetComponent<CameraController> ().SwitchDirections (direction);
-		}
+		//if (direction == -1) {
+        direction = -direction;
+        depthArrow.rotation *= Quaternion.Euler(0, 0, 180);
+		Camera.main.GetComponent<CameraController> ().SwitchDirections (direction);
+		//}
 	}
 
 	public void ResetTerrain () {

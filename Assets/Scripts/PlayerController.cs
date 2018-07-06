@@ -4,89 +4,96 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-	public float weaponDistance;
-	Transform weaponMount;
-	GunController gun;
+    public float weaponDistance;
+    Transform weaponMount;
+    GunController gun;
 
-	Rigidbody2D rb;
-	float weaponMoveDstToBodyForce = 0.8f;
+    Rigidbody2D rb;
+    float weaponMoveDstToBodyForce = 0.8f;
 
     public float minKillVelocity;
-	public Transform[] arms;
+    public Transform[] arms;
 
     public float upperMargin = 2f;
     float flipHeightThreshold;
     Transform cam;
 
-	Vector2 lastWeaponAngle = Vector2.right;
-   
-	// death
-	[Header("Oxygen")]
-	float oxygen = 100f;
-	public float baseDrain;
-	public float leakDrain;
-	public float flipThreshold;
-	bool flipQued = false;
-	public float hitWhileLeakingDrain;
-	public Text oxygenText;
+    Vector2 lastWeaponAngle = Vector2.right;
 
-	// leaks
-	bool leaking = false;
-	LightFlicker warningLight;
-	ParticleSystem leakEffect;
-	Vector2 leakDirection;
-	public float leakForce;
+    // death
+    [Header("Oxygen")]
+    float oxygen = 100f;
+    public float baseDrain;
+    public float leakDrain;
+    public float flipThreshold;
+    bool flipQued = false;
+    public float hitWhileLeakingDrain;
+    public Text oxygenText;
 
-	// death
-	bool isDead;
+    // leaks
+    bool leaking = false;
+    LightFlicker warningLight;
+    ParticleSystem leakEffect;
+    Vector2 leakDirection;
+    public float leakForce;
 
-	void Start () {
-		warningLight = GetComponentInChildren<LightFlicker> ();
-		leakEffect = transform.Find("LeakEffect").GetComponent<ParticleSystem> ();
-		rb = GetComponent<Rigidbody2D> ();
-		weaponMount = transform.Find ("WeaponMount");
-		gun = GetComponentInChildren<GunController> ();
+    // death
+    bool isDead;
+
+    void Start() {
+        warningLight = GetComponentInChildren<LightFlicker>();
+        leakEffect = transform.Find("LeakEffect").GetComponent<ParticleSystem>();
+        rb = GetComponent<Rigidbody2D>();
+        weaponMount = transform.Find("WeaponMount");
+        gun = GetComponentInChildren<GunController>();
         isDead = false;
 
         cam = Camera.main.transform;
         flipHeightThreshold = Camera.main.orthographicSize - upperMargin;
 
-		EquipWeapon (0);
+        EquipWeapon(0);
 
-		// enter ship
-		ShipController.instance.PlayerEnter (transform);
-	}
+        // enter ship
+        ShipController.instance.PlayerEnter(transform);
+    }
 
-	void Update () {
-		if (!isDead) {
-			// leaking
-			float amountToRemove = baseDrain;
-			if (leaking) {
-				rb.AddRelativeForce (-leakDirection * leakForce * Time.deltaTime);
-				amountToRemove += leakDrain;
-			}
-			RemoveOxygen (amountToRemove * Time.deltaTime);
+    void Update() {
+        if (!isDead) {
+            // leaking
+            float amountToRemove = baseDrain;
+            if (leaking) {
+                rb.AddRelativeForce(-leakDirection * leakForce * Time.deltaTime);
+                amountToRemove += leakDrain;
+            }
+            RemoveOxygen(amountToRemove * Time.deltaTime);
 
-			if (oxygen <= 0f) {
-				Die ();
-			}
+            if (oxygen <= 0f) {
+                Die();
+            }
 
-			// shooting
-			if (Input.GetMouseButton (0)) {
-				Vector2 angleVector = Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position;
-				PositionWeapon (angleVector.normalized);
-				gun.TryFire ();
-			}
-			if (Input.GetKeyDown (KeyCode.P)) {
-				// temp for patching leaks
-				StopLeak();
-			}
+            // shooting
+            if (Input.GetMouseButton(0)) {
+                Vector2 angleVector = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                PositionWeapon(angleVector.normalized);
+                gun.TryFire();
+            }
+            if (Input.GetKeyDown(KeyCode.P)) {
+                // temp for patching leaks
+                StopLeak();
+            }
 
-            if (TerrainManager.instance.direction == -1 && transform.position.y - cam.position.y > flipHeightThreshold) {
+            if (shouldFlip) {
                 TerrainManager.instance.SwitchDirections();
             }
-		}
-	}
+        }
+    }
+
+    bool shouldFlip {
+        get {
+            return (TerrainManager.instance.direction == -1 && transform.position.y - cam.position.y > flipHeightThreshold) ||
+                    (TerrainManager.instance.direction == 1 && transform.position.y - cam.position.y < -flipHeightThreshold);
+        }
+    }
 
 	void RemoveOxygen (float value) {
 		oxygen -= value;

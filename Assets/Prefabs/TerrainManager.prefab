@@ -59,7 +59,7 @@ MonoBehaviour:
   maxWallObjects: 2
   wallObjectAngleVariance: 5
   wallObjectSpawnRange: 5
-  wallObjectZ: 0.1
+  wallObjectZ: 1.5
   sidePiecePrefabs:
   - {fileID: 1096771626076446, guid: 1123dd9f6ba3842e98514e4d744fa527, type: 2}
   sidePieceX: 12

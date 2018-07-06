@@ -2047,11 +2047,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
-        type: 2}
-      propertyPath: allWallObjectDifficultyData.Array.data[0].objectIndexes.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4133427853604558, guid: 7794e708f204743cdac36b3c82050280, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2094,16 +2089,6 @@ Prefab:
       propertyPath: depthArrow
       value: 
       objectReference: {fileID: 458741734}
-    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
-        type: 2}
-      propertyPath: allWallObjectDifficultyData.Array.data[0].objectIndexes.Array.data[1]
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
-        type: 2}
-      propertyPath: allWallObjectDifficultyData.Array.data[0].objectIndexes.Array.data[2]
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7794e708f204743cdac36b3c82050280, type: 2}
   m_IsPrefabParent: 0

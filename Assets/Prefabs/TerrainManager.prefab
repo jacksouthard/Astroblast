@@ -82,10 +82,10 @@ MonoBehaviour:
       chunkIDs: 01000000
     - difficulty: 2
       appearsAfter: -200
-      chunkIDs: 0100000000000000
+      chunkIDs: 000000000100000002000000
     - difficulty: 3
       appearsAfter: -350
-      chunkIDs: 0100000000000000
+      chunkIDs: 02000000
   smoothRock: {fileID: 1022439322555394, guid: a16e1064bec1a4064956bc8b5b27e94f, type: 2}
   spikyRock: {fileID: 1022439322555394, guid: c8dacdae66ae94b9db68c145e6d2d744, type: 2}
   crystal: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4, type: 2}

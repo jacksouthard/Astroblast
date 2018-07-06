@@ -309,7 +309,7 @@ public class TerrainManager : MonoBehaviour {
 	void BuildLevelChunks () {
 		List<LevelObject> levelObjects = new List<LevelObject> ();
 
-		// INDEX 0
+		// INDEX 0 basic smooth rock formation
 		// objects
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, -4f), _prefab: smoothRock));
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (4f, -13f), _prefab: smoothRock));
@@ -318,7 +318,7 @@ public class TerrainManager : MonoBehaviour {
 		allLevelChunks.Add (new LevelChunk (_chunkSize: 23, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();
 
-		// INDEX 1
+		// INDEX 1 basic spiky rock formation
 		// objects
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (-5f, -2f), _prefab: spikyRock));
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (6f, -11f), _prefab: spikyRock));
@@ -326,6 +326,16 @@ public class TerrainManager : MonoBehaviour {
 		levelObjects.Add (new LevelObject (_pos: new Vector2 (-1f, -21f), _prefab: smoothRock));
 		// build chunk
 		allLevelChunks.Add (new LevelChunk (_chunkSize: 26, _levelObjects: new List<LevelObject> (levelObjects)));
+		levelObjects.Clear ();
+
+		// INDEX 2 basic spiky rock / smooth rock formation
+		// objects
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-1f, -7f), _prefab: spikyRock));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (8f, -8f), _prefab: smoothRock));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (6f, -17f), _prefab: spikyRock));
+		levelObjects.Add (new LevelObject (_pos: new Vector2 (-7f, -18f), _prefab: smoothRock));
+		// build chunk
+		allLevelChunks.Add (new LevelChunk (_chunkSize: 24, _levelObjects: new List<LevelObject> (levelObjects)));
 		levelObjects.Clear ();
 	}
 

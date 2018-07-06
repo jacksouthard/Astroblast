@@ -391,7 +391,8 @@ MonoBehaviour:
   arms:
   - {fileID: 4899905126348060}
   - {fileID: 4827098403328662}
-  baseDrain: 0.3
+  upperMargin: 2
+  baseDrain: 0.7
   leakDrain: 20
   flipThreshold: 40
   hitWhileLeakingDrain: 20

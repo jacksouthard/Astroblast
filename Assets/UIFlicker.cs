@@ -12,11 +12,10 @@ public class UIFlicker : MonoBehaviour {
 	public Color flickerColor;
 	float timer;
 
-	Text text;
+	public Text[] texts;
 
 	void Start () {
-		text = GetComponent<Text> ();
-		startColor = text.color;
+		startColor = texts[0].color;
 	}
 
 	public void StartFlicker () {
@@ -27,7 +26,9 @@ public class UIFlicker : MonoBehaviour {
 
 	public void StopFlicker () {
 		flickering = false;
-		text.color = startColor;
+		foreach (var text in texts) {
+			text.color = startColor;
+		}
 	}
 
 	void Update () {
@@ -36,11 +37,15 @@ public class UIFlicker : MonoBehaviour {
 			if (timer <= 0f) {
 				if (active) { // needs to turn to start color
 					active = false;
-					text.color = startColor;
+					foreach (var text in texts) {
+						text.color = startColor;
+					}					
 					timer = offTime;
 				} else { // needs to turn to flicker color
 					active = true;
-					text.color = flickerColor;
+					foreach (var text in texts) {
+						text.color = flickerColor;
+					}					
 					timer = activeTime;
 				}
 			}

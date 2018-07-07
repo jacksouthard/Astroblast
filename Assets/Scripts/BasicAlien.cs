@@ -7,7 +7,8 @@ public class BasicAlien : MonoBehaviour {
 		idle,
 		awakening,
 		awakened,
-		attacking
+		attacking,
+		dead
 	};
 	protected State state = State.idle;
 	protected bool active;
@@ -29,11 +30,23 @@ public class BasicAlien : MonoBehaviour {
     float curRatio;
     int dir;
 
+	// hit and leaking
+	Transform leakEffect;
+	ParticleSystem leakEffectParticles;
+	bool leaking = false;
+	Vector2 leakDirection;
+	float leakForce = 4000f;
+	float leakTimeOnHit = 0.3f;
+	float leakTimeAfterDeath = 4f;
+	float leakTimer = 0;
+
 	protected AstroidSpawner curAstroid;
 
 	void Awake () {
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody2D> ();
+		leakEffect = transform.Find ("LeakEffect");
+		leakEffectParticles = leakEffect.GetComponent<ParticleSystem> ();
 	}
 
 	void Start () {
@@ -65,6 +78,14 @@ public class BasicAlien : MonoBehaviour {
 	protected virtual void Initiated () {}
 
 	void Update() {
+		if (leaking) {
+			rb.AddForce (-leakDirection * leakForce * Time.deltaTime);
+			leakTimer -= Time.deltaTime;
+			if (leakTimer <= 0f) {
+				StopLeaking ();
+			}
+		}
+
         AlienUpdate();
 	}
 
@@ -99,11 +120,13 @@ public class BasicAlien : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D coll) {
 		if (coll.gameObject.tag == "Player") {
-			if (state == State.idle) {
-				target = coll.transform;
-				Awaken ();
-			} else if (state == State.awakened) {
-				TripAttack (); // for shooting enemies
+			if (state != State.dead) {
+				if (state == State.idle) {
+					target = coll.transform;
+					Awaken ();
+				} else if (state == State.awakened) {
+					TripAttack (); // for shooting enemies
+				}
 			}
 		} else if (coll.tag == "ActiveZone") {
 			if (!active) {
@@ -129,6 +152,10 @@ public class BasicAlien : MonoBehaviour {
 		active = false;
         anim.SetBool("IsActive", false);
 		rb.velocity = Vector2.zero;
+
+		if (state == State.dead) {
+			Destroy (gameObject);
+		}
 	}
 
 	protected virtual void TripAttack () {}
@@ -139,26 +166,54 @@ public class BasicAlien : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D coll) {
-		if (coll.gameObject.tag == "Bullet") {
-			Bullet bullet = coll.gameObject.GetComponent<Bullet> ();
-			bullet.Hit ();
-			TakeDamage (bullet.damage);
+		if (state != State.dead) {
+			if (coll.gameObject.tag == "Bullet") {
+				Bullet bullet = coll.gameObject.GetComponent<Bullet> ();
+				bullet.Hit ();
+				TakeDamage (bullet.damage, coll.transform);
 
-			if (state == State.idle) {
-				target = GameObject.Find ("Player").transform;
-				Awaken ();
+				if (state == State.idle) {
+					target = GameObject.Find ("Player").transform;
+					Awaken ();
+				}
 			}
 		}
 	}
 
-	void TakeDamage (int damage) {
+	void TakeDamage (int damage, Transform source) {
 		health -= damage;
 		if (health <= 0) {
+			StartLeaking (leakTimeAfterDeath, source);
 			Die ();
+		} else {
+			StartLeaking (leakTimeOnHit, source);
 		}
 	}
 
+	void StartLeaking (float time, Transform source) {
+		leaking = true;
+		leakTimer = time;
+
+		// setup effect
+		leakDirection = (source.position - transform.position).normalized;
+		leakEffectParticles.Play ();
+		var leakAngle = Mathf.Atan2 (leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
+		leakEffect.rotation = Quaternion.AngleAxis (leakAngle, Vector3.forward);
+	}
+
+	void StopLeaking () {
+		leaking = false;
+		leakEffectParticles.Stop ();
+	}
+
 	void Die () {
-		Destroy (gameObject);
+		state = State.dead;
+		rb.isKinematic = false;
+		anim.SetTrigger ("Die");
+
+		PlayerDamaging possibleDamaging = GetComponent<PlayerDamaging> ();
+		if (possibleDamaging != null) {
+			Destroy (possibleDamaging);
+		}
 	}
 }

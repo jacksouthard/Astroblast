@@ -14,7 +14,7 @@ public class AlienEgg : BasicAlien {
 	}
 
 	protected override void Activate () {
-		if (TerrainManager.instance.direction == 1) {
+		if (TerrainManager.instance.direction == 1 && state == State.dead) {
 			armed = true;
 			transform.localScale = new Vector3 (largeSize, largeSize, 1f);
 		}

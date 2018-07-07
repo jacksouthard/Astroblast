@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1879133927728098}
+  m_IsPrefabParent: 1
+--- !u!1 &1879133927728098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4503384826935952}
+  - component: {fileID: 114415041269010508}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4503384826935952
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1879133927728098}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114415041269010508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1879133927728098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0833b93da1c0a42039763df2994d9f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverScreen: {fileID: 0}
+  preGameUI: {fileID: 0}
+  postGameUI: {fileID: 0}
+  gameUI: {fileID: 0}
+  failMoneyText: {fileID: 0}
+  successMoneyText: {fileID: 0}
+  preGameMoneyText: {fileID: 0}
+  postGameMoneyText: {fileID: 0}
+  moneyAddTime: 0.5
+  postGameReport: {fileID: 0}
+  gameOverReport: {fileID: 0}
+  moneyText: {fileID: 0}
+  shopItems:
+  - upgradeString: tank
+    currentLevel: 0
+    costs: 320000006400000096000000
+    description: Upgrade your O2 to reach deeper depths
+    weapon: 0
+    equiped: 0
+    topText: O2
+  - upgradeString: reach
+    currentLevel: 0
+    costs: 2800000050000000
+    description: Upgrade reach to pick up objects from farther away
+    weapon: 0
+    equiped: 0
+    topText: Xm
+  - upgradeString: patches
+    currentLevel: 0
+    costs: 1e000000320000005a00000096000000
+    description: Upgrade to increase the number of patches per site
+    weapon: 0
+    equiped: 0
+    topText: xN
+  - upgradeString: pistol
+    currentLevel: 0
+    costs: 00000000
+    description: 
+    weapon: 0
+    equiped: 0
+    topText: 
+  - upgradeString: SMG
+    currentLevel: 0
+    costs: 96000000
+    description: Fast shooting, yet innacurate
+    weapon: 1
+    equiped: 0
+    topText: 

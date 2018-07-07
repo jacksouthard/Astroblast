@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
         cam = Camera.main.transform;
         flipHeightThreshold = FindObjectOfType<CameraController>().baseZoom - upperMargin;
 
-        EquipWeapon(1);
+        EquipWeapon();
 
         // enter ship
         ShipController.instance.PlayerEnter(transform);
@@ -225,12 +225,12 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 		
-	public void EquipWeapon (int weaponIndex) {
+	public void EquipWeapon () {
 		if (weaponMount.childCount > 0) {
 			// destory any current weapons
 			Destroy (weaponMount.GetChild(0));
 		}
-		WeaponManager.WeaponData weaponData = WeaponManager.instance.GetDataFromIndex (weaponIndex);
+		WeaponManager.WeaponData weaponData = WeaponManager.instance.GetEquipedWeapon ();
 		GameObject newWeapon = Instantiate (weaponData.prefab, weaponMount);
 		newWeapon.transform.localPosition = Vector3.zero;
 		gun = newWeapon.GetComponent<GunController> ();

@@ -34,6 +34,12 @@ public class GameController : MonoBehaviour {
         preGameMoneyText.text = startingMoney.ToString();
     }
 
+	void Start () {
+		InitShopItems ();
+		UnpackAll ();
+		UnpackEquipedWeapon ();
+	}
+
     public void ShowPregame() {
         preGameUI.ShowAll();
         postGameUI.HideAll();
@@ -102,4 +108,62 @@ public class GameController : MonoBehaviour {
 
         moneyText.text = "+"+curSiteMoney.ToString();
     }
+
+	// SHOPING
+	public void BuyUpgrade (string newUpgrade) {
+		int currentLevel = PlayerPrefs.GetInt (newUpgrade);
+		PlayerPrefs.SetInt (newUpgrade, currentLevel++);
+		UnpackUpgrade (newUpgrade, allShopItems);
+	}
+
+	void UnpackAll () {
+		// get level info from player prefs and update the dictionary
+		Dictionary<string, StopItem> newItems = new Dictionary<string, StopItem>();
+		foreach (KeyValuePair<string,StopItem> item in allShopItems) {
+			newItems.Add (item.Value.upgradeString, item.Value);
+			UnpackUpgrade (item.Value.upgradeString, newItems);
+		}
+		allShopItems = newItems;
+	}
+
+	void UnpackEquipedWeapon () {
+		string weapon = PlayerPrefs.GetString ("weapon", "pistol");
+		StopItem item = allShopItems[weapon];
+		item.equiped = true;
+		allShopItems [weapon] = item;
+		print ("Unpacking " + item.upgradeString + " as equiped weapon ");
+	}
+
+	void UnpackUpgrade (string upgrade, Dictionary<string, StopItem> allItems) {
+		StopItem item = allItems [upgrade];
+		item.currentLevel = PlayerPrefs.GetInt (upgrade, 0);
+		allItems [upgrade] = item;
+		print ("Unpacking " + item.upgradeString + " with level " + item.currentLevel);
+	}
+
+	void InitShopItems () {
+		foreach (var item in shopItems) {
+			allShopItems.Add (item.upgradeString, item);
+		}
+	}
+
+	public Dictionary<string, StopItem> allShopItems = new Dictionary<string, StopItem>();
+	// for inspector
+	public List<StopItem> shopItems;
+
+	[System.Serializable]
+	public struct StopItem {
+		// general
+		public string upgradeString;
+		public int currentLevel;
+		public int[] costs;
+		public string description;
+
+		// weapon specific
+		public bool weapon;
+		public bool equiped;
+
+		// upgrade specific
+		public string topText;
+	}
 }

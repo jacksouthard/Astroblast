@@ -18,6 +18,9 @@ public class GameController : MonoBehaviour {
     public Text preGameMoneyText;
     public Text postGameMoneyText;
 
+    public Animator postGameReport;
+    public Animator gameOverReport;
+
     public MoneyText moneyText;
 
     int curSiteMoney;
@@ -56,6 +59,7 @@ public class GameController : MonoBehaviour {
         postGameUI.SetActive(true);
         successMoneyText.text = "+" + curSiteMoney.ToString();
         postGameMoneyText.text = (startingMoney + curSiteMoney).ToString();
+        postGameReport.SetTrigger("Open");
         SaveMoney();
     }
 
@@ -72,6 +76,7 @@ public class GameController : MonoBehaviour {
     void ShowGameOverUI() {
         gameOverScreen.SetActive(true);
         failMoneyText.text = "+" + curSiteMoney.ToString();
+        gameOverReport.SetTrigger("Open");
     }
 
     public void EndGame() {

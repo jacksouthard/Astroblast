@@ -67,12 +67,15 @@ MonoBehaviour:
   sidePieceSpawnIntervals: 15
   initialSidePieceCount: 3
   initialSidePieceY: -22.5
-  farthestY: 0
+  currentY: 0
   depthText: {fileID: 0}
   depthArrow: {fileID: 0}
   curDifficulty: 0
+  baseDifficulty: 0
+  curAstroidIndex: 0
   astroids:
   - name: Starter
+    baseDifficulty: 0
     teirs:
     - difficulty: 0
       appearsAfter: 0

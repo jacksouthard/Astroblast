@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
     [Header("Oxygen")]
     float oxygen = 100f;
 	public float minTankMultiplier;
-	float tankMultiplier;
+	float tankMultiplier = 1f;
     public float baseDrain;
     public float leakDrain;
     public float flipThreshold;

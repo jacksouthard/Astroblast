@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour {
         isDead = false;
 
         cam = Camera.main.transform;
-        flipHeightThreshold = Camera.main.orthographicSize - upperMargin;
+        flipHeightThreshold = FindObjectOfType<CameraController>().baseZoom - upperMargin;
 
         EquipWeapon(0);
 

@@ -15,7 +15,8 @@ public class CameraController : MonoBehaviour {
 
 	// zooming
 	bool zooming = false;
-	float baseZoom = 16;
+    [HideInInspector]
+	public float baseZoom = 16;
 	float zoomTime;
 	float zoomTimer;
 	float oldZoom;

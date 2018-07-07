@@ -30,6 +30,17 @@ public class WeaponManager : MonoBehaviour {
 		print ("Could not find weapon with name: " + weaponName);
 		return weapons [0];
 	}
+
+	public Sprite GetIconFromName (string name) {
+		foreach (var weapon in weapons) {
+			if (weapon.name == name) {
+				return weapon.sprite;
+			}
+		}
+
+		print ("Could not find weapon with name: " + name);
+		return weapons [0].sprite;
+	}
 		
 	[System.Serializable]
 	public class WeaponData {

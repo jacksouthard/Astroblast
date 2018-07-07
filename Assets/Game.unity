@@ -4902,6 +4902,7 @@ MonoBehaviour:
   successMoneyText: {fileID: 1354951326}
   preGameMoneyText: {fileID: 637809057}
   postGameMoneyText: {fileID: 601282455}
+  moneyAddTime: 0.5
   postGameReport: {fileID: 48655430}
   gameOverReport: {fileID: 1837754782}
   moneyText: {fileID: 2084908701}

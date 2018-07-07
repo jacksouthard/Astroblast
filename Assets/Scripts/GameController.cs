@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
     public static GameController instance;
 
-
     public GameObject gameOverScreen;
     public GameObject preGameUI;
     public GameObject postGameUI;
@@ -17,6 +16,8 @@ public class GameController : MonoBehaviour {
     public Text successMoneyText;
     public Text preGameMoneyText;
     public Text postGameMoneyText;
+
+    public float moneyAddTime;
 
     public Animator postGameReport;
     public Animator gameOverReport;
@@ -57,7 +58,7 @@ public class GameController : MonoBehaviour {
         preGameUI.SetActive(false);
         gameUI.SetActive(false);
         postGameUI.SetActive(true);
-        successMoneyText.text = "+" + curSiteMoney.ToString();
+        StartCoroutine(ShowAddMoney(successMoneyText));
         postGameMoneyText.text = (startingMoney + curSiteMoney).ToString();
         postGameReport.SetTrigger("Open");
         SaveMoney();
@@ -75,7 +76,7 @@ public class GameController : MonoBehaviour {
 
     void ShowGameOverUI() {
         gameOverScreen.SetActive(true);
-        failMoneyText.text = "+" + curSiteMoney.ToString();
+        StartCoroutine(ShowAddMoney(failMoneyText));
         gameOverReport.SetTrigger("Open");
     }
 
@@ -90,5 +91,18 @@ public class GameController : MonoBehaviour {
 
     void SaveMoney() {
         PlayerPrefs.SetInt("Total_Money", startingMoney + curSiteMoney);
+    }
+
+    IEnumerator ShowAddMoney(Text moneyText) {
+        yield return new WaitForSeconds(0.5f);
+
+        float p = 0;
+        while (p < 1f) {
+            moneyText.text = "+"+Mathf.RoundToInt(Mathf.Lerp(0, curSiteMoney, p)).ToString();
+            yield return new WaitForEndOfFrame();
+            p += Time.deltaTime / moneyAddTime;
+        }
+
+        moneyText.text = "+"+curSiteMoney.ToString();
     }
 }

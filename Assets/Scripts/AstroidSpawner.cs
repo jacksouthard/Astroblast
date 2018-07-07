@@ -43,7 +43,8 @@ public class AstroidSpawner : MonoBehaviour {
 			for (int i = 0; i < alienCount; i++) {
 				EdgePositionData data = GetRandomSpawnPoint ();
 				Vector3 spawnPos3d = new Vector3 (data.point.x, data.point.y, 1.1f);
-				GameObject prefab = alienPrefabs [Random.Range (0, alienPrefabs.Length)];
+				// chose prefab from avaiable aliens in difficulty teir
+				GameObject prefab = alienPrefabs [diffData.alienIDs[Random.Range(0, diffData.alienIDs.Length)]];
 				GameObject newAlien = Instantiate (prefab, spawnPos3d, data.rotation, persistantObjects);
 
 				newAlien.GetComponent<BasicAlien> ().InitPos (this, data.anchorIndex);

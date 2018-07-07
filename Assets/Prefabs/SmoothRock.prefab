@@ -59,6 +59,7 @@ MonoBehaviour:
   - {fileID: 1336862633254428, guid: 509f56b1ff436439289c917d78db040c, type: 2}
   - {fileID: 1218411777221514, guid: 4a6bc76cfdbe34d41966b87c954160c3, type: 2}
   - {fileID: 1262218684195710, guid: a3457eb72de3a42388377c326e08addd, type: 2}
+  - {fileID: 1147265632715716, guid: c987ef68143594a39b3dcf7a0a080cb3, type: 2}
   crystalPrefab: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4,
     type: 2}
   minSize: 1.3
@@ -74,12 +75,12 @@ MonoBehaviour:
     maxAliens: 2
     minCrystals: 1
     maxCrystals: 2
-  - alienIDs: 000000000100000002000000
+  - alienIDs: 0000000001000000020000000300000000000000
     minAliens: 1
     maxAliens: 3
     minCrystals: 1
     maxCrystals: 3
-  - alienIDs: 000000000100000002000000
+  - alienIDs: 00000000010000000200000003000000
     minAliens: 2
     maxAliens: 4
     minCrystals: 2

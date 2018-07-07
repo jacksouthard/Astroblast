@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     bool flipQued = false;
     public float hitWhileLeakingDrain;
     public Text oxygenText;
+	public UIFlicker oxygenFlicker;
 
     // leaks
     bool leaking = false;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour {
 
     void Start() {
         warningLight = GetComponentInChildren<LightFlicker>();
+		oxygenFlicker = oxygenText.GetComponent<UIFlicker> ();
         leakEffect = transform.Find("LeakEffect").GetComponent<ParticleSystem>();
         rb = GetComponent<Rigidbody2D>();
         weaponMount = transform.Find("WeaponMount");
@@ -180,6 +182,7 @@ public class PlayerController : MonoBehaviour {
 
 			// start leak effect
 			warningLight.StartFlicker();
+			oxygenFlicker.StartFlicker ();
 			leakDirection = (damagingObject.position - transform.position).normalized;
 			leakEffect.Play ();
 			var leakAngle = Mathf.Atan2 (leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
@@ -195,6 +198,7 @@ public class PlayerController : MonoBehaviour {
 	public void StopLeak () {
 		leaking = false;
 		warningLight.StopFlicker ();
+		oxygenFlicker.StopFlicker ();
 		leakEffect.Stop ();
 
 		if (flipQued) {

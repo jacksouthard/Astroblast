@@ -4774,13 +4774,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833b93da1c0a42039763df2994d9f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curSiteMoney: 0
   gameOverScreen: {fileID: 914317170}
   preGameUI: {fileID: 1759223520}
   postGameUI: {fileID: 723188207}
   gameUI: {fileID: 1030405967}
   failMoneyText: {fileID: 297514067}
   successMoneyText: {fileID: 904677853}
+  preGameMoneyText: {fileID: 637809057}
+  postGameMoneyText: {fileID: 601282455}
   moneyText: {fileID: 2084908701}
 --- !u!4 &2040404506
 Transform:

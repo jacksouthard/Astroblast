@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
     public static GameController instance;
 
-    public int curSiteMoney;
 
     public GameObject gameOverScreen;
     public GameObject preGameUI;
@@ -16,8 +15,13 @@ public class GameController : MonoBehaviour {
 
     public Text failMoneyText;
     public Text successMoneyText;
+    public Text preGameMoneyText;
+    public Text postGameMoneyText;
 
     public MoneyText moneyText;
+
+    int curSiteMoney;
+    int startingMoney;
 
     void Awake() {
         instance = this;
@@ -25,6 +29,9 @@ public class GameController : MonoBehaviour {
         preGameUI.SetActive(false);
         gameUI.SetActive(false);
         postGameUI.SetActive(false);
+
+        startingMoney = PlayerPrefs.GetInt("Total_Money", 0);
+        preGameMoneyText.text = startingMoney.ToString();
     }
 
     public void ShowPregame() {
@@ -48,9 +55,12 @@ public class GameController : MonoBehaviour {
         gameUI.SetActive(false);
         postGameUI.SetActive(true);
         successMoneyText.text = "+" + curSiteMoney.ToString();
+        postGameMoneyText.text = (startingMoney + curSiteMoney).ToString();
+        SaveMoney();
     }
 
     public void OnPlayerDeath() {
+        SaveMoney();
         StartCoroutine(GameOverSequence());
     }
 
@@ -71,5 +81,9 @@ public class GameController : MonoBehaviour {
     public void CollectMoney(int newMoney) {
         curSiteMoney += newMoney;
         moneyText.UpdateText(curSiteMoney);
+    }
+
+    void SaveMoney() {
+        PlayerPrefs.SetInt("Total_Money", startingMoney + curSiteMoney);
     }
 }

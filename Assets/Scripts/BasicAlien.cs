@@ -166,10 +166,11 @@ public class BasicAlien : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D coll) {
-		if (state != State.dead) {
-			if (coll.gameObject.tag == "Bullet") {
-				Bullet bullet = coll.gameObject.GetComponent<Bullet> ();
-				bullet.Hit ();
+		if (coll.gameObject.tag == "Bullet") {
+			Bullet bullet = coll.gameObject.GetComponent<Bullet> ();
+			bullet.Hit ();
+
+			if (state != State.dead) {
 				TakeDamage (bullet.damage, coll.transform);
 
 				if (state == State.idle) {

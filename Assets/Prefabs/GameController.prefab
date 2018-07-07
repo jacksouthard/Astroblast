@@ -51,18 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833b93da1c0a42039763df2994d9f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverScreen: {fileID: 0}
-  preGameUI: {fileID: 0}
-  postGameUI: {fileID: 0}
-  gameUI: {fileID: 0}
-  failMoneyText: {fileID: 0}
-  successMoneyText: {fileID: 0}
-  preGameMoneyText: {fileID: 0}
-  postGameMoneyText: {fileID: 0}
   moneyAddTime: 0.5
-  postGameReport: {fileID: 0}
-  gameOverReport: {fileID: 0}
-  moneyText: {fileID: 0}
   shopItems:
   - upgradeString: tank
     currentLevel: 0
@@ -89,7 +78,7 @@ MonoBehaviour:
     currentLevel: 0
     costs: 00000000
     description: 
-    weapon: 0
+    weapon: 1
     equiped: 0
     topText: 
   - upgradeString: SMG

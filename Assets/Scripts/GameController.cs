@@ -31,6 +31,10 @@ public class GameController : MonoBehaviour {
 
         startingMoney = PlayerPrefs.GetInt("Total_Money", 0);
         preGameMoneyText.text = startingMoney.ToString();
+
+        InitShopItems();
+        UnpackAll();
+        UnpackEquipedWeapon();
     }
 
     void SetupUI() {
@@ -46,12 +50,6 @@ public class GameController : MonoBehaviour {
 
         moneyText = FindObjectOfType<MoneyText>();
     }
-
-	void Start () {
-		InitShopItems ();
-		UnpackAll ();
-		UnpackEquipedWeapon ();
-	}
 
     public void ShowPregame() {
         preGameUI.ShowAll();

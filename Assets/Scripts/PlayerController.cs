@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour {
     public float hitWhileLeakingDrain;
     public Text oxygenText;
 	public UIFlicker oxygenFlicker;
+    public UIAnimator patchAnim;
 
     // leaks
     bool leaking = false;
@@ -188,7 +189,7 @@ public class PlayerController : MonoBehaviour {
 			var leakAngle = Mathf.Atan2 (leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
 			leakEffect.transform.rotation = Quaternion.AngleAxis (leakAngle, Vector3.forward);
 
-            PatchController.instance.ShowPatchButton();
+            patchAnim.Show();
 		} else {
 			// hit while already leaking
 			RemoveOxygen (hitWhileLeakingDrain);
@@ -211,7 +212,6 @@ public class PlayerController : MonoBehaviour {
 		isDead = true;
 		Camera.main.GetComponent<CameraController>().PlayerDied();
 		GameController.instance.OnPlayerDeath();
-        PatchController.instance.gameObject.SetActive(false);
 		oxygenFlicker.StopFlicker ();
 
 		if (leaking) {

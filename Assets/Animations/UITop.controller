@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PatchButton
+  m_Name: UITop
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Show
@@ -13,7 +13,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -145,7 +145,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: be7614f676691483fab52beb5480dc9f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 06d4e8362ce71449a9c4ad9586af4ac8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -171,7 +171,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ee2ff239c9cab48168f942577f691f7c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 08cf4e74f4f724c5fbecd47633a87f93, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

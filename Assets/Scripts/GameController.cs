@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
     public static GameController instance;
 
-    public GameObject gameOverScreen;
-    public GameObject preGameUI;
-    public GameObject postGameUI;
-    public GameObject gameUI;
+    public UIPanel gameOverScreen;
+    public UIPanel preGameUI;
+    public UIPanel postGameUI;
+    public UIPanel gameUI;
 
     public Text failMoneyText;
     public Text successMoneyText;
@@ -29,35 +29,31 @@ public class GameController : MonoBehaviour {
 
     void Awake() {
         instance = this;
-        gameOverScreen.SetActive(false);
-        preGameUI.SetActive(false);
-        gameUI.SetActive(false);
-        postGameUI.SetActive(false);
 
         startingMoney = PlayerPrefs.GetInt("Total_Money", 0);
         preGameMoneyText.text = startingMoney.ToString();
     }
 
     public void ShowPregame() {
-        preGameUI.SetActive(true);
-        gameUI.SetActive(false);
-        postGameUI.SetActive(false);
+        preGameUI.ShowAll();
+        postGameUI.HideAll();
+        gameUI.HideAll();
     }
 
     public void ShowGameUI() {
-        preGameUI.SetActive(false);
-        gameUI.SetActive(true);
-        postGameUI.SetActive(false);
+        preGameUI.HideAll();
+        postGameUI.HideAll();
+        gameUI.ShowTop();
     }
 
     public void HideGameUI() {
-        gameUI.SetActive(false);
+        gameUI.HideAll();
     }
 
     public void ShowPostgame() {
-        preGameUI.SetActive(false);
-        gameUI.SetActive(false);
-        postGameUI.SetActive(true);
+        preGameUI.HideAll();
+        postGameUI.ShowAll();
+        gameUI.HideAll();
         StartCoroutine(ShowAddMoney(successMoneyText));
         postGameMoneyText.text = (startingMoney + curSiteMoney).ToString();
         postGameReport.SetTrigger("Open");
@@ -70,12 +66,13 @@ public class GameController : MonoBehaviour {
     }
 
     IEnumerator GameOverSequence() {
+        HideGameUI();
         yield return new WaitForSeconds(1f); //TODO: link this with the death particle system?
         ShowGameOverUI();
     }
 
     void ShowGameOverUI() {
-        gameOverScreen.SetActive(true);
+        gameOverScreen.ShowAll();
         StartCoroutine(ShowAddMoney(failMoneyText));
         gameOverReport.SetTrigger("Open");
     }

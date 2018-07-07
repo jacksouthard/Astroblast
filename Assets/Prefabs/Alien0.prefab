@@ -415,7 +415,7 @@ MonoBehaviour:
   walkSpeed: 0
   rotSpeed: 0
   leapForce: 15000
-  leapDelay: 1
+  leapDelay: 0.75
   acceleration: 10000
   maxSpeed: 5
   rotationSpeed: 5

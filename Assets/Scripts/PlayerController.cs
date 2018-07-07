@@ -132,9 +132,15 @@ public class PlayerController : MonoBehaviour {
 		if (Mathf.Abs (angleDiff) < 90f || angleDiff > 270f) {
 			// weapon on right side
 			newScale = new Vector3 (1f, 1f, 1f);
+			// arm 0 is left arm and 1 is right arm
+			arms [0].transform.position = new Vector3 (arms [0].transform.position.x, arms [0].transform.position.y, -1.1f);
+			arms [1].transform.position = new Vector3 (arms [1].transform.position.x, arms [1].transform.position.y, -0.9f);
 		} else {
 			// weapon on left side
 			newScale = new Vector3 (1f, -1f, 1f);
+			// arm 0 is left arm and 1 is right arm
+			arms [0].transform.position = new Vector3 (arms [0].transform.position.x, arms [0].transform.position.y, -0.9f);
+			arms [1].transform.position = new Vector3 (arms [1].transform.position.x, arms [1].transform.position.y, -1.1f);
 		}
 		weaponMount.localScale = newScale;
 
@@ -226,6 +232,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		WeaponManager.WeaponData weaponData = WeaponManager.instance.GetDataFromIndex (weaponIndex);
 		GameObject newWeapon = Instantiate (weaponData.prefab, weaponMount);
+		newWeapon.transform.localPosition = Vector3.zero;
 		gun = newWeapon.GetComponent<GunController> ();
 	}
 }

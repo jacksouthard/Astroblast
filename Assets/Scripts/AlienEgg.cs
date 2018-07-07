@@ -31,7 +31,17 @@ public class AlienEgg : BasicAlien {
 		newAlien.GetComponent<BasicAlien> ().InitPos (curAstroid, curIndex);
 	}
 
-	void HatchingComplete () {
+	protected override void Die () {
+		state = State.dead;
+		anim.SetTrigger ("Die");
+
+		PlayerDamaging possibleDamaging = GetComponent<PlayerDamaging> ();
+		if (possibleDamaging != null) {
+			Destroy (possibleDamaging);
+		}
+	}
+
+	void DestroyEgg () {
 		Destroy (gameObject);
 	}
 }

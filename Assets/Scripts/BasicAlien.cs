@@ -211,7 +211,7 @@ public class BasicAlien : MonoBehaviour {
 		leakEffectParticles.Stop ();
 	}
 
-	void Die () {
+	protected virtual void Die () {
 		state = State.dead;
 		rb.isKinematic = false;
 		anim.SetTrigger ("Die");

@@ -393,10 +393,12 @@ MonoBehaviour:
   - {fileID: 4827098403328662}
   upperMargin: 2
   baseDrain: 0.7
-  leakDrain: 20
+  leakDrain: 10
   flipThreshold: 40
   hitWhileLeakingDrain: 20
   oxygenText: {fileID: 0}
+  oxygenFlicker: {fileID: 0}
+  patchAnim: {fileID: 0}
   leakForce: 8000
 --- !u!198 &198052506108776716
 ParticleSystem:

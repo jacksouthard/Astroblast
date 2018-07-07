@@ -207,10 +207,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 1815368778069866, guid: aecc499b08b86488abb9b884eb80b66b, type: 2}
+  damage: 50
+  accuracy: 3
   speed: 6
   lifetime: 2
-  knockback: 6000
-  fireRate: 0.5
+  knockback: 7000
+  fireRate: 0.4
 --- !u!212 &212184567912583258
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -21,7 +21,7 @@ public class CrystalSpawner : MonoBehaviour {
 	int valueTeir;
 
 	void Start () {
-		int highestValue = TerrainManager.instance.curDifficulty;
+		int highestValue = TerrainManager.instance.curDifficulty + TerrainManager.instance.baseDifficulty;
 		if (highestValue > allCrystalTeirs.Length - 1) {
 			highestValue = allCrystalTeirs.Length - 1;
 		}

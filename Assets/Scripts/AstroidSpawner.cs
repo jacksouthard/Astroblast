@@ -20,7 +20,7 @@ public class AstroidSpawner : MonoBehaviour {
 
 	void Start () {
 		// set difficulty 
-		int difficulty = TerrainManager.instance.curDifficulty;
+		int difficulty = TerrainManager.instance.curDifficulty + TerrainManager.instance.baseDifficulty;
 		if (difficulty > allDifficultyData.Length - 1) {
 			difficulty = allDifficultyData.Length - 1;
 		}

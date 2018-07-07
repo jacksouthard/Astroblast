@@ -25,15 +25,17 @@ public class TerrainManager : MonoBehaviour {
 	public float wallObjectZ;
 
 	[Header("Side Pieces")]
+//	public List<int> activePieces = new List<int>();
 	public GameObject[] sidePiecePrefabs;
 	public float sidePieceX;
 	public float sidePieceSpawnIntervals;
 	public float initialSidePieceCount;
 	public float initialSidePieceY;
-	Transform lastSidePiece = null;
+	float? lastSidePieceY = null;
 
 	[HideInInspector]
-	public float farthestY = 0f;
+	public float currentY = 0f;
+	float farthestY = 0f;
 	Transform persistantObjects;
 	Transform mainCam;
 	float curChunkY = 0f;
@@ -64,26 +66,30 @@ public class TerrainManager : MonoBehaviour {
 	}
 		
 	void Update () {
-		if (shouldUpdate && mainCam.position.y * direction > farthestY * direction) {
+		if (shouldUpdate && mainCam.position.y < currentY) {
 			farthestY = mainCam.position.y;
-            depthText.text = Mathf.Abs(Mathf.RoundToInt(farthestY)).ToString() + "m";
+		}
+
+		if (shouldUpdate && mainCam.position.y * direction > currentY * direction) {
+			currentY = mainCam.position.y;
+            depthText.text = Mathf.Abs(Mathf.RoundToInt(currentY)).ToString() + "m";
 
 			if (spawnTerrain && direction == -1) { // chunks only spawn when going into astroid
-				if (farthestY - objectSpawnBuffer < curChunkY) {
+				if (currentY - objectSpawnBuffer < curChunkY) {
 					ExpressNextChunk ();
 				}
 			}
 				
 			// side pieces are generated dynamically based on where the player is
-			if (farthestY < initialSidePieceY) { // dont spawn side pieces above extraction point
-				if (lastSidePiece == null) {
+			if (currentY < initialSidePieceY && direction == -1) { // dont spawn side pieces above extraction point
+				if (lastSidePieceY == null) {
 					CreateNextSidePiece ();
-				} else if ((farthestY + (objectSpawnBuffer * direction)) * direction > lastSidePiece.position.y * direction) {
+				} else if ((currentY + (objectSpawnBuffer * direction)) * direction > lastSidePieceY.Value * direction) {
 					CreateNextSidePiece ();
 				}
 			}
 
-			TestForObjectDespawns ();
+//			TestForObjectDespawns ();
 		}
 
 		if (Input.GetKeyDown (KeyCode.F)) { // temp
@@ -105,7 +111,7 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	public void ResetTerrain () {
-		farthestY = 0f;
+		currentY = 0f;
 		curChunkY = 0f;
 
 		if (spawnTerrain) {
@@ -128,15 +134,24 @@ public class TerrainManager : MonoBehaviour {
 
 	void CreateNextSidePiece () {
 		Vector3 spawnPos;
-		if (lastSidePiece == null) {
+		if (lastSidePieceY == null) {
 			spawnPos = new Vector3 (sidePieceX, initialSidePieceY, 0f);
 		} else {
-			spawnPos = new Vector3 (sidePieceX, lastSidePiece.position.y + (sidePieceSpawnIntervals * direction), 0f);
+			spawnPos = new Vector3 (sidePieceX, lastSidePieceY.Value + (sidePieceSpawnIntervals * direction), 0f);
 			if (spawnPos.y > initialSidePieceY) {
 //				print ("Tried to spawn side piece in extraction area");
 				return;
 			}
 		}
+
+		// check to make sure this location is avaiable for a side piece
+//		int roundedY = Mathf.RoundToInt(spawnPos.y);
+//		if (activePieces.Contains (roundedY)) {
+//			print ("loc in use");
+//			return;
+//		}
+//		activePieces.Add (roundedY);
+		lastSidePieceY = spawnPos.y;
 
 		GameObject prefab = sidePiecePrefabs [Random.Range (0, sidePiecePrefabs.Length)];
 
@@ -144,7 +159,6 @@ public class TerrainManager : MonoBehaviour {
 
 			Vector3 newSpawnPos = new Vector3 (sidePieceX * sign, spawnPos.y, spawnPos.z);
 			GameObject piece = (GameObject)Instantiate (prefab, newSpawnPos, Quaternion.identity, transform);
-			lastSidePiece = piece.transform;
 
 			piece.transform.localScale = new Vector3 (piece.transform.localScale.x * -sign, piece.transform.localScale.y, 1f);
 
@@ -235,7 +249,7 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	void TestForObjectDespawns () {
-		float despawnMargin = farthestY - (objectDespawnDst * direction);
+		float despawnMargin = currentY - (objectDespawnDst * direction);
 		List<GameObject> objectsToDelete = new List<GameObject> ();
 		for (int i = 0; i < transform.childCount; i++) {
 			Transform child = transform.GetChild (i);
@@ -246,8 +260,10 @@ public class TerrainManager : MonoBehaviour {
 			}
 		}
 		foreach (var GO in objectsToDelete) {
+//			if (GO.tag == "Rock") { // must be side piece
+//				activePieces.Remove (Mathf.RoundToInt(GO.transform.position.y));
+//			}
 			Destroy (GO);
-
 		}
 			
 	}

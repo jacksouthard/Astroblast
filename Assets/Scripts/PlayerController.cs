@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
         cam = Camera.main.transform;
         flipHeightThreshold = FindObjectOfType<CameraController>().baseZoom - upperMargin;
 
-        EquipWeapon(0);
+        EquipWeapon(1);
 
         // enter ship
         ShipController.instance.PlayerEnter(transform);

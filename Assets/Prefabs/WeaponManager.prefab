@@ -55,3 +55,6 @@ MonoBehaviour:
   - prefab: {fileID: 1114760905528406, guid: 2db1ed98883c84e6e8782f1d3cd579be, type: 2}
     sprite: {fileID: 21300000, guid: eb702788bd3464016bb774cc68195b1e, type: 3}
     name: Pistol
+  - prefab: {fileID: 1934362708206686, guid: a7f53a86d29b44560b9f6a2cfe0d84c4, type: 2}
+    sprite: {fileID: 21300000, guid: 6b0db4b3e688249dd89eff139e7bf93b, type: 3}
+    name: SMG

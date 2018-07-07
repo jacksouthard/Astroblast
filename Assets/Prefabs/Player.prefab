@@ -392,8 +392,9 @@ MonoBehaviour:
   - {fileID: 4899905126348060}
   - {fileID: 4827098403328662}
   upperMargin: 2
+  minTankMultiplier: 0.35
   baseDrain: 0.7
-  leakDrain: 10
+  leakDrain: 15
   flipThreshold: 40
   hitWhileLeakingDrain: 20
   oxygenText: {fileID: 0}

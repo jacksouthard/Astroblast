@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour {
     // death
     [Header("Oxygen")]
     float oxygen = 100f;
+	public float minTankMultiplier;
+	float tankMultiplier;
     public float baseDrain;
     public float leakDrain;
     public float flipThreshold;
@@ -50,6 +52,8 @@ public class PlayerController : MonoBehaviour {
         weaponMount = transform.Find("WeaponMount");
         gun = GetComponentInChildren<GunController>();
         isDead = false;
+
+//		SetTankMultiplier (1, 1); // temp
 
         cam = Camera.main.transform;
         flipHeightThreshold = FindObjectOfType<CameraController>().baseZoom - upperMargin;
@@ -94,8 +98,13 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+	public void SetTankMultiplier (int tankLevel, int maxLevel) {
+		float levelRatio = tankLevel / maxLevel;
+		tankMultiplier = Mathf.Lerp (1f, minTankMultiplier, levelRatio);
+	}
+
 	void RemoveOxygen (float value) {
-		oxygen -= value;
+		oxygen -= value * tankMultiplier;
 		if (oxygen < flipThreshold) {
 			flipQued = true;
 		}

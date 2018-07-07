@@ -32,9 +32,13 @@ public class GameController : MonoBehaviour {
         startingMoney = PlayerPrefs.GetInt("Total_Money", 0);
         preGameMoneyText.text = startingMoney.ToString();
 
+		// shop
         InitShopItems();
         UnpackAll();
         UnpackEquipedWeapon();
+
+		// map
+		UnpackAstroidLocationMap ();
     }
 
     void SetupUI() {
@@ -176,5 +180,26 @@ public class GameController : MonoBehaviour {
 
 		// upgrade specific
 		public string topText;
+	}
+
+	// ASTROIDS
+	public int farthestAstroid;
+
+	void UnpackAstroidLocationMap () {
+		farthestAstroid = PlayerPrefs.GetInt ("farthest", 0);
+		print ("Unpacking astroid map with farthest location: " + farthestAstroid);
+	}
+
+	public void UnlockNewAstroid (int newFarthestAstroid) {
+		PlayerPrefs.SetInt ("farthest", newFarthestAstroid);
+		UnpackAstroidLocationMap ();
+	}
+
+	public List<AstroidLocation> astroidLocations = new List<AstroidLocation>();
+	[System.Serializable]
+	public struct AstroidLocation {
+		public int astroidIndex;
+		public Color color;
+		public Vector2 position;
 	}
 }

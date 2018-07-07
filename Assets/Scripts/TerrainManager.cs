@@ -290,6 +290,10 @@ public class TerrainManager : MonoBehaviour {
 		public Teir[] teirs;
 	}
 
+	public string GetAstroidNameFromIndex (int index) {
+		return astroids [index].name;
+	}
+
 	// teirs
 	[System.Serializable]
 	public class Teir {

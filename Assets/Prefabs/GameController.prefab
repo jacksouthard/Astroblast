@@ -88,3 +88,11 @@ MonoBehaviour:
     weapon: 1
     equiped: 0
     topText: 
+  farthestUnlockedAstroid: 0
+  astroidLocations:
+  - astroidIndex: 0
+    color: {r: 0.18836506, g: 0.78743577, b: 0.9852941, a: 1}
+    position: {x: 0, y: 0}
+  - astroidIndex: 1
+    color: {r: 0.82411397, g: 0.30687717, b: 0.9705882, a: 0}
+    position: {x: 7, y: 4}

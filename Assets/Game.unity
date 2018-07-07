@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,7 +39,6 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
-  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -55,10 +54,11 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
-    m_AtlasSize: 1024
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -1224,7 +1224,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f5032e02607fe4fc7b7c986a7d999f89, type: 2}
   m_StaticBatchInfo:
@@ -1635,7 +1634,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &614523636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,7 +1702,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f5032e02607fe4fc7b7c986a7d999f89, type: 2}
   m_StaticBatchInfo:
@@ -2593,7 +2590,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 5d588c0199ead41a69bd791b8a38cade, type: 2}
   m_StaticBatchInfo:
@@ -2841,7 +2837,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!61 &991249801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3025,7 +3020,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 24fcd4968975a45cf82db30fa203536b, type: 2}
   m_StaticBatchInfo:
@@ -3312,6 +3306,10 @@ MonoBehaviour:
   activeTime: 0.5
   offTime: 0.3
   flickerColor: {r: 1, g: 0.2509804, b: 0.2509804, a: 1}
+  texts:
+  - {fileID: 1242628712}
+  - {fileID: 1937223698}
+  - {fileID: 1660138184}
 --- !u!1 &1287578611
 GameObject:
   m_ObjectHideFlags: 0
@@ -3483,7 +3481,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 7a14dc8a7e5214d95af331b896a7873a, type: 2}
   m_StaticBatchInfo:
@@ -3696,7 +3693,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: fe7f1f1f4ef0b4fac824199c3a564207, type: 2}
   m_StaticBatchInfo:
@@ -4219,7 +4215,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 009a706ab21ca4dc6be2532de51d1da9, type: 2}
   m_StaticBatchInfo:
@@ -4555,7 +4550,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 0a05e2e10e2c84973956821b940523da, type: 2}
   m_StaticBatchInfo:

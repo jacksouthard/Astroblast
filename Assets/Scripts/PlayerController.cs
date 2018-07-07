@@ -67,11 +67,7 @@ public class PlayerController : MonoBehaviour {
                 rb.AddRelativeForce(-leakDirection * leakForce * Time.deltaTime);
                 amountToRemove += leakDrain;
             }
-            RemoveOxygen(amountToRemove * Time.deltaTime);
-
-            if (oxygen <= 0f) {
-                Die();
-            }
+			RemoveOxygen(amountToRemove * Time.deltaTime);
 
             // shooting
             if (Input.GetMouseButton(0)) {
@@ -104,6 +100,10 @@ public class PlayerController : MonoBehaviour {
 		}
 		oxygen = Mathf.Clamp (oxygen, 0f, 100f);
 		oxygenText.text = "" + (int)oxygen + "%";
+
+		if (oxygen <= 0f) {
+			Die();
+		}
 	}
 
 	void PositionWeapon (Vector2 angleVector) {
@@ -212,6 +212,7 @@ public class PlayerController : MonoBehaviour {
 		Camera.main.GetComponent<CameraController>().PlayerDied();
 		GameController.instance.OnPlayerDeath();
         PatchController.instance.gameObject.SetActive(false);
+		oxygenFlicker.StopFlicker ();
 
 		if (leaking) {
 			StopLeak ();

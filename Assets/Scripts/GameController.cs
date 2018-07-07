@@ -7,22 +7,19 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
     public static GameController instance;
 
-    public UIPanel gameOverScreen;
-    public UIPanel preGameUI;
-    public UIPanel postGameUI;
-    public UIPanel gameUI;
+    UIPanel gameOverUI;
+    UIPanel preGameUI;
+    UIPanel postGameUI;
+    UIPanel gameUI;
 
-    public Text failMoneyText;
-    public Text successMoneyText;
-    public Text preGameMoneyText;
-    public Text postGameMoneyText;
+    Text failMoneyText;
+    Text successMoneyText;
+    Text preGameMoneyText;
+    Text postGameMoneyText;
 
     public float moneyAddTime;
 
-    public Animator postGameReport;
-    public Animator gameOverReport;
-
-    public MoneyText moneyText;
+    MoneyText moneyText;
 
     int curSiteMoney;
     int startingMoney;
@@ -30,8 +27,24 @@ public class GameController : MonoBehaviour {
     void Awake() {
         instance = this;
 
+        SetupUI();
+
         startingMoney = PlayerPrefs.GetInt("Total_Money", 0);
         preGameMoneyText.text = startingMoney.ToString();
+    }
+
+    void SetupUI() {
+        gameOverUI = GameObject.Find("GameOverUI").GetComponent<UIPanel>();
+        postGameUI = GameObject.Find("PostGameUI").GetComponent<UIPanel>();
+        preGameUI = GameObject.Find("PreGameUI").GetComponent<UIPanel>();
+        gameUI = GameObject.Find("GameUI").GetComponent<UIPanel>();
+
+        failMoneyText = GameObject.Find("FailMoneyText").GetComponent<Text>();
+        successMoneyText = GameObject.Find("SuccessMoneyText").GetComponent<Text>();
+        preGameMoneyText = GameObject.Find("PreGameMoneyText").GetComponent<Text>();
+        postGameMoneyText = GameObject.Find("PostGameMoneyText").GetComponent<Text>();
+
+        moneyText = FindObjectOfType<MoneyText>();
     }
 
 	void Start () {
@@ -62,7 +75,7 @@ public class GameController : MonoBehaviour {
         gameUI.HideAll();
         StartCoroutine(ShowAddMoney(successMoneyText));
         postGameMoneyText.text = (startingMoney + curSiteMoney).ToString();
-        postGameReport.SetTrigger("Open");
+        //postGameReport.SetTrigger("Open");
         SaveMoney();
     }
 
@@ -78,9 +91,9 @@ public class GameController : MonoBehaviour {
     }
 
     void ShowGameOverUI() {
-        gameOverScreen.ShowAll();
+        gameOverUI.ShowAll();
         StartCoroutine(ShowAddMoney(failMoneyText));
-        gameOverReport.SetTrigger("Open");
+        //gameOverReport.SetTrigger("Open");
     }
 
     public void EndGame() {

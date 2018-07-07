@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -1224,6 +1224,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f5032e02607fe4fc7b7c986a7d999f89, type: 2}
   m_StaticBatchInfo:
@@ -1634,6 +1635,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &614523636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,6 +1704,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f5032e02607fe4fc7b7c986a7d999f89, type: 2}
   m_StaticBatchInfo:
@@ -2590,6 +2593,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 5d588c0199ead41a69bd791b8a38cade, type: 2}
   m_StaticBatchInfo:
@@ -2837,6 +2841,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!61 &991249801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3020,6 +3025,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 24fcd4968975a45cf82db30fa203536b, type: 2}
   m_StaticBatchInfo:
@@ -3481,6 +3487,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 7a14dc8a7e5214d95af331b896a7873a, type: 2}
   m_StaticBatchInfo:
@@ -3693,6 +3700,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: fe7f1f1f4ef0b4fac824199c3a564207, type: 2}
   m_StaticBatchInfo:
@@ -4215,6 +4223,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 009a706ab21ca4dc6be2532de51d1da9, type: 2}
   m_StaticBatchInfo:
@@ -4550,6 +4559,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 0a05e2e10e2c84973956821b940523da, type: 2}
   m_StaticBatchInfo:
@@ -4764,10 +4774,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833b93da1c0a42039763df2994d9f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curSiteMoney: 0
   gameOverScreen: {fileID: 914317170}
   preGameUI: {fileID: 1759223520}
   postGameUI: {fileID: 723188207}
   gameUI: {fileID: 1030405967}
+  failMoneyText: {fileID: 297514067}
+  successMoneyText: {fileID: 904677853}
+  moneyText: {fileID: 2084908701}
 --- !u!4 &2040404506
 Transform:
   m_ObjectHideFlags: 0
@@ -4928,7 +4942,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02070ca9c6d049048468e89e634f280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showTime: 0
+  showTime: 2
+  fadeTime: 0.5
 --- !u!1 &2101349189
 GameObject:
   m_ObjectHideFlags: 0

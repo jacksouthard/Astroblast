@@ -51,7 +51,8 @@ public class CrystalSpawner : MonoBehaviour {
 		if (collecting) {
 			collectionTimer -= Time.deltaTime;
 			if (collectionTimer <= 0f) {
-				// finish collection
+                // finish collection
+                GameController.instance.CollectMoney(allCrystalTeirs[valueTeir].value);
 				Destroy (gameObject);
 			} else {
 				float timeRatio = collectionTimer / collectionTime;

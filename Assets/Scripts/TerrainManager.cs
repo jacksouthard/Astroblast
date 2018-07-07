@@ -49,6 +49,7 @@ public class TerrainManager : MonoBehaviour {
 	bool allTeirsActive = false;
 	int curTeirIndex = 0;
 	public int curDifficulty;
+	public int baseDifficulty;
 	Astroid curAstroid;
 
 	void Awake () {
@@ -60,7 +61,8 @@ public class TerrainManager : MonoBehaviour {
 	void Start () {
 		mainCam = Camera.main.transform;
 		persistantObjects = GameObject.Find ("PersistantObjects").transform;
-		curAstroid = astroids [0];
+		curAstroid = astroids [curAstroidIndex];
+		baseDifficulty = astroids [curAstroidIndex].baseDifficulty;
 		// spawn initial chunks
 		ResetTerrain();
 	}
@@ -170,7 +172,7 @@ public class TerrainManager : MonoBehaviour {
 	}
 
 	void CreateWallObjects (float anchorY, int sideSign) {
-		WallObjectDifficultyData diffData = allWallObjectDifficultyData[Mathf.Clamp (Random.Range(0, curDifficulty + 1), 0, allWallObjectData.Length - 1)];
+		WallObjectDifficultyData diffData = allWallObjectDifficultyData[Mathf.Clamp (Random.Range(0, curDifficulty + 1 + baseDifficulty), 0, allWallObjectData.Length - 1)];
 		List<float> usedHeights = new List<float> ();
 
 		int objectCount = Random.Range (0, maxWallObjects + 1);
@@ -219,7 +221,7 @@ public class TerrainManager : MonoBehaviour {
 			// increase to next teir
 			curTeirIndex++;
 			curDifficulty = curAstroid.teirs [curTeirIndex].difficulty;
-			print ("Moved to teir " + curTeirIndex + " with " + curDifficulty + " difficulty");
+			print ("Moved to teir " + curTeirIndex + " with " + (curDifficulty + baseDifficulty) + " difficulty");
 			if (curTeirIndex >= curAstroid.teirs.Length - 1) {
 				allTeirsActive = true;
 				print ("All teirs now active");
@@ -278,11 +280,13 @@ public class TerrainManager : MonoBehaviour {
 
 	// astroids
 	[Header("Astroids")]
+	public int curAstroidIndex;
 	public Astroid[] astroids;
 
 	[System.Serializable]
 	public class Astroid { 
 		public string name;
+		public int baseDifficulty;
 		public Teir[] teirs;
 	}
 

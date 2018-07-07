@@ -54,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   astroids:
   - {fileID: 1299888090128188, guid: a35b3fb7607e24827a51ff8ca542323a, type: 2}
+  - {fileID: 1819042204198750, guid: fa704b520c3784d75b7a599e3d24a5cb, type: 2}
   alienPrefabs: []
   crystalPrefab: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4,
     type: 2}

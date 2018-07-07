@@ -145,12 +145,16 @@ public class BasicAlien : MonoBehaviour {
 
 	protected virtual void Activate () {
 		active = true;
-        anim.SetBool("IsActive", true);
+        if (canWalk) {
+            anim.SetBool("IsActive", true);
+        }
 	}
 
 	protected virtual void Deactivate () {
 		active = false;
-        anim.SetBool("IsActive", false);
+        if (canWalk) {
+            anim.SetBool("IsActive", false);
+        }
 		rb.velocity = Vector2.zero;
 
 		if (state == State.dead) {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShipController : MonoBehaviour {
     public static ShipController instance;
 
+	bool entering = true;
     public bool skipEntry;
     public bool canExit;
     Animator anim;
@@ -35,10 +36,16 @@ public class ShipController : MonoBehaviour {
             // temp for exiting ship
             PlayerExit();
         }
+
+		if (entering && Input.GetMouseButtonDown(0)) {
+			anim.speed = 10000f; // to skip animation (hacky?)
+		}
     }
 
     void EnterHover() { // called partially as an event in the enter animation
-        canExit = true;
+		anim.speed = 1f;
+		canExit = true;
+		entering = false;
         GameController.instance.ShowPregame();
     }
 

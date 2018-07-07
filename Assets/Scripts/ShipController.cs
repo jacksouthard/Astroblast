@@ -24,7 +24,6 @@ public class ShipController : MonoBehaviour {
         if (skipEntry) {
             anim.SetTrigger("Hover");
             EnterHover();
-            GameController.instance.ShowShipUI();
         } else {
             anim.SetTrigger("Enter");
             //          camCon.StartTracking (transform);
@@ -40,18 +39,22 @@ public class ShipController : MonoBehaviour {
 
     void EnterHover() { // called partially as an event in the enter animation
         canExit = true;
-        GameController.instance.ShowShipUI();
+        GameController.instance.ShowPregame();
     }
 
     void ExitHover() {
         canExit = false;
     }
 
+    void ExitSite() {
+        GameController.instance.ShowPostgame();
+    }
+
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "Player") {
             if (TerrainManager.instance.direction == 1) {
-                GameController.instance.ShowShipUI ();
                 PlayerEnter(player);
+                GameController.instance.HideGameUI();
                 //              camCon.StartTracking (transform);
                 camCon.StartZoom(22f, 2f);
                 anim.SetTrigger("Exit");

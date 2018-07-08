@@ -19,6 +19,8 @@ public class BasicAlien : MonoBehaviour {
 	protected Animator anim;
 	protected Rigidbody2D rb;
 
+	public bool invincible;
+	public bool fixedPosition;
     public bool canWalk;
     public float walkSpeed;
     public float rotSpeed;
@@ -174,7 +176,7 @@ public class BasicAlien : MonoBehaviour {
 			Bullet bullet = coll.gameObject.GetComponent<Bullet> ();
 			bullet.Hit ();
 
-			if (state != State.dead) {
+			if (state != State.dead && !invincible) {
 				TakeDamage (bullet.damage, coll.transform);
 
 				if (state == State.idle) {
@@ -182,8 +184,14 @@ public class BasicAlien : MonoBehaviour {
 					Awaken ();
 				}
 			}
+		} else if (coll.gameObject.tag == "Player") {
+			if (state == State.awakened) {
+				PhysicalTripAttack ();
+			}
 		}
 	}
+
+	protected virtual void PhysicalTripAttack () {}
 
 	void TakeDamage (int damage, Transform source) {
 		health -= damage;
@@ -213,12 +221,22 @@ public class BasicAlien : MonoBehaviour {
 
 	protected virtual void Die () {
 		state = State.dead;
-		rb.isKinematic = false;
+		if (!fixedPosition) {
+			rb.isKinematic = false;
+		}
 		anim.SetTrigger ("Die");
 
 		PlayerDamaging possibleDamaging = GetComponent<PlayerDamaging> ();
 		if (possibleDamaging != null) {
 			Destroy (possibleDamaging);
 		}
+	}
+
+	void BecomeInvincible () {
+		invincible = true;
+	}
+
+	void ExitInvincible () {
+		invincible = false;
 	}
 }

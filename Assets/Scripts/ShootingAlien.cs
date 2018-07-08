@@ -6,6 +6,9 @@ public class ShootingAlien : BasicAlien {
 	public GameObject projectile;
 	public float shotSpeed;
 	public float awakenTime;
+	public float attackCooldown;
+	float cooldownTimer;
+	bool onCooldown = false;
 
 	Transform bulletSpawn;
 	public BoxCollider2D triggerColl;
@@ -29,16 +32,37 @@ public class ShootingAlien : BasicAlien {
 			}
 		}
 
+		if (onCooldown) {
+			cooldownTimer -= Time.deltaTime;
+			if (cooldownTimer <= 0f) {
+				onCooldown = false;
+			}
+		}
+
         base.AlienUpdate();
 	}
 
 	protected override void TripAttack () {
-		StartAttacking ();
+		if (!onCooldown) {
+			StartAttacking ();
+		}
 	}
+
+	protected override void PhysicalTripAttack () {
+		// for barbalien to close and munch on player
+		anim.SetTrigger ("Bite");
+	}
+
 
 	void StartAttacking () {
 		state = State.attacking;
 		anim.SetTrigger ("Attack");
+
+		// start cooldown
+		if (attackCooldown != 0) {
+			cooldownTimer = attackCooldown;
+			onCooldown = true;
+		}
 	}
 
 	void Shoot () { // called in attack animation

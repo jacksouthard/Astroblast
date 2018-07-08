@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour {
 	public void EquipWeapon () {
 		if (weaponMount.childCount > 0) {
 			// destory any current weapons
-			Destroy (weaponMount.GetChild(0));
+            Destroy (weaponMount.GetChild(0).gameObject);
 		}
 		WeaponManager.WeaponData weaponData = WeaponManager.instance.GetEquipedWeapon ();
 		GameObject newWeapon = Instantiate (weaponData.prefab, weaponMount);

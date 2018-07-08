@@ -81,6 +81,7 @@ public class ShipController : MonoBehaviour {
             return;
         }
 
+        player.GetComponent<PlayerController>().EquipWeapon();
         GameController.instance.ShowGameUI();
         player.gameObject.SetActive(true);
         player.position = transform.Find("PlayerSpawn").position;

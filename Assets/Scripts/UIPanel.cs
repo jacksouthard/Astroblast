@@ -5,10 +5,16 @@ using UnityEngine;
 public class UIPanel : MonoBehaviour {
     UIAnimator topAnim;
     UIAnimator bottomAnim;
+    UIAnimator reportWindow;
 
     void Awake() {
         topAnim = transform.Find("TopAnchor").GetComponent<UIAnimator>();
         bottomAnim = transform.Find("BottomAnchor").GetComponent<UIAnimator>();
+
+        Transform reportWindowTransform = transform.Find("ReportWindow");
+        if (reportWindowTransform != null) {
+            reportWindow = reportWindowTransform.GetComponent<UIAnimator>();
+        }
     }
 
     public void ShowTop() {
@@ -30,10 +36,18 @@ public class UIPanel : MonoBehaviour {
     public void ShowAll() {
         ShowTop();
         ShowBottom();
+
+        if (reportWindow != null) {
+            reportWindow.Show();
+        }
     }
 
     public void HideAll() {
         HideTop();
         HideBottom();
+
+        if (reportWindow != null) {
+            reportWindow.Hide();
+        }
     }
 }

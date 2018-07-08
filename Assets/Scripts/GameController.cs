@@ -11,9 +11,11 @@ public class GameController : MonoBehaviour {
     UIPanel preGameUI;
     UIPanel postGameUI;
     UIPanel gameUI;
+    UIPanel shopUI;
 
     Text failMoneyText;
     Text successMoneyText;
+    Text shopMoneyText;
     Text preGameMoneyText;
     Text postGameMoneyText;
 
@@ -22,23 +24,30 @@ public class GameController : MonoBehaviour {
     MoneyText moneyText;
 
     int curSiteMoney;
-    int startingMoney;
+    public int totalMoney { get; private set; }
+
+    bool isInPostGame = false;
 
     void Awake() {
         instance = this;
 
         SetupUI();
+    }
 
-        startingMoney = PlayerPrefs.GetInt("Total_Money", 0);
-        preGameMoneyText.text = startingMoney.ToString();
+    void Start() {
+        totalMoney = PlayerPrefs.GetInt("Total_Money", 0);
+        preGameMoneyText.text = totalMoney.ToString();
 
-		// shop
+        // shop
         InitShopItems();
         UnpackAll();
         UnpackEquipedWeapon();
+        Shop.instance.Init();
 
-		// map
-		UnpackAstroidLocationMap ();
+        // map
+        UnpackAstroidLocationMap();
+
+        GetInitialItems();
     }
 
     void SetupUI() {
@@ -46,25 +55,35 @@ public class GameController : MonoBehaviour {
         postGameUI = GameObject.Find("PostGameUI").GetComponent<UIPanel>();
         preGameUI = GameObject.Find("PreGameUI").GetComponent<UIPanel>();
         gameUI = GameObject.Find("GameUI").GetComponent<UIPanel>();
+        shopUI = GameObject.Find("ShopUI").GetComponent<UIPanel>();
 
         failMoneyText = GameObject.Find("FailMoneyText").GetComponent<Text>();
         successMoneyText = GameObject.Find("SuccessMoneyText").GetComponent<Text>();
         preGameMoneyText = GameObject.Find("PreGameMoneyText").GetComponent<Text>();
         postGameMoneyText = GameObject.Find("PostGameMoneyText").GetComponent<Text>();
+        shopMoneyText = GameObject.Find("ShopMoneyText").GetComponent<Text>();
 
         moneyText = FindObjectOfType<MoneyText>();
+    }
+
+    void GetInitialItems() {
+        if (!PlayerPrefs.HasKey("weapon")) {
+            BuyUpgrade("pistol");
+        }
     }
 
     public void ShowPregame() {
         preGameUI.ShowAll();
         postGameUI.HideAll();
         gameUI.HideAll();
+        shopUI.HideAll();
     }
 
     public void ShowGameUI() {
         preGameUI.HideAll();
         postGameUI.HideAll();
         gameUI.ShowTop();
+        shopUI.HideAll();
     }
 
     public void HideGameUI() {
@@ -75,10 +94,34 @@ public class GameController : MonoBehaviour {
         preGameUI.HideAll();
         postGameUI.ShowAll();
         gameUI.HideAll();
-        StartCoroutine(ShowAddMoney(successMoneyText));
-        postGameMoneyText.text = (startingMoney + curSiteMoney).ToString();
-        //postGameReport.SetTrigger("Open");
-        SaveMoney();
+        shopUI.HideAll();
+
+        if (!isInPostGame) {
+            isInPostGame = true;
+            StartCoroutine(ShowAddMoney(successMoneyText));
+            SaveMoney();
+        } else {
+            successMoneyText.text = "+" + curSiteMoney;
+        }
+
+        postGameMoneyText.text = totalMoney.ToString();
+    }
+
+    public void ShowShop() {
+        Shop.instance.Reset();
+        preGameUI.HideAll();
+        postGameUI.HideAll();
+        gameUI.HideAll();
+        shopUI.ShowAll();
+        shopMoneyText.text = totalMoney.ToString();
+    }
+
+    public void CloseShop() {
+        if (isInPostGame) {
+            ShowPostgame();
+        } else {
+            ShowPregame();
+        }
     }
 
     public void OnPlayerDeath() {
@@ -95,7 +138,6 @@ public class GameController : MonoBehaviour {
     void ShowGameOverUI() {
         gameOverUI.ShowAll();
         StartCoroutine(ShowAddMoney(failMoneyText));
-        //gameOverReport.SetTrigger("Open");
     }
 
     public void EndGame() {
@@ -108,28 +150,51 @@ public class GameController : MonoBehaviour {
     }
 
     void SaveMoney() {
-        PlayerPrefs.SetInt("Total_Money", startingMoney + curSiteMoney);
+        totalMoney += curSiteMoney;
+        PlayerPrefs.SetInt("Total_Money", totalMoney);
     }
 
-    IEnumerator ShowAddMoney(Text moneyText) {
+    IEnumerator ShowAddMoney(Text text) {
         yield return new WaitForSeconds(0.5f);
 
         float p = 0;
         while (p < 1f) {
-            moneyText.text = "+"+Mathf.RoundToInt(Mathf.Lerp(0, curSiteMoney, p)).ToString();
+            text.text = "+"+Mathf.RoundToInt(Mathf.Lerp(0, curSiteMoney, p)).ToString();
             yield return new WaitForEndOfFrame();
             p += Time.deltaTime / moneyAddTime;
         }
 
-        moneyText.text = "+"+curSiteMoney.ToString();
+        text.text = "+"+curSiteMoney.ToString();
     }
 
 	// SHOPING
 	public void BuyUpgrade (string newUpgrade) {
 		int currentLevel = PlayerPrefs.GetInt (newUpgrade);
-		PlayerPrefs.SetInt (newUpgrade, currentLevel++);
-		UnpackUpgrade (newUpgrade, allShopItems);
+        if (currentLevel < allShopItems[newUpgrade].costs.Length) {
+            totalMoney -= allShopItems[newUpgrade].costs[allShopItems[newUpgrade].currentLevel];
+            PlayerPrefs.SetInt("Total_Money", totalMoney);
+
+            PlayerPrefs.SetInt(newUpgrade, ++currentLevel);
+            UnpackUpgrade(newUpgrade, allShopItems);
+
+            if (allShopItems[newUpgrade].weapon) {
+                EquipItem(newUpgrade);
+            }
+
+            shopMoneyText.text = totalMoney.ToString();
+        } else if(allShopItems[newUpgrade].weapon) {
+            EquipItem(newUpgrade);
+        }
+
+        Shop.instance.UpdateUI(newUpgrade);
 	}
+
+    void EquipItem(string itemName) {
+        string curEquippedWeaponName = WeaponManager.instance.GetEquipedWeapon().name;
+        allShopItems[curEquippedWeaponName].equiped = false;
+        allShopItems[itemName].equiped = true;
+        PlayerPrefs.SetString("weapon", itemName);
+    }
 
 	void UnpackAll () {
 		// get level info from player prefs and update the dictionary
@@ -167,7 +232,7 @@ public class GameController : MonoBehaviour {
 	public List<StopItem> shopItems;
 
 	[System.Serializable]
-	public struct StopItem {
+    public class StopItem {
 		// general
 		public string upgradeString;
 		public int currentLevel;

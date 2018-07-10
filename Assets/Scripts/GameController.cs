@@ -109,6 +109,7 @@ public class GameController : MonoBehaviour {
 
     public void ShowShop() {
         Shop.instance.Reset();
+        Shop.instance.OnOpen();
         preGameUI.HideAll();
         postGameUI.HideAll();
         gameUI.HideAll();
@@ -117,6 +118,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void CloseShop() {
+        Shop.instance.OnClose();
         if (isInPostGame) {
             ShowPostgame();
         } else {

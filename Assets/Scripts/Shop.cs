@@ -21,14 +21,17 @@ public class Shop : MonoBehaviour {
     public Text buttonText;
     public Text descriptionText;
 
+    public ScrollRect scrollArea;
+
     Dictionary<string, UIShopItem> uiShopItems = new Dictionary<string, UIShopItem>();
 
 	void Awake() {
         instance = this;
+        scrollArea.enabled = false;
 	}
 
 	public void Init() {
-        float currentHeight = padding;
+        float currentHeight = 0;
 
         List<GameController.StopItem> upgradeItems = new List<GameController.StopItem>();
         List<GameController.StopItem> weaponItems = new List<GameController.StopItem>();
@@ -86,6 +89,20 @@ public class Shop : MonoBehaviour {
         content.sizeDelta = new Vector2(0, currentHeight);
 
         Reset();
+    }
+
+    public void OnOpen() {
+        StartCoroutine(OpenSequence());
+    }
+
+    IEnumerator OpenSequence() {
+        yield return new WaitForSeconds(0.5f);
+        scrollArea.enabled = true;
+        content.anchoredPosition = Vector2.zero;
+    }
+
+    public void OnClose() {
+        scrollArea.enabled = false;
     }
 
 	public void Reset() {

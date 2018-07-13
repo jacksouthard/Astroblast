@@ -11,11 +11,11 @@ public class Shop : MonoBehaviour {
     //public Text upgradeTitleText;
     //public Text weaponTitleText;
 
-    public GridLayoutGroup upgradeParent;
-    public GridLayoutGroup weaponParent;
+    //public GridLayoutGroup upgradeParent;
+    //public GridLayoutGroup weaponParent;
 
     public RectTransform content;
-    public float padding;
+    //public float padding;
 
     public Button bottomButton;
     public Text buttonText;
@@ -31,7 +31,7 @@ public class Shop : MonoBehaviour {
 	}
 
 	public void Init() {
-        float currentHeight = 0;
+        //float currentHeight = 0;
 
         List<GameController.StopItem> upgradeItems = new List<GameController.StopItem>();
         List<GameController.StopItem> weaponItems = new List<GameController.StopItem>();
@@ -44,49 +44,66 @@ public class Shop : MonoBehaviour {
             }
         }
 
-        //upgradeTitleText.rectTransform.anchoredPosition = new Vector2(0, -currentHeight);
-        //currentHeight += upgradeTitleText.rectTransform.rect.height + padding;
-
         foreach (GameController.StopItem item in upgradeItems) {
-            GameObject newItem = Instantiate(shopItemPrefab, upgradeParent.transform);
+            GameObject newItem = Instantiate(shopItemPrefab, content.transform);
             UIShopItem ui = newItem.GetComponent<UIShopItem>();
             ui.Init(item.upgradeString);
 
             uiShopItems.Add(item.upgradeString, ui);
         }
 
-        RectTransform upgradeRT = upgradeParent.GetComponent<RectTransform>();
-        upgradeRT.anchoredPosition = new Vector2(0, -currentHeight);
-        int numUpgradeRows = Mathf.CeilToInt(upgradeItems.Count / (upgradeRT.rect.width / (upgradeParent.cellSize.x + upgradeParent.spacing.x)));
-        currentHeight += Mathf.Abs(numUpgradeRows * upgradeParent.cellSize.y + padding);
-        if (Mathf.Abs(numUpgradeRows) > 1) {
-            currentHeight += upgradeParent.spacing.y * (numUpgradeRows - 1);
+        foreach (GameController.StopItem item in weaponItems) {
+            GameObject newItem = Instantiate(shopItemPrefab, content.transform);
+            UIShopItem ui = newItem.GetComponent<UIShopItem>();
+            ui.Init(item.upgradeString);
+
+            uiShopItems.Add(item.upgradeString, ui);
         }
+
+        // FOR SEPARATE GRIDS
+        //upgradeTitleText.rectTransform.anchoredPosition = new Vector2(0, -currentHeight);
+        //currentHeight += upgradeTitleText.rectTransform.rect.height + padding;
+
+        //foreach (GameController.StopItem item in upgradeItems) {
+        //    GameObject newItem = Instantiate(shopItemPrefab, upgradeParent.transform);
+        //    UIShopItem ui = newItem.GetComponent<UIShopItem>();
+        //    ui.Init(item.upgradeString);
+
+        //    uiShopItems.Add(item.upgradeString, ui);
+        //}
+
+        //RectTransform upgradeRT = upgradeParent.GetComponent<RectTransform>();
+        //upgradeRT.anchoredPosition = new Vector2(0, -currentHeight);
+        //int numUpgradeRows = Mathf.CeilToInt(upgradeItems.Count / (upgradeRT.rect.width / (upgradeParent.cellSize.x + upgradeParent.spacing.x)));
+        //currentHeight += Mathf.Abs(numUpgradeRows * upgradeParent.cellSize.y + padding);
+        //if (Mathf.Abs(numUpgradeRows) > 1) {
+        //    currentHeight += upgradeParent.spacing.y * (numUpgradeRows - 1);
+        //}
 
         //weaponTitleText.rectTransform.anchoredPosition = new Vector2(0, -currentHeight);
         //currentHeight += weaponTitleText.rectTransform.rect.height + padding;
 
-        foreach (GameController.StopItem item in weaponItems) {
-            GameObject newItem = Instantiate(shopItemPrefab, weaponParent.transform);
-            UIShopItem ui = newItem.GetComponent<UIShopItem>();
-            ui.Init(item.upgradeString);
+        //foreach (GameController.StopItem item in weaponItems) {
+        //    GameObject newItem = Instantiate(shopItemPrefab, weaponParent.transform);
+        //    UIShopItem ui = newItem.GetComponent<UIShopItem>();
+        //    ui.Init(item.upgradeString);
 
-            if (item.equiped) {
-                newItem.GetComponent<UIShopItem>().Equip();
-            }
+        //    if (item.equiped) {
+        //        newItem.GetComponent<UIShopItem>().Equip();
+        //    }
 
-            uiShopItems.Add(item.upgradeString, ui);
-        }
+        //    uiShopItems.Add(item.upgradeString, ui);
+        //}
 
-        RectTransform weaponRT = weaponParent.GetComponent<RectTransform>();
-        weaponRT.anchoredPosition = new Vector2(0, -currentHeight);
-        int numWeaponRows = Mathf.CeilToInt(upgradeItems.Count / (weaponRT.rect.width / (weaponParent.cellSize.x + weaponParent.spacing.x)));
-        currentHeight += Mathf.Abs(numWeaponRows * weaponParent.cellSize.y + padding);
-        if (Mathf.Abs(numWeaponRows) > 1) {
-            currentHeight += weaponParent.spacing.y * (numWeaponRows - 1);
-        }
+        //RectTransform weaponRT = weaponParent.GetComponent<RectTransform>();
+        //weaponRT.anchoredPosition = new Vector2(0, -currentHeight);
+        //int numWeaponRows = Mathf.CeilToInt(upgradeItems.Count / (weaponRT.rect.width / (weaponParent.cellSize.x + weaponParent.spacing.x)));
+        //currentHeight += Mathf.Abs(numWeaponRows * weaponParent.cellSize.y + padding);
+        //if (Mathf.Abs(numWeaponRows) > 1) {
+        //    currentHeight += weaponParent.spacing.y * (numWeaponRows - 1);
+        //}
 
-        content.sizeDelta = new Vector2(0, currentHeight);
+        //content.sizeDelta = new Vector2(0, currentHeight);
 
         Reset();
     }

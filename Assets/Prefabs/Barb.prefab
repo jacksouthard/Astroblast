@@ -131,7 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 1
   lifeTimeAfterHit: 5
-  reelForce: 90000
+  reelForce: 60000
+  dragOnHit: 3
 --- !u!120 &120213440354348596
 LineRenderer:
   m_ObjectHideFlags: 1

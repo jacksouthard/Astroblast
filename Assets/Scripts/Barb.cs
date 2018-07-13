@@ -6,6 +6,7 @@ public class Barb : MonoBehaviour {
 	public float lifeTime;
 	public float lifeTimeAfterHit;
 	public float reelForce;
+	public float dragOnHit;
 	bool embeded = false;
 	bool hitPlayer = false;
 
@@ -52,6 +53,7 @@ public class Barb : MonoBehaviour {
 		hitPlayer = _hitPlayer;
 		if (hitPlayer) {
 			player = target;
+			player.GetComponent<Rigidbody2D> ().drag = dragOnHit;
 		}
 		lifeTime = lifeTimeAfterHit;
 		Destroy (GetComponent<Rigidbody2D> ());
@@ -62,6 +64,9 @@ public class Barb : MonoBehaviour {
 	void BarbBreak () {
 		if (embeded) {
 			Destroy (tip.gameObject);
+		}
+		if (hitPlayer) {
+			player.GetComponent<Rigidbody2D> ().drag = 0f;
 		}
 
 		Destroy (gameObject);

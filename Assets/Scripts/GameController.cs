@@ -40,14 +40,15 @@ public class GameController : MonoBehaviour {
 
         // shop
         InitShopItems();
+//		ClearUpgrades ();
+		GetInitialItems();
+
         UnpackAll();
         UnpackEquipedWeapon();
         Shop.instance.Init();
 
         // map
         UnpackAstroidLocationMap();
-
-        GetInitialItems();
     }
 
     void SetupUI() {
@@ -221,6 +222,22 @@ public class GameController : MonoBehaviour {
 		item.currentLevel = PlayerPrefs.GetInt (upgrade, 0);
 		allItems [upgrade] = item;
 		print ("Unpacking " + item.upgradeString + " with level " + item.currentLevel);
+
+		// apply upgrade effect
+		if (upgrade == "tank") {
+			// oxygen tank
+			PlayerController.instance.SetTankMultiplier (item.currentLevel, item.costs.Length);
+		} else if (upgrade == "reach") {
+			// oxygen tank
+			PlayerController.instance.SetReachMultiplier (item.currentLevel, item.costs.Length);
+		}
+	}
+
+	void ClearUpgrades () {
+		foreach (KeyValuePair<string,StopItem> item in allShopItems) {
+			PlayerPrefs.SetInt (item.Key, 0);
+		}
+		PlayerPrefs.SetString ("weapon", "pistol");
 	}
 
 	void InitShopItems () {

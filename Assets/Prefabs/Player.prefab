@@ -392,7 +392,6 @@ MonoBehaviour:
   - {fileID: 4899905126348060}
   - {fileID: 4827098403328662}
   upperMargin: 2
-  minTankMultiplier: 0.35
   baseDrain: 0.7
   leakDrain: 15
   flipThreshold: 40
@@ -400,6 +399,9 @@ MonoBehaviour:
   oxygenText: {fileID: 0}
   oxygenFlicker: {fileID: 0}
   patchAnim: {fileID: 0}
+  minTankMultiplier: 0.35
+  maxReachMultiplier: 3
+  reachMultiplier: 1
   leakForce: 8000
 --- !u!198 &198052506108776716
 ParticleSystem:

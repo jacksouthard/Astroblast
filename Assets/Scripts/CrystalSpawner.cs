@@ -45,6 +45,9 @@ public class CrystalSpawner : MonoBehaviour {
 		}
 
 		GetComponent<Light> ().color = allCrystalTeirs[valueTeir].color;
+
+		// set collider
+		GetComponent<CircleCollider2D> ().radius *= PlayerController.instance.reachMultiplier;
 	}
 
 	void Update () {

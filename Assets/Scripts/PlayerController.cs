@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-    public float weaponDistance;
+	public static PlayerController instance;
+
+	public float weaponDistance;
     Transform weaponMount;
     GunController gun;
 
@@ -23,8 +25,6 @@ public class PlayerController : MonoBehaviour {
     // death
     [Header("Oxygen")]
     float oxygen = 100f;
-	public float minTankMultiplier;
-	float tankMultiplier = 1f;
     public float baseDrain;
     public float leakDrain;
     public float flipThreshold;
@@ -33,6 +33,13 @@ public class PlayerController : MonoBehaviour {
     public Text oxygenText;
 	public UIFlicker oxygenFlicker;
     public UIAnimator patchAnim;
+
+	[Header("Upgrades")]
+	public float minTankMultiplier;
+	float tankMultiplier = 1f;
+	public float maxReachMultiplier;
+	[HideInInspector]
+	public float reachMultiplier = 1f;
 
     // leaks
     bool leaking = false;
@@ -43,6 +50,10 @@ public class PlayerController : MonoBehaviour {
 
     // death
     bool isDead;
+
+	void Awake () {
+		instance = this;
+	}
 
     void Start() {
         warningLight = GetComponentInChildren<LightFlicker>();
@@ -98,9 +109,17 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-	public void SetTankMultiplier (int tankLevel, int maxLevel) {
-		float levelRatio = tankLevel / maxLevel;
+	// UPGRADES
+	public void SetTankMultiplier (int level, int maxLevel) {
+		float levelRatio = (float)level / (float)maxLevel;
 		tankMultiplier = Mathf.Lerp (1f, minTankMultiplier, levelRatio);
+//		print (level + " / " + maxLevel + " -> " + tankMultiplier);
+	}
+
+	public void SetReachMultiplier (int level, int maxLevel) {
+		float levelRatio = (float)level / (float)maxLevel;
+		reachMultiplier = Mathf.Lerp (1f, maxReachMultiplier, levelRatio);
+//		print (level + " / " + maxLevel + " -> " + reachMultiplier);
 	}
 
 	void RemoveOxygen (float value) {

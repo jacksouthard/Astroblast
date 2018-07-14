@@ -211,7 +211,7 @@ MonoBehaviour:
   accuracy: 10
   speed: 6
   lifetime: 2
-  knockback: 3000
+  knockback: 5000
   fireRate: 0.1
 --- !u!212 &212573867510877270
 SpriteRenderer:

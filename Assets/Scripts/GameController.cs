@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour {
 
     void Start() {
         totalMoney = PlayerPrefs.GetInt("Total_Money", 0);
+//		totalMoney = 10000;
         preGameMoneyText.text = totalMoney.ToString();
 
         // shop
@@ -228,8 +229,11 @@ public class GameController : MonoBehaviour {
 			// oxygen tank
 			PlayerController.instance.SetTankMultiplier (item.currentLevel, item.costs.Length);
 		} else if (upgrade == "reach") {
-			// oxygen tank
+			// reach
 			PlayerController.instance.SetReachMultiplier (item.currentLevel, item.costs.Length);
+		} else if (upgrade == "patches") {
+			// patches
+			PlayerController.instance.SetPatches (item.currentLevel);
 		}
 	}
 
@@ -257,6 +261,7 @@ public class GameController : MonoBehaviour {
 		public int currentLevel;
 		public int[] costs;
 		public string description;
+		public bool dynamicText;
 
 		// weapon specific
 		public bool weapon;

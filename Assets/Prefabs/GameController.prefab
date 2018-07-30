@@ -57,27 +57,31 @@ MonoBehaviour:
     currentLevel: 0
     costs: 320000006400000096000000
     description: Upgrade your O2 to reach deeper depths
+    dynamicText: 1
     weapon: 0
     equiped: 0
-    topText: O2
+    topText: ' O2'
   - upgradeString: reach
     currentLevel: 0
     costs: 2800000050000000
     description: Upgrade reach to pick up objects from farther away
+    dynamicText: 1
     weapon: 0
     equiped: 0
-    topText: Xm
+    topText: m
   - upgradeString: patches
     currentLevel: 0
     costs: 1e000000320000005a00000096000000
     description: Upgrade to increase the number of patches per site
+    dynamicText: 1
     weapon: 0
     equiped: 0
-    topText: xN
+    topText: 
   - upgradeString: pistol
     currentLevel: 0
     costs: 00000000
     description: 
+    dynamicText: 0
     weapon: 1
     equiped: 0
     topText: 
@@ -85,10 +89,11 @@ MonoBehaviour:
     currentLevel: 0
     costs: 96000000
     description: Fast shooting, yet innacurate
+    dynamicText: 0
     weapon: 1
     equiped: 0
     topText: 
-  farthestUnlockedAstroid: 0
+  farthestAstroid: 0
   astroidLocations:
   - astroidIndex: 0
     color: {r: 0.18836506, g: 0.78743577, b: 0.9852941, a: 1}

@@ -399,7 +399,10 @@ MonoBehaviour:
   oxygenText: {fileID: 0}
   oxygenFlicker: {fileID: 0}
   patchAnim: {fileID: 0}
+  minPatches: 2
+  patches: 0
   minTankMultiplier: 0.35
+  tankMultiplier: 1
   maxReachMultiplier: 3
   reachMultiplier: 1
   leakForce: 8000

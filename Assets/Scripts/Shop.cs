@@ -160,6 +160,7 @@ public class Shop : MonoBehaviour {
             GameController.instance.CloseShop();
         } else {
             GameController.instance.BuyUpgrade(UIShopItem.selectedItem.key);
+			UIShopItem.selectedItem.UpdateMainText ();
         }
     }
 

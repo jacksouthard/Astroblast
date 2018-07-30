@@ -27,7 +27,7 @@ public class UIShopItem : MonoBehaviour {
 
         subTitleText.text = data.upgradeString;
         if (!data.weapon) {
-            mainText.text = data.topText;
+			UpdateMainText ();
             weaponIcon.enabled = false;
         } else {
             mainText.enabled = false;
@@ -114,4 +114,22 @@ public class UIShopItem : MonoBehaviour {
             border.color = newColor;
         }
     }
+
+	public void UpdateMainText () { // for items only (not weapons)
+		GameController.StopItem data = GameController.instance.allShopItems[key];
+		if (data.dynamicText) {
+			float diplayValue = 0f;
+			if (data.upgradeString == "tank") {
+				diplayValue = PlayerController.instance.tankMultiplier;
+				diplayValue = Mathf.Round (diplayValue * 10f) / 10f;
+			} else if (data.upgradeString == "reach") {
+				diplayValue = PlayerController.instance.reachMultiplier;
+			} else if (data.upgradeString == "patches") {
+				diplayValue = PlayerController.instance.patches;
+			}
+			mainText.text = "" + diplayValue + data.topText;
+		} else {
+			mainText.text = data.topText;
+		}
+	}
 }

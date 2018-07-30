@@ -35,8 +35,12 @@ public class PlayerController : MonoBehaviour {
     public UIAnimator patchAnim;
 
 	[Header("Upgrades")]
+	public int minPatches;
+	[HideInInspector]
+	public int patches;
 	public float minTankMultiplier;
-	float tankMultiplier = 1f;
+	[HideInInspector]
+	public float tankMultiplier = 1f;
 	public float maxReachMultiplier;
 	[HideInInspector]
 	public float reachMultiplier = 1f;
@@ -120,6 +124,10 @@ public class PlayerController : MonoBehaviour {
 		float levelRatio = (float)level / (float)maxLevel;
 		reachMultiplier = Mathf.Lerp (1f, maxReachMultiplier, levelRatio);
 //		print (level + " / " + maxLevel + " -> " + reachMultiplier);
+	}
+
+	public void SetPatches (int level) {
+		patches = minPatches + level;
 	}
 
 	void RemoveOxygen (float value) {

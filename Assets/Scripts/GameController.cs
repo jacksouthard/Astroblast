@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour {
     Text shopMoneyText;
     Text preGameMoneyText;
     Text postGameMoneyText;
+    Text preGameLocationText;
+    Text postGameLocationText;
 
     public float moneyAddTime;
 
@@ -52,6 +54,11 @@ public class GameController : MonoBehaviour {
         // map
         UnpackAstroidLocationMap();
         AsteroidMap.instance.Init();
+
+        int curAsteroid = PlayerPrefs.GetInt("Current_Asteroid", 0);
+        string curAsteroidName = astroidLocations[curAsteroid].name;
+        preGameLocationText.text = curAsteroidName;
+        postGameLocationText.text = curAsteroidName;
     }
 
     void SetupUI() {
@@ -67,6 +74,8 @@ public class GameController : MonoBehaviour {
         preGameMoneyText = GameObject.Find("PreGameMoneyText").GetComponent<Text>();
         postGameMoneyText = GameObject.Find("PostGameMoneyText").GetComponent<Text>();
         shopMoneyText = GameObject.Find("ShopMoneyText").GetComponent<Text>();
+        preGameLocationText = GameObject.Find("PreGameLocationText").GetComponent<Text>();
+        postGameLocationText = GameObject.Find("PostGameLocationText").GetComponent<Text>();
 
         moneyText = FindObjectOfType<MoneyText>();
     }
@@ -315,6 +324,14 @@ public class GameController : MonoBehaviour {
 			AsteroidMap.instance.Init ();
 		}
 	}
+
+    public void SelectNewAstroid(int newSelected) {
+        int curSelected = PlayerPrefs.GetInt("Current_Asteroid", 0);
+        if (newSelected != curSelected) {
+            PlayerPrefs.SetInt("Current_Asteroid", newSelected);
+            EndGame();
+        }
+    }
 
 	public List<AstroidLocation> astroidLocations = new List<AstroidLocation>();
 	[System.Serializable]

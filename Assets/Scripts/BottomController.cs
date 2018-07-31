@@ -50,7 +50,7 @@ public class BottomController : MonoBehaviour {
 		}
 
 		// spawn treasure
-		if (tspawn != null && !alreadyGotTreasure) {
+		if (tspawn != null && !alreadyGotTreasure && allTreasures.Length - 1 >= TerrainManager.instance.curAstroidIndex) {
 			TreasureData tData = allTreasures [TerrainManager.instance.curAstroidIndex];
 			Instantiate (tData.prefab, tspawn.position, tspawn.rotation, transform);
 		}

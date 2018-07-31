@@ -95,7 +95,7 @@ MonoBehaviour:
       chunkIDs: 02000000
   - name: Medium
     baseDifficulty: 1
-    depth: 500
+    depth: 400
     teirs:
     - difficulty: 0
       appearsAfter: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
       chunkIDs: 02000000
   - name: Hard
     baseDifficulty: 2
-    depth: 700
+    depth: 500
     teirs:
     - difficulty: 0
       appearsAfter: 0
@@ -142,3 +142,8 @@ MonoBehaviour:
   - prefab: {fileID: 1070027937785930, guid: edae800a42bbb4d8d83683212bf4ab9e, type: 2}
     minScale: 1.5
     maxScale: 3
+  alienDifficultyData:
+  - healthMultiplier: 1
+    glowColor: {r: 1, g: 0.14901961, b: 0.14901961, a: 1}
+  - healthMultiplier: 1.25
+    glowColor: {r: 0.17836371, g: 1, b: 0.1490196, a: 1}

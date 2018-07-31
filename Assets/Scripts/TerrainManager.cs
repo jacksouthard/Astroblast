@@ -381,4 +381,17 @@ public class TerrainManager : MonoBehaviour {
 		public float minScale;
 		public float maxScale;
 	}
+
+	// ALIENS
+	public AlienDifficultyData GetAstroidAlienData () {
+		return alienDifficultyData[Mathf.Clamp (curAstroidIndex, 0, alienDifficultyData.Length - 1)];
+	}
+
+	[Header("Aliens")]
+	public AlienDifficultyData[] alienDifficultyData;
+	[System.Serializable]
+	public struct AlienDifficultyData {
+		public float healthMultiplier;
+		public Color glowColor;
+	}
 }

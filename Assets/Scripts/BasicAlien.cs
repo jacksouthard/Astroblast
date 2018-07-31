@@ -44,6 +44,8 @@ public class BasicAlien : MonoBehaviour {
 
 	protected AstroidSpawner curAstroid;
 
+	protected Color difficultyColor;
+
 	void Awake () {
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody2D> ();
@@ -52,6 +54,18 @@ public class BasicAlien : MonoBehaviour {
 	}
 
 	void Start () {
+		// set basic properties for given astroid
+		TerrainManager.AlienDifficultyData diffData = TerrainManager.instance.GetAstroidAlienData ();
+		health = Mathf.RoundToInt ((float)health * diffData.healthMultiplier);
+		difficultyColor = diffData.glowColor;
+		Transform possibleEye = transform.Find ("Eye");
+		if (possibleEye != null) {
+			SpriteRenderer[] eyes = possibleEye.GetComponentsInChildren<SpriteRenderer> ();
+			foreach (var eye in eyes) {
+				eye.color = difficultyColor;
+			}
+		}
+
 		Initiated ();
         Activate();
 	}
@@ -177,7 +191,6 @@ public class BasicAlien : MonoBehaviour {
 
 			if (state != State.dead && !invincible) {
 				TakeDamage (bullet.damage, coll.transform);
-				print (bullet.damage + " | " + health);
 
 				if (state == State.idle) {
 					target = GameObject.Find ("Player").transform;

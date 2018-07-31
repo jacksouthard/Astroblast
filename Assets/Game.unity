@@ -7457,6 +7457,11 @@ Prefab:
       propertyPath: depthArrow
       value: 
       objectReference: {fileID: 222184890}
+    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
+        type: 2}
+      propertyPath: curAstroidIndex
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7794e708f204743cdac36b3c82050280, type: 2}
   m_IsPrefabParent: 0

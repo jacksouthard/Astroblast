@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShootingAlien : BasicAlien {
 	public GameObject projectile;
+	public bool colorProjectile;
 	public float shotSpeed;
 	public float awakenTime;
 	public float attackCooldown;
@@ -68,6 +69,18 @@ public class ShootingAlien : BasicAlien {
 	void Shoot () { // called in attack animation
 		GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation, transform.parent);
 		newProjectile.GetComponent<Rigidbody2D> ().AddRelativeForce (Vector2.up * shotSpeed);
+		if (colorProjectile) {
+			LineRenderer possibleLR = projectile.GetComponent<LineRenderer> ();
+			if (possibleLR != null) {
+				possibleLR.startColor = difficultyColor;
+				possibleLR.endColor = difficultyColor;
+			}
+
+//			TrailRenderer possibleTR = projectile.GetComponent<TrailRenderer> ();
+//			if (possibleTR != null) {
+//				possibleTR.material.SetColor ("_EmissionColor", difficultyColor);
+//			}
+		}
 	}
 
 	void AttackComplete () { // called when attack animation is done in animation

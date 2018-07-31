@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
     UIPanel postGameUI;
     UIPanel gameUI;
     UIPanel shopUI;
+    UIPanel mapUI;
 
     Text failMoneyText;
     Text successMoneyText;
@@ -50,6 +51,7 @@ public class GameController : MonoBehaviour {
 
         // map
         UnpackAstroidLocationMap();
+        AsteroidMap.instance.Init();
     }
 
     void SetupUI() {
@@ -58,6 +60,7 @@ public class GameController : MonoBehaviour {
         preGameUI = GameObject.Find("PreGameUI").GetComponent<UIPanel>();
         gameUI = GameObject.Find("GameUI").GetComponent<UIPanel>();
         shopUI = GameObject.Find("ShopUI").GetComponent<UIPanel>();
+        mapUI = GameObject.Find("MapUI").GetComponent<UIPanel>();
 
         failMoneyText = GameObject.Find("FailMoneyText").GetComponent<Text>();
         successMoneyText = GameObject.Find("SuccessMoneyText").GetComponent<Text>();
@@ -79,6 +82,7 @@ public class GameController : MonoBehaviour {
         postGameUI.HideAll();
         gameUI.HideAll();
         shopUI.HideAll();
+        mapUI.HideAll();
     }
 
     public void ShowGameUI() {
@@ -86,6 +90,7 @@ public class GameController : MonoBehaviour {
         postGameUI.HideAll();
         gameUI.ShowTop();
         shopUI.HideAll();
+        mapUI.HideAll();
     }
 
     public void HideGameUI() {
@@ -97,6 +102,7 @@ public class GameController : MonoBehaviour {
         postGameUI.ShowAll();
         gameUI.HideAll();
         shopUI.HideAll();
+        mapUI.HideAll();
 
         if (!isInPostGame) {
             isInPostGame = true;
@@ -116,11 +122,30 @@ public class GameController : MonoBehaviour {
         postGameUI.HideAll();
         gameUI.HideAll();
         shopUI.ShowAll();
+        mapUI.HideAll();
         shopMoneyText.text = totalMoney.ToString();
     }
 
     public void CloseShop() {
         Shop.instance.OnClose();
+        if (isInPostGame) {
+            ShowPostgame();
+        } else {
+            ShowPregame();
+        }
+    }
+
+    public void ShowMap() {
+        AsteroidMap.instance.OnOpen();
+        preGameUI.HideAll();
+        postGameUI.HideAll();
+        gameUI.HideAll();
+        shopUI.HideAll();
+        mapUI.ShowAll();
+    }
+
+    public void CloseMap() {
+        AsteroidMap.instance.OnClose();
         if (isInPostGame) {
             ShowPostgame();
         } else {
@@ -274,6 +299,7 @@ public class GameController : MonoBehaviour {
 
 	// ASTROIDS
 	public int farthestAstroid;
+    public int currentAstroid;
 
 	void UnpackAstroidLocationMap () {
 		farthestAstroid = PlayerPrefs.GetInt ("farthest", 0);
@@ -283,13 +309,14 @@ public class GameController : MonoBehaviour {
 	public void UnlockNewAstroid (int newFarthestAstroid) {
 		PlayerPrefs.SetInt ("farthest", newFarthestAstroid);
 		UnpackAstroidLocationMap ();
+        AsteroidMap.instance.Init();
 	}
 
 	public List<AstroidLocation> astroidLocations = new List<AstroidLocation>();
 	[System.Serializable]
 	public struct AstroidLocation {
-		public int astroidIndex;
+        public string name;
 		public Color color;
-		public Vector2 position;
+        public float xPosition;
 	}
 }

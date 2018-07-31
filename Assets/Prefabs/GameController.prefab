@@ -101,6 +101,14 @@ MonoBehaviour:
     weapon: 1
     equiped: 0
     topText: 
+  - upgradeString: shotgun
+    currentLevel: 0
+    costs: 3c000000
+    description: Slow, but powerful
+    dynamicText: 0
+    weapon: 1
+    equiped: 0
+    topText: 
   farthestAstroid: 0
   currentAstroid: 0
   astroidLocations:

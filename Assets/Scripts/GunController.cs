@@ -8,6 +8,7 @@ public class GunController : MonoBehaviour {
     GameObject muzzleFlash;
 
 	public GameObject projectile;
+	public int shots = 1;
 	public int damage;
 	public float accuracy;
 	public float speed;
@@ -40,13 +41,15 @@ public class GunController : MonoBehaviour {
 	}
 
 	void Fire () {
-		GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation);
-		newProjectile.GetComponent<Bullet> ().damage = damage;
-		Rigidbody2D projectileRb = newProjectile.GetComponent<Rigidbody2D> ();
-		newProjectile.transform.rotation = Quaternion.Euler (0f, 0f, newProjectile.transform.rotation.eulerAngles.z + Random.Range (-accuracy, accuracy)); 
-        projectileRb.velocity = rb.velocity;
-        projectileRb.AddForce (newProjectile.transform.right * speed);
-		Destroy (newProjectile, lifetime);
+		for (int i = 0; i < shots; i++) {
+			GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation);
+			newProjectile.GetComponent<Bullet> ().damage = damage;
+			Rigidbody2D projectileRb = newProjectile.GetComponent<Rigidbody2D> ();
+			newProjectile.transform.rotation = Quaternion.Euler (0f, 0f, newProjectile.transform.rotation.eulerAngles.z + Random.Range (-accuracy, accuracy)); 
+			projectileRb.velocity = rb.velocity;
+			projectileRb.AddForce (newProjectile.transform.right * speed);
+			Destroy (newProjectile, lifetime);		
+		}
 
 		pc.ProjectileFire (knockback);
 

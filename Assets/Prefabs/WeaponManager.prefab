@@ -61,3 +61,6 @@ MonoBehaviour:
   - prefab: {fileID: 1853773152558122, guid: 0c32b0ca9967b415ab65bd7a45914077, type: 2}
     sprite: {fileID: 21300000, guid: fab24feb3091a46fc99a044769b827c4, type: 3}
     name: carbine
+  - prefab: {fileID: 1065777475990314, guid: fadd222dd2595450ba36feb55a41f466, type: 2}
+    sprite: {fileID: 21300000, guid: ce796f6964b5e4417bebfd08ace7222d, type: 3}
+    name: shotgun

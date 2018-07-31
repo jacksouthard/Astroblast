@@ -59,6 +59,7 @@ public class TerrainManager : MonoBehaviour {
 
 	void Awake () {
 		instance = this;
+        curAstroidIndex = PlayerPrefs.GetInt("Current_Asteroid", 0);
 		BuildLevelChunks ();
         InitUI();
 	}

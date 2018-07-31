@@ -7459,8 +7459,23 @@ Prefab:
       objectReference: {fileID: 222184890}
     - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
         type: 2}
+      propertyPath: astroids.Array.data[0].depth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
+        type: 2}
+      propertyPath: astroids.Array.data[1].depth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
+        type: 2}
+      propertyPath: astroids.Array.data[2].depth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
+        type: 2}
       propertyPath: curAstroidIndex
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7794e708f204743cdac36b3c82050280, type: 2}

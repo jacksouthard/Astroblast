@@ -305,11 +305,15 @@ public class GameController : MonoBehaviour {
 		farthestAstroid = PlayerPrefs.GetInt ("farthest", 0);
 		print ("Unpacking astroid map with farthest location: " + farthestAstroid);
 	}
-
+		
 	public void UnlockNewAstroid (int newFarthestAstroid) {
-		PlayerPrefs.SetInt ("farthest", newFarthestAstroid);
-		UnpackAstroidLocationMap ();
-        AsteroidMap.instance.Init();
+		int curFarthest = PlayerPrefs.GetInt ("farthest", 0);
+		if (newFarthestAstroid > curFarthest) {
+			print ("Unlocking astroid " + newFarthestAstroid);
+			PlayerPrefs.SetInt ("farthest", newFarthestAstroid);
+			UnpackAstroidLocationMap ();
+			AsteroidMap.instance.Init ();
+		}
 	}
 
 	public List<AstroidLocation> astroidLocations = new List<AstroidLocation>();

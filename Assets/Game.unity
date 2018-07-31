@@ -4638,16 +4638,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 114415041269010508, guid: d8d1212c99c834c3393cef8c2fbc0bed,
-        type: 2}
-      propertyPath: shopItems.Array.data[3].dynamicText
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114415041269010508, guid: d8d1212c99c834c3393cef8c2fbc0bed,
-        type: 2}
-      propertyPath: shopItems.Array.data[2].dynamicText
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8d1212c99c834c3393cef8c2fbc0bed, type: 2}
   m_IsPrefabParent: 0
@@ -5280,6 +5270,11 @@ Prefab:
       propertyPath: patchAnim
       value: 
       objectReference: {fileID: 705557219}
+    - target: {fileID: 114431132584546808, guid: 7d6fb8a547de54f26ba53f60eaca7be4,
+        type: 2}
+      propertyPath: minTankMultiplier
+      value: 0.333
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d6fb8a547de54f26ba53f60eaca7be4, type: 2}
   m_IsPrefabParent: 0
@@ -6306,6 +6301,7 @@ MonoBehaviour:
   baseFollowSpeed: 4
   directionalOffset: 6
   farthestY: 0
+  maxDepthOffset: 16
   xRange: 11.5
   maxY: 0
   baseZoom: 16
@@ -6511,11 +6507,6 @@ Prefab:
       propertyPath: depthArrow
       value: 
       objectReference: {fileID: 222184890}
-    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
-        type: 2}
-      propertyPath: spawnTerrain
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7794e708f204743cdac36b3c82050280, type: 2}
   m_IsPrefabParent: 0

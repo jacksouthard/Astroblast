@@ -16,6 +16,11 @@ public class TerrainManager : MonoBehaviour {
 	public float objectSpawnBuffer;
 	public float objectDespawnDst;
 	List<LevelChunk> allLevelChunks = new List<LevelChunk>();
+	// bottom
+	public float bottomBuffer;
+	[HideInInspector]
+	public float maxDepth;
+	public GameObject bottom;
 
 	[Header("Wall Objects")]
 	public int maxWallObjects;
@@ -62,7 +67,11 @@ public class TerrainManager : MonoBehaviour {
 		mainCam = Camera.main.transform;
 		persistantObjects = GameObject.Find ("PersistantObjects").transform;
 		curAstroid = astroids [curAstroidIndex];
-		baseDifficulty = astroids [curAstroidIndex].baseDifficulty;
+		baseDifficulty = curAstroid.baseDifficulty;
+		maxDepth = curAstroid.depth;
+
+		float bottomSpawnY = -maxDepth + (maxDepth % sidePieceSpawnIntervals);
+		Instantiate (bottom, new Vector3 (0f, bottomSpawnY, 0f), Quaternion.identity);
 		// spawn initial chunks
 		ResetTerrain();
 	}
@@ -74,15 +83,17 @@ public class TerrainManager : MonoBehaviour {
 
 		if (shouldUpdate && mainCam.position.y * direction > currentY * direction) {
 			currentY = mainCam.position.y;
+			if (currentY <= -maxDepth + bottomBuffer) {
+				BottomController.instance.AttemptExpression ();
+			}
             depthText.text = Mathf.Abs(Mathf.RoundToInt(currentY)).ToString() + "m";
 
 			if (spawnTerrain && direction == -1) { // chunks only spawn when going into astroid
-				if (currentY - objectSpawnBuffer < curChunkY) {
+				if (currentY - objectSpawnBuffer < curChunkY && currentY - objectSpawnBuffer > -(maxDepth - bottomBuffer)) {
 					ExpressNextChunk ();
 				}
 			}
 				
-			// side pieces are generated dynamically based on where the player is
 			if (currentY < initialSidePieceY && direction == -1) { // dont spawn side pieces above extraction point
 				if (lastSidePieceY == null) {
 					CreateNextSidePiece ();
@@ -116,14 +127,6 @@ public class TerrainManager : MonoBehaviour {
 		currentY = 0f;
 		curChunkY = 0f;
 
-		if (spawnTerrain) {
-//			ExpressNextChunk ();
-		}
-
-//		for (int i = 0; i < initialBackgroundCount; i++) {
-//			CreateNextBackground ();
-//		}
-
 		for (int i = 0; i < initialSidePieceCount; i++) {
 			CreateNextSidePiece ();
 		}
@@ -140,7 +143,7 @@ public class TerrainManager : MonoBehaviour {
 			spawnPos = new Vector3 (sidePieceX, initialSidePieceY, 0f);
 		} else {
 			spawnPos = new Vector3 (sidePieceX, lastSidePieceY.Value + (sidePieceSpawnIntervals * direction), 0f);
-			if (spawnPos.y > initialSidePieceY) {
+			if (spawnPos.y > initialSidePieceY || spawnPos.y < -maxDepth + (sidePieceSpawnIntervals / 2f)) {
 //				print ("Tried to spawn side piece in extraction area");
 				return;
 			}
@@ -287,6 +290,7 @@ public class TerrainManager : MonoBehaviour {
 	public class Astroid { 
 		public string name;
 		public int baseDifficulty;
+		public float depth;
 		public Teir[] teirs;
 	}
 

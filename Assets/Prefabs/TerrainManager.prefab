@@ -56,6 +56,8 @@ MonoBehaviour:
   initalChunkY: -30
   objectSpawnBuffer: 15
   objectDespawnDst: 30
+  bottomBuffer: 80
+  bottom: {fileID: 1741414698767954, guid: f8b8874441b554a2c97ff352f94118af, type: 2}
   maxWallObjects: 2
   wallObjectAngleVariance: 5
   wallObjectMinSpacing: 5
@@ -76,6 +78,7 @@ MonoBehaviour:
   astroids:
   - name: Starter
     baseDifficulty: 0
+    depth: 100
     teirs:
     - difficulty: 0
       appearsAfter: 0

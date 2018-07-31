@@ -5,6 +5,7 @@ using UnityEngine;
 public class CrystalSpawner : MonoBehaviour {
 	[Header("Generation")]
 	public GameObject crystalSprout;
+	public int minSprouts;
 	public int maxSprouts;
 	public float sproutMaxAngle;
 	public float minSproutLength;
@@ -18,33 +19,46 @@ public class CrystalSpawner : MonoBehaviour {
 	Transform player; 
 	float startSize;
 
+	[Header("Custom Spawning")]
+	public bool customSpawn;
+	public CrystalTeir customTeir;
+
 	int valueTeir;
 
 	void Start () {
-		int highestValue = TerrainManager.instance.curDifficulty + TerrainManager.instance.baseDifficulty;
-		if (highestValue > allCrystalTeirs.Length - 1) {
-			highestValue = allCrystalTeirs.Length - 1;
-		}
+		CrystalTeir teir;
+		if (!customSpawn) { 
+			int highestValue = TerrainManager.instance.curDifficulty + TerrainManager.instance.baseDifficulty;
+			if (highestValue > allCrystalTeirs.Length - 1) {
+				highestValue = allCrystalTeirs.Length - 1;
+			}
 
-		if (highestValue == 0) {
-			valueTeir = highestValue;
+			if (highestValue == 0) {
+				valueTeir = highestValue;
+			} else {
+				valueTeir = Random.Range (highestValue - 1, highestValue + 1);
+			}
+			// TODO valueTeir += baseValue for astroid
+
+			teir = allCrystalTeirs [valueTeir];
 		} else {
-			valueTeir = Random.Range (highestValue - 1, highestValue + 1);
+			teir = customTeir;
 		}
-		// TODO valueTeir += baseValue for astroid
 
-		int sproutCount = Random.Range (1, maxSprouts + 1);
+		int sproutCount = Random.Range (minSprouts, maxSprouts + 1);
 		for (int i = 0; i < sproutCount; i++) {
 			Quaternion spawnRot = Quaternion.Euler (0f, 0f, Random.Range (-sproutMaxAngle, sproutMaxAngle) + 90f);
 			GameObject newSprout = Instantiate (crystalSprout, transform.position, Quaternion.identity, transform);
 			newSprout.transform.localRotation = spawnRot;
-			newSprout.GetComponentInChildren<SpriteRenderer> ().color = allCrystalTeirs[valueTeir].color;
+			newSprout.GetComponentInChildren<SpriteRenderer> ().color = teir.color;
 
 			float scale = Random.Range (minSproutLength, maxSproutLength);
 			newSprout.transform.localScale = new Vector3 (scale, scale, 1f);
 		}
 
-		GetComponent<Light> ().color = allCrystalTeirs[valueTeir].color;
+		Light light = GetComponent<Light> ();
+		light.color = teir.color;
+		light.intensity *= teir.intensity;
 
 		// set collider
 		GetComponent<CircleCollider2D> ().radius *= PlayerController.instance.reachMultiplier;
@@ -55,7 +69,11 @@ public class CrystalSpawner : MonoBehaviour {
 			collectionTimer -= Time.deltaTime;
 			if (collectionTimer <= 0f) {
                 // finish collection
-                GameController.instance.CollectMoney(allCrystalTeirs[valueTeir].value);
+				if (!customSpawn) {
+					GameController.instance.CollectMoney (allCrystalTeirs [valueTeir].value);
+				} else {
+					GameController.instance.CollectMoney (customTeir.value);
+				}
 				Destroy (gameObject);
 			} else {
 				float timeRatio = collectionTimer / collectionTime;
@@ -85,5 +103,6 @@ public class CrystalSpawner : MonoBehaviour {
 	public class CrystalTeir {
 		public Color color;
 		public int value;
+		public int intensity;
 	}
 }

@@ -118,16 +118,19 @@ public class UIShopItem : MonoBehaviour {
 	public void UpdateMainText () { // for items only (not weapons)
 		GameController.StopItem data = GameController.instance.allShopItems[key];
 		if (data.dynamicText) {
-			float diplayValue = 0f;
+			string displayString = "";
 			if (data.upgradeString == "tank") {
+				float diplayValue = 0f;
 				diplayValue = PlayerController.instance.tankMultiplier;
+				diplayValue = 1f / diplayValue;
 				diplayValue = Mathf.Round (diplayValue * 10f) / 10f;
+				displayString = (diplayValue * 100f) + "%"; 
 			} else if (data.upgradeString == "reach") {
-				diplayValue = PlayerController.instance.reachMultiplier;
+				displayString = PlayerController.instance.reachMultiplier.ToString();
 			} else if (data.upgradeString == "patches") {
-				diplayValue = PlayerController.instance.patches;
+				displayString = PlayerController.instance.patches.ToString();
 			}
-			mainText.text = "" + diplayValue + data.topText;
+			mainText.text = "" + displayString + data.topText;
 		} else {
 			mainText.text = data.topText;
 		}

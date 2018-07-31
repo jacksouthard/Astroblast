@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour {
 
         // shop
         InitShopItems();
-//		ClearUpgrades ();
+		ClearUpgrades ();
 		GetInitialItems();
 
         UnpackAll();
@@ -129,7 +129,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void OnPlayerDeath() {
-        SaveMoney();
+		curSiteMoney = Mathf.RoundToInt ((float)curSiteMoney / 4f);
+		SaveMoney();
         StartCoroutine(GameOverSequence());
     }
 

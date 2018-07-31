@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour {
     bool flipQued = false;
     public float hitWhileLeakingDrain;
     public Text oxygenText;
-	public UIFlicker oxygenFlicker;
+	UIFlicker oxygenFlicker;
     public UIAnimator patchAnim;
 
 	[Header("Upgrades")]

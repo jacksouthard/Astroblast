@@ -32,11 +32,6 @@ public class ShipController : MonoBehaviour {
     }
 
     void Update() {
-        if (canExit && Input.GetKeyDown(KeyCode.Space)) {
-            // temp for exiting ship
-            PlayerExit();
-        }
-
 		if (entering && Input.GetMouseButtonDown(0)) {
 			anim.speed = 10000f; // to skip animation (hacky?)
 		}

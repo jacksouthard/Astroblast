@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour {
 	float curFollowSpeed;
 	public float directionalOffset;
 	public float farthestY;
+	public float maxDepthOffset;
+	float minY;
 	public float xRange;
 	public float maxY;
 	Transform target;
@@ -44,6 +46,7 @@ public class CameraController : MonoBehaviour {
 		farthestY = maxY;
 		transform.position = new Vector3 (transform.position.x, maxY, transform.position.z);
 		curFollowSpeed = baseFollowSpeed;
+		minY = -TerrainManager.instance.maxDepth + maxDepthOffset;
 	}
 
 	public void StartTracking (Transform _target) {
@@ -105,7 +108,7 @@ public class CameraController : MonoBehaviour {
 
 	void MoveCam () {
 		float x = Mathf.Clamp (target.position.x, -xRange, xRange);
-		float y = Mathf.Clamp (farthestY, -Mathf.Infinity, maxY) + (directionalOffset * direction);
+		float y = Mathf.Clamp (farthestY, minY, maxY) + (directionalOffset * direction);
 		Vector3 newPosition = new Vector3 (x, y, transform.position.z);
 		transform.position = Vector3.Slerp(transform.position, newPosition, curFollowSpeed * Time.deltaTime);
 

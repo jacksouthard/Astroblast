@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 108542457561295924}
   - component: {fileID: 58505250546181426}
   m_Layer: 0
-  m_Name: Crystal
+  m_Name: BigCrystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,24 +106,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystalSprout: {fileID: 1268813128345816, guid: b7059c92cab9b454cbb912c71dd59469,
     type: 2}
-  minSprouts: 1
-  maxSprouts: 3
+  minSprouts: 5
+  maxSprouts: 5
   sproutMaxAngle: 30
-  minSproutLength: 0.4
-  maxSproutLength: 0.8
+  minSproutLength: 1.2
+  maxSproutLength: 2
   collectionTime: 0.3
-  customSpawn: 0
+  customSpawn: 1
   customTeir:
-    color: {r: 0, g: 0, b: 0, a: 0}
-    value: 0
-    intensity: 0
-  allCrystalTeirs:
-  - color: {r: 0.17560555, g: 0.76885813, b: 0.85294116, a: 1}
-    value: 1
-    intensity: 1
-  - color: {r: 0.45374474, g: 0.12943341, b: 0.9264706, a: 1}
-    value: 2
-    intensity: 1
-  - color: {r: 0.61479664, g: 0.19755624, b: 0.9264706, a: 1}
-    value: 4
-    intensity: 1
+    color: {r: 1, g: 0, b: 0.68275833, a: 1}
+    value: 100
+    intensity: 3
+  allCrystalTeirs: []

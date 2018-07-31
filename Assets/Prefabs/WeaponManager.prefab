@@ -58,3 +58,6 @@ MonoBehaviour:
   - prefab: {fileID: 1934362708206686, guid: a7f53a86d29b44560b9f6a2cfe0d84c4, type: 2}
     sprite: {fileID: 21300000, guid: 6b0db4b3e688249dd89eff139e7bf93b, type: 3}
     name: SMG
+  - prefab: {fileID: 1853773152558122, guid: 0c32b0ca9967b415ab65bd7a45914077, type: 2}
+    sprite: {fileID: 21300000, guid: fab24feb3091a46fc99a044769b827c4, type: 3}
+    name: carbine

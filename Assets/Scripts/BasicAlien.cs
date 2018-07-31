@@ -174,16 +174,18 @@ public class BasicAlien : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D coll) {
 		if (coll.gameObject.tag == "Bullet") {
 			Bullet bullet = coll.gameObject.GetComponent<Bullet> ();
-			bullet.Hit ();
 
 			if (state != State.dead && !invincible) {
 				TakeDamage (bullet.damage, coll.transform);
+				print (bullet.damage + " | " + health);
 
 				if (state == State.idle) {
 					target = GameObject.Find ("Player").transform;
 					Awaken ();
 				}
 			}
+
+			bullet.Hit ();
 		} else if (coll.gameObject.tag == "Player") {
 			if (state == State.awakened) {
 				PhysicalTripAttack ();

@@ -93,6 +93,14 @@ MonoBehaviour:
     weapon: 1
     equiped: 0
     topText: 
+  - upgradeString: carbine
+    currentLevel: 0
+    costs: 64000000
+    description: Moderate damage and firerate
+    dynamicText: 0
+    weapon: 1
+    equiped: 0
+    topText: 
   farthestAstroid: 0
   currentAstroid: 0
   astroidLocations:

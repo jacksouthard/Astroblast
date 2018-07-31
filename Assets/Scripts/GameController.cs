@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 
         // shop
         InitShopItems();
-		ClearUpgrades ();
+//		ClearUpgrades ();
 		GetInitialItems();
 
         UnpackAll();

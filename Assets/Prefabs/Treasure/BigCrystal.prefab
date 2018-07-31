@@ -108,9 +108,9 @@ MonoBehaviour:
     type: 2}
   minSprouts: 5
   maxSprouts: 5
-  sproutMaxAngle: 30
-  minSproutLength: 1.2
-  maxSproutLength: 2
+  sproutMaxAngle: 50
+  minSproutLength: 0.9
+  maxSproutLength: 1.5
   collectionTime: 0.3
   customSpawn: 1
   customTeir:

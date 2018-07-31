@@ -26,8 +26,9 @@ public class AsteroidMap : MonoBehaviour {
         Vector2 curPos = Vector2.zero;
 
         for (int i = 0; i < astroids.Count; i++) {
+			print ("yote");
             GameObject newAsteroid = Instantiate(uiAsteroidPrefab, content.GetChild(1));
-            curPos = new Vector2(astroids[i].xPosition, 100 * (i + 1) + 50);
+            curPos = new Vector2(astroids[i].xPosition, 150 * (i + 1) + 50);
 
             newAsteroid.GetComponent<RectTransform>().anchoredPosition = curPos;
 

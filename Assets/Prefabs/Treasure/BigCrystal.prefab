@@ -112,9 +112,9 @@ MonoBehaviour:
   minSproutLength: 0.9
   maxSproutLength: 1.5
   collectionTime: 0.3
-  customSpawn: 1
+  treasure: 1
   customTeir:
     color: {r: 1, g: 0, b: 0.68275833, a: 1}
-    value: 100
+    value: 0
     intensity: 3
   allCrystalTeirs: []

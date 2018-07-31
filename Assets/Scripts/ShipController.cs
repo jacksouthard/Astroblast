@@ -55,6 +55,9 @@ public class ShipController : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "Player") {
             if (TerrainManager.instance.direction == 1) {
+				if (BottomController.instance.hasTreasure) {
+					BottomController.instance.TreasureExtracted ();
+				}
                 PlayerEnter(player);
                 GameController.instance.HideGameUI();
                 //              camCon.StartTracking (transform);

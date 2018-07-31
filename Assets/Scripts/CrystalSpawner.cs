@@ -20,14 +20,14 @@ public class CrystalSpawner : MonoBehaviour {
 	float startSize;
 
 	[Header("Custom Spawning")]
-	public bool customSpawn;
+	public bool treasure;
 	public CrystalTeir customTeir;
 
 	int valueTeir;
 
 	void Start () {
 		CrystalTeir teir;
-		if (!customSpawn) { 
+		if (!treasure) { 
 			int highestValue = TerrainManager.instance.curDifficulty + TerrainManager.instance.baseDifficulty;
 			if (highestValue > allCrystalTeirs.Length - 1) {
 				highestValue = allCrystalTeirs.Length - 1;
@@ -69,10 +69,11 @@ public class CrystalSpawner : MonoBehaviour {
 			collectionTimer -= Time.deltaTime;
 			if (collectionTimer <= 0f) {
                 // finish collection
-				if (!customSpawn) {
+				if (!treasure) {
 					GameController.instance.CollectMoney (allCrystalTeirs [valueTeir].value);
 				} else {
-					GameController.instance.CollectMoney (customTeir.value);
+					BottomController.instance.TreasureCollected ();
+					PlayerController.instance.CollectedTreasure (customTeir.color);
 				}
 				Destroy (gameObject);
 			} else {

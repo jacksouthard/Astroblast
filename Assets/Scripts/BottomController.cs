@@ -9,13 +9,20 @@ public class BottomController : MonoBehaviour {
 	TreasureData data;
 	public TreasureData[] allTreasures;
 	bool expressed = false;
+	bool alreadyGotTreasure = false;
+	public bool hasTreasure = false;
+	public bool alwaysSpawnTreasure;
 
 	void Awake () {
 		instance = this;
 	}
 
 	void Start () {
-		
+		int boolInt = PlayerPrefs.GetInt ("T" + TerrainManager.instance.curAstroidIndex, 0); // 0 means false | 1 is true
+		if (boolInt == 1 && !alwaysSpawnTreasure) {
+			alreadyGotTreasure = true;
+			print ("Already have treasure");
+		}
 	}
 
 	public void AttemptExpression () {
@@ -43,7 +50,7 @@ public class BottomController : MonoBehaviour {
 		}
 
 		// spawn treasure
-		if (tspawn != null) {
+		if (tspawn != null && !alreadyGotTreasure) {
 			TreasureData tData = allTreasures [TerrainManager.instance.curAstroidIndex];
 			Instantiate (tData.prefab, tspawn.position, tspawn.rotation, transform);
 		}
@@ -51,8 +58,18 @@ public class BottomController : MonoBehaviour {
 		expressed = true;
 	}
 
+	public void TreasureCollected () {
+		hasTreasure = true;
+	}
+
+	public void TreasureExtracted () {
+		GameController.instance.CollectMoney (allTreasures [TerrainManager.instance.curAstroidIndex].value);
+		PlayerPrefs.SetInt ("T" + TerrainManager.instance.curAstroidIndex, 1);
+	}
+
 	[System.Serializable]
 	public struct TreasureData {
+		public int value;
 		public GameObject prefab;
 	}
 }

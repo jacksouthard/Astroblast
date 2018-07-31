@@ -64,7 +64,7 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Global
-    pixelLightCount: 4
+    pixelLightCount: 6
     shadows: 0
     shadowResolution: 0
     shadowProjection: 1

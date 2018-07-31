@@ -271,4 +271,10 @@ public class PlayerController : MonoBehaviour {
 		newWeapon.transform.localPosition = Vector3.zero;
 		gun = newWeapon.GetComponent<GunController> ();
 	}
+
+	public void CollectedTreasure (Color treasureColor) {
+		Light l = transform.Find ("TreasureLight").GetComponent<Light> ();
+		l.enabled = true;
+		l.color = treasureColor;
+	}
 }

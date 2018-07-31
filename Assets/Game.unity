@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,7 +39,6 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
-  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -55,10 +54,11 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
-    m_AtlasSize: 1024
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -353,7 +353,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &48655431
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -520,7 +519,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &80247152
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1059,7 +1057,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &222539768
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1204,7 +1201,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &250561009
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1656,7 +1652,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &336387588
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2078,7 +2073,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &507853190
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2153,7 +2147,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f5032e02607fe4fc7b7c986a7d999f89, type: 2}
   m_StaticBatchInfo:
@@ -2792,7 +2785,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f5032e02607fe4fc7b7c986a7d999f89, type: 2}
   m_StaticBatchInfo:
@@ -3445,7 +3437,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &705557221
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4421,7 +4412,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 5d588c0199ead41a69bd791b8a38cade, type: 2}
   m_StaticBatchInfo:
@@ -4644,7 +4634,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!61 &991249801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4938,7 +4927,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 24fcd4968975a45cf82db30fa203536b, type: 2}
   m_StaticBatchInfo:
@@ -5253,7 +5241,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1107332194
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5482,7 +5469,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1182062939
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5712,7 +5698,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1327107707
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6121,7 +6106,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1396440861
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6214,7 +6198,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 7a14dc8a7e5214d95af331b896a7873a, type: 2}
   m_StaticBatchInfo:
@@ -6359,7 +6342,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: fe7f1f1f4ef0b4fac824199c3a564207, type: 2}
   m_StaticBatchInfo:
@@ -7320,7 +7302,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 009a706ab21ca4dc6be2532de51d1da9, type: 2}
   m_StaticBatchInfo:
@@ -7476,26 +7457,6 @@ Prefab:
       propertyPath: depthArrow
       value: 
       objectReference: {fileID: 222184890}
-    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
-        type: 2}
-      propertyPath: astroids.Array.data[0].depth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
-        type: 2}
-      propertyPath: astroids.Array.data[1].depth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
-        type: 2}
-      propertyPath: astroids.Array.data[2].depth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114842812911336920, guid: 7794e708f204743cdac36b3c82050280,
-        type: 2}
-      propertyPath: curAstroidIndex
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7794e708f204743cdac36b3c82050280, type: 2}
   m_IsPrefabParent: 0
@@ -7623,7 +7584,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1837754783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8219,7 +8179,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1887964931
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8355,7 +8314,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 0a05e2e10e2c84973956821b940523da, type: 2}
   m_StaticBatchInfo:
@@ -8499,7 +8457,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1921578507
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8576,7 +8533,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1924748549
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9258,7 +9214,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &2066846039
 CanvasRenderer:
   m_ObjectHideFlags: 0

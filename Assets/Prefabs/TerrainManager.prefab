@@ -75,7 +75,7 @@ MonoBehaviour:
   depthArrow: {fileID: 0}
   curDifficulty: 0
   baseDifficulty: 0
-  curAstroidIndex: 0
+  curAstroidIndex: 1
   astroids:
   - name: Easy
     baseDifficulty: 0

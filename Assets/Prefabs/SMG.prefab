@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 1815368778069866, guid: aecc499b08b86488abb9b884eb80b66b, type: 2}
+  shots: 1
   damage: 40
   accuracy: 10
   speed: 6

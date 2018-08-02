@@ -5,6 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 	[HideInInspector]
 	public int damage;
+	[HideInInspector]
+	public float force;
 
 	void OnCollisionEnter2D (Collision2D coll) {
 		if (coll.gameObject.tag == "Rock") {

@@ -44,7 +44,8 @@ public class BasicAlien : MonoBehaviour {
 
 	protected AstroidSpawner curAstroid;
 
-	protected Color difficultyColor;
+	[HideInInspector]
+	public Color difficultyColor;
 
 	void Awake () {
 		anim = GetComponent<Animator> ();
@@ -191,6 +192,9 @@ public class BasicAlien : MonoBehaviour {
 
 			if (state != State.dead && !invincible) {
 				TakeDamage (bullet.damage, coll.transform);
+				if (!rb.isKinematic) {
+					rb.AddForce ((Vector2)coll.transform.right * bullet.force);
+				}
 
 				if (state == State.idle) {
 					target = GameObject.Find ("Player").transform;

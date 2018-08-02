@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spike : MonoBehaviour {
+public class Spike : AlienProjectile {
 	public float lifeTime;
 	public float impactForce;
 	bool embeded = false;
+	SpriteRenderer trail;
+
+	void Start () {
+		trail = transform.Find ("Trail").GetComponent<SpriteRenderer> ();
+		trail.color = parentAlien.difficultyColor;
+	}
 
 	void Update () {
 //		if (!embeded) {
@@ -30,6 +36,7 @@ public class Spike : MonoBehaviour {
 
 	void Embed (Transform target) {
 		Destroy (GetComponent<Rigidbody2D> ());
+		trail.enabled = false;
 		transform.parent = target;
 		embeded = true;
 	}

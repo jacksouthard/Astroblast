@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ShootingAlien : BasicAlien {
 	public GameObject projectile;
-	public bool colorProjectile;
 	public bool destroyBarbOnDeath;
 	Barb curBarb;
 	public float shotSpeed;
@@ -70,22 +69,11 @@ public class ShootingAlien : BasicAlien {
 
 	void Shoot () { // called in attack animation
 		GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation, transform.parent);
+		print (newProjectile);
 		newProjectile.GetComponent<Rigidbody2D> ().AddRelativeForce (Vector2.up * shotSpeed);
+		newProjectile.GetComponent<AlienProjectile> ().parentAlien = this;
 		if (destroyBarbOnDeath) {
 			curBarb = newProjectile.GetComponent<Barb> ();
-		}
-
-		if (colorProjectile) {
-			LineRenderer possibleLR = projectile.GetComponent<LineRenderer> ();
-			if (possibleLR != null) {
-				possibleLR.startColor = difficultyColor;
-				possibleLR.endColor = difficultyColor;
-			}
-
-//			TrailRenderer possibleTR = projectile.GetComponent<TrailRenderer> ();
-//			if (possibleTR != null) {
-//				possibleTR.material.SetColor ("_EmissionColor", difficultyColor);
-//			}
 		}
 	}
 

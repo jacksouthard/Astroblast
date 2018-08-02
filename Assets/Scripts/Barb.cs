@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Barb : MonoBehaviour {
+public class Barb : AlienProjectile {
 	public float lifeTime;
 	public float lifeTimeAfterHit;
 	public float reelForce;
@@ -17,6 +17,9 @@ public class Barb : MonoBehaviour {
 
 	void Start () {
 		lr = GetComponent<LineRenderer> ();
+		lr.startColor = parentAlien.difficultyColor;
+		lr.endColor = parentAlien.difficultyColor;
+
 		tip = transform.GetChild (0);
 		barbAnchor = transform.position;
 	}
@@ -28,7 +31,7 @@ public class Barb : MonoBehaviour {
 		}
 
 		if (hitPlayer) {
-			transform.position = player.position;
+			transform.position = new Vector3 (player.position.x, player.position.y, transform.position.z);
 			Vector2 playerPos2d = new Vector2 (player.position.x, player.position.y);
 			Vector2 pos2d = new Vector2 (barbAnchor.x, barbAnchor.y);
 			Vector2 dir = (playerPos2d - pos2d).normalized;

@@ -165,6 +165,8 @@ public class Shop : MonoBehaviour {
     }
 
     public void UpdateUI(string purchasedItem) {
-        uiShopItems[purchasedItem].Refresh();
+		if (uiShopItems.Count > 0) {
+			uiShopItems [purchasedItem].Refresh ();
+		}
     }
 }

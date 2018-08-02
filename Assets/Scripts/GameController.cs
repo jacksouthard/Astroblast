@@ -33,7 +33,6 @@ public class GameController : MonoBehaviour {
 
     void Awake() {
         instance = this;
-
         SetupUI();
     }
 
@@ -182,6 +181,10 @@ public class GameController : MonoBehaviour {
     public void EndGame() {
         SceneManager.LoadScene(0);
     }
+
+	public void LoadCheatScene () {
+		SceneManager.LoadScene(1);
+	}
 
     public void CollectMoney(int newMoney) {
         curSiteMoney += newMoney;

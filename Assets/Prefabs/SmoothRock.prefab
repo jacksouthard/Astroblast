@@ -74,18 +74,18 @@ MonoBehaviour:
   - alienIDs: 00000000010000000200000004000000
     minAliens: 1
     maxAliens: 2
-    minCrystals: 1
-    maxCrystals: 2
+    minCrystals: 0
+    maxCrystals: 1
   - alienIDs: 0000000001000000020000000300000000000000
+    minAliens: 1
+    maxAliens: 2
+    minCrystals: 0
+    maxCrystals: 1
+  - alienIDs: 0000000001000000020000000300000004000000
     minAliens: 1
     maxAliens: 3
     minCrystals: 1
-    maxCrystals: 3
-  - alienIDs: 0000000001000000020000000300000004000000
-    minAliens: 2
-    maxAliens: 4
-    minCrystals: 2
-    maxCrystals: 4
+    maxCrystals: 2
 --- !u!114 &114939849107018246
 MonoBehaviour:
   m_ObjectHideFlags: 1

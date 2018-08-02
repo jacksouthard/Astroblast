@@ -437,6 +437,7 @@ MonoBehaviour:
   rotSpeed: 0
   projectile: {fileID: 1699056771628168, guid: 12cc31fbc0b7a43af9ece62606c77cef, type: 2}
   colorProjectile: 1
+  destroyBarbOnDeath: 1
   shotSpeed: 5000
   awakenTime: 0.1
   attackCooldown: 10

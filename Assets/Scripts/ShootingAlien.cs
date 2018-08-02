@@ -5,6 +5,8 @@ using UnityEngine;
 public class ShootingAlien : BasicAlien {
 	public GameObject projectile;
 	public bool colorProjectile;
+	public bool destroyBarbOnDeath;
+	Barb curBarb;
 	public float shotSpeed;
 	public float awakenTime;
 	public float attackCooldown;
@@ -69,6 +71,10 @@ public class ShootingAlien : BasicAlien {
 	void Shoot () { // called in attack animation
 		GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation, transform.parent);
 		newProjectile.GetComponent<Rigidbody2D> ().AddRelativeForce (Vector2.up * shotSpeed);
+		if (destroyBarbOnDeath) {
+			curBarb = newProjectile.GetComponent<Barb> ();
+		}
+
 		if (colorProjectile) {
 			LineRenderer possibleLR = projectile.GetComponent<LineRenderer> ();
 			if (possibleLR != null) {
@@ -86,4 +92,12 @@ public class ShootingAlien : BasicAlien {
 	void AttackComplete () { // called when attack animation is done in animation
 		state = State.awakened;
 	}
+
+	protected override void Die () {
+		if (destroyBarbOnDeath && curBarb != null) {
+			curBarb.BarbBreak ();
+		}
+		base.Die ();
+	}
+		
 }

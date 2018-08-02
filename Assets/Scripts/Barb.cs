@@ -61,7 +61,7 @@ public class Barb : MonoBehaviour {
 		embeded = true;
 	}
 
-	void BarbBreak () {
+	public void BarbBreak () {
 		if (embeded) {
 			Destroy (tip.gameObject);
 		}

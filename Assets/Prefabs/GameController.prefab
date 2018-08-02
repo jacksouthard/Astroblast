@@ -55,7 +55,7 @@ MonoBehaviour:
   shopItems:
   - upgradeString: tank
     currentLevel: 0
-    costs: 1400000028000000500000008c000000c8000000
+    costs: 14000000280000005a00000096000000dc000000
     description: Upgrade your O2 to reach deeper depths
     dynamicText: 1
     weapon: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
     topText: 
   - upgradeString: SMG
     currentLevel: 0
-    costs: 28000000
+    costs: 1e000000
     description: Fast shooting, yet innacurate
     dynamicText: 0
     weapon: 1
@@ -95,7 +95,7 @@ MonoBehaviour:
     topText: 
   - upgradeString: carbine
     currentLevel: 0
-    costs: 64000000
+    costs: c8000000
     description: Moderate damage and firerate
     dynamicText: 0
     weapon: 1

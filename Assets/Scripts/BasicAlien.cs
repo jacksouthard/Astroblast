@@ -190,15 +190,18 @@ public class BasicAlien : MonoBehaviour {
 		if (coll.gameObject.tag == "Bullet") {
 			Bullet bullet = coll.gameObject.GetComponent<Bullet> ();
 
-			if (state != State.dead && !invincible) {
-				TakeDamage (bullet.damage, coll.transform);
-				if (!rb.isKinematic) {
-					rb.AddForce ((Vector2)coll.transform.right * bullet.force);
+			if (!invincible) {
+				if (state != State.dead) {
+					TakeDamage (bullet.damage, coll.transform);
+
+					if (state == State.idle) {
+						target = GameObject.Find ("Player").transform;
+						Awaken ();
+					}
 				}
 
-				if (state == State.idle) {
-					target = GameObject.Find ("Player").transform;
-					Awaken ();
+				if (!rb.isKinematic) {
+					rb.AddForce ((Vector2)coll.transform.right * bullet.force);
 				}
 			}
 

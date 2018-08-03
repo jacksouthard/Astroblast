@@ -61,7 +61,6 @@ public class GunController : MonoBehaviour {
 			}
 			projectileRb.velocity = rb.velocity;
 			newProjectile.transform.rotation = Quaternion.Euler (0f, 0f, newProjectile.transform.rotation.eulerAngles.z + rotOffset); 
-			print (newProjectile.transform.eulerAngles.z);
 			projectileRb.AddForce (newProjectile.transform.right * speed);
 			Destroy (newProjectile, lifetime);		
 		}

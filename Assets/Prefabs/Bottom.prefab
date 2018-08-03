@@ -453,12 +453,12 @@ MonoBehaviour:
   allTreasures:
   - value: 50
     prefab: {fileID: 1514990785414888, guid: be6f0e979c17443ba8645ea71b7dc961, type: 2}
-  - value: 50
+  - value: 120
     prefab: {fileID: 1514990785414888, guid: be6f0e979c17443ba8645ea71b7dc961, type: 2}
-  - value: 50
+  - value: 230
     prefab: {fileID: 1514990785414888, guid: be6f0e979c17443ba8645ea71b7dc961, type: 2}
   hasTreasure: 0
-  alwaysSpawnTreasure: 1
+  alwaysSpawnTreasure: 0
 --- !u!212 &212049793557819986
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -112,7 +112,7 @@ MonoBehaviour:
   minSproutLength: 0.4
   maxSproutLength: 0.8
   collectionTime: 0.3
-  customSpawn: 0
+  treasure: 0
   customTeir:
     color: {r: 0, g: 0, b: 0, a: 0}
     value: 0
@@ -125,5 +125,14 @@ MonoBehaviour:
     value: 2
     intensity: 1
   - color: {r: 0.61479664, g: 0.19755624, b: 0.9264706, a: 1}
+    value: 3
+    intensity: 1
+  - color: {r: 0.9264706, g: 0.19755624, b: 0.7857148, a: 1}
     value: 4
+    intensity: 1
+  - color: {r: 0.9264706, g: 0.19755624, b: 0.19755624, a: 1}
+    value: 5
+    intensity: 1
+  - color: {r: 0.9264706, g: 0.63490486, b: 0.19755624, a: 1}
+    value: 6
     intensity: 1

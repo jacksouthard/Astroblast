@@ -32,6 +32,7 @@ public class Shop : MonoBehaviour {
 
 	public void Init() {
         //float currentHeight = 0;
+		string equipedWeapon = PlayerPrefs.GetString("weapon", "pistol");
 
         List<GameController.StopItem> upgradeItems = new List<GameController.StopItem>();
         List<GameController.StopItem> weaponItems = new List<GameController.StopItem>();
@@ -55,7 +56,7 @@ public class Shop : MonoBehaviour {
         foreach (GameController.StopItem item in weaponItems) {
             GameObject newItem = Instantiate(shopItemPrefab, content.transform);
             UIShopItem ui = newItem.GetComponent<UIShopItem>();
-            ui.Init(item.upgradeString);
+			ui.Init(item.upgradeString, item.upgradeString == equipedWeapon);
 
             uiShopItems.Add(item.upgradeString, ui);
         }

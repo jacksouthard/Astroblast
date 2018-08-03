@@ -20,7 +20,7 @@ public class UIShopItem : MonoBehaviour {
 
     public string key { get; private set; }
 
-	public void Init(string itemKey) {
+	public void Init(string itemKey, bool equiped = false) {
         key = itemKey;
 
         GameController.StopItem data = GameController.instance.allShopItems[key];
@@ -45,7 +45,13 @@ public class UIShopItem : MonoBehaviour {
         }
 
         borders = borderParent.GetComponentsInChildren<Image>();
-        borderParent.SetActive(false);
+
+		if (equiped) {
+			SetAllBorders (orangeColor);
+			equippedItem = this;
+		} else {
+			borderParent.SetActive(false);
+		}
     }
 
     public void Refresh() {

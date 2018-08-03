@@ -135,6 +135,11 @@ public class UIShopItem : MonoBehaviour {
 				displayString = PlayerController.instance.reachMultiplier.ToString();
 			} else if (data.upgradeString == "patches") {
 				displayString = PlayerController.instance.patches.ToString();
+			} else if (data.upgradeString == "recovery") {
+				float diplayValue = 0f;
+				diplayValue = PlayerController.instance.recovery;
+				diplayValue = Mathf.Round (diplayValue * 100f) / 100f;
+				displayString = (diplayValue * 100f) + "%"; 
 			}
 			mainText.text = "" + displayString + data.topText;
 		} else {

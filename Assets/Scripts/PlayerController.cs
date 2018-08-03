@@ -36,15 +36,24 @@ public class PlayerController : MonoBehaviour {
 	public Text patchText;
 
 	[Header("Upgrades")]
+	// patches
 	public int minPatches;
 	[HideInInspector]
 	public int patches;
+	// tank
 	public float minTankMultiplier;
 	[HideInInspector]
 	public float tankMultiplier = 1f;
+	// reach
 	public float maxReachMultiplier;
 	[HideInInspector]
 	public float reachMultiplier = 1f;
+	// recovery
+	public float minRecovery;
+	public float maxRecovery;
+	[HideInInspector]
+	public float recovery;
+
 
     // leaks
     bool leaking = false;
@@ -125,6 +134,12 @@ public class PlayerController : MonoBehaviour {
 
 	public void SetPatches (int level) {
 		patches = minPatches + level;
+	}
+
+	public void SetRecovery (int level, int maxLevel) {
+		float levelRatio = (float)level / (float)maxLevel;
+		recovery = Mathf.Lerp (minRecovery, maxRecovery, levelRatio);
+//		print (level + " / " + maxLevel + " -> " + recovery);
 	}
 
 	void RemoveOxygen (float value) {

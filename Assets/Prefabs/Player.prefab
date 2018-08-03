@@ -471,6 +471,9 @@ MonoBehaviour:
   tankMultiplier: 1
   maxReachMultiplier: 3
   reachMultiplier: 1
+  minRecovery: 0.05
+  maxRecovery: 0.25
+  recovery: 0
   leakForce: 8000
 --- !u!198 &198052506108776716
 ParticleSystem:

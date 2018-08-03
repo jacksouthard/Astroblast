@@ -162,7 +162,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void OnPlayerDeath() {
-		curSiteMoney = Mathf.RoundToInt ((float)curSiteMoney / 4f);
+		curSiteMoney = Mathf.RoundToInt ((float)curSiteMoney * PlayerController.instance.recovery);
 		SaveMoney();
         StartCoroutine(GameOverSequence());
     }
@@ -272,6 +272,9 @@ public class GameController : MonoBehaviour {
 		} else if (upgrade == "patches") {
 			// patches
 			PlayerController.instance.SetPatches (item.currentLevel);
+		} else if (upgrade == "recovery") {
+			// recovery
+			PlayerController.instance.SetRecovery (item.currentLevel, item.costs.Length);
 		}
 	}
 

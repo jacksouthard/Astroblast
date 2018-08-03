@@ -109,6 +109,14 @@ MonoBehaviour:
     weapon: 1
     equiped: 0
     topText: 
+  - upgradeString: recovery
+    currentLevel: 0
+    costs: 1e0000003c00000078000000
+    description: Upgrade to increase the portion of your haul you keep on death
+    dynamicText: 1
+    weapon: 0
+    equiped: 0
+    topText: 
   farthestAstroid: 0
   currentAstroid: 0
   astroidLocations:

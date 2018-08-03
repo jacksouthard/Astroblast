@@ -145,7 +145,7 @@ public class Shop : MonoBehaviour {
                 buttonText.text = "Equip";
                 bottomButton.interactable = true;
             } else {
-                buttonText.text = "MAXED OUT";
+                buttonText.text = "MAX LEVEL";
                 bottomButton.interactable = false;
             }
         } else {

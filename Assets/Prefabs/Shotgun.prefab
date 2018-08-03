@@ -209,7 +209,7 @@ MonoBehaviour:
   projectile: {fileID: 1815368778069866, guid: aecc499b08b86488abb9b884eb80b66b, type: 2}
   shots: 6
   damage: 60
-  accuracy: 25
+  accuracy: 12
   speed: 6
   lifetime: 2
   knockback: 30000

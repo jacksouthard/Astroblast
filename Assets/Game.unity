@@ -5957,16 +5957,6 @@ Prefab:
       propertyPath: patchAnim
       value: 
       objectReference: {fileID: 705557219}
-    - target: {fileID: 114431132584546808, guid: 7d6fb8a547de54f26ba53f60eaca7be4,
-        type: 2}
-      propertyPath: upperMargin
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 61164346744556084, guid: 7d6fb8a547de54f26ba53f60eaca7be4,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d6fb8a547de54f26ba53f60eaca7be4, type: 2}
   m_IsPrefabParent: 0

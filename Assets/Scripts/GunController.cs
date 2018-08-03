@@ -42,14 +42,26 @@ public class GunController : MonoBehaviour {
 	}
 
 	void Fire () {
+		float angleIncriment = 0;
+		if (shots > 0) {
+			angleIncriment = accuracy * 2f / (float)(shots - 1);
+		}
+
 		for (int i = 0; i < shots; i++) {
 			GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation);
 			Bullet newBullet = newProjectile.GetComponent<Bullet> ();
 			newBullet.damage = damage;
 			newBullet.force = damage * forceToDamageRatio;
 			Rigidbody2D projectileRb = newProjectile.GetComponent<Rigidbody2D> ();
-			newProjectile.transform.rotation = Quaternion.Euler (0f, 0f, newProjectile.transform.rotation.eulerAngles.z + Random.Range (-accuracy, accuracy)); 
+			float rotOffset;
+			if (shots == 1) {
+				rotOffset = Random.Range (-accuracy, accuracy);
+			} else {
+				rotOffset = -accuracy + (angleIncriment * i);
+			}
 			projectileRb.velocity = rb.velocity;
+			newProjectile.transform.rotation = Quaternion.Euler (0f, 0f, newProjectile.transform.rotation.eulerAngles.z + rotOffset); 
+			print (newProjectile.transform.eulerAngles.z);
 			projectileRb.AddForce (newProjectile.transform.right * speed);
 			Destroy (newProjectile, lifetime);		
 		}

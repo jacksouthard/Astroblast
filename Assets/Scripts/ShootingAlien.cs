@@ -69,7 +69,6 @@ public class ShootingAlien : BasicAlien {
 
 	void Shoot () { // called in attack animation
 		GameObject newProjectile = Instantiate (projectile, bulletSpawn.position, bulletSpawn.rotation, transform.parent);
-		print (newProjectile);
 		newProjectile.GetComponent<Rigidbody2D> ().AddRelativeForce (Vector2.up * shotSpeed);
 		newProjectile.GetComponent<AlienProjectile> ().parentAlien = this;
 		if (destroyBarbOnDeath) {

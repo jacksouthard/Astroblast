@@ -105,10 +105,6 @@ public class TerrainManager : MonoBehaviour {
 
 //			TestForObjectDespawns ();
 		}
-
-		if (Input.GetKeyDown (KeyCode.F)) { // temp
-			SwitchDirections();
-		}
 	}
 
 	public void StopUpdating () {
@@ -188,7 +184,7 @@ public class TerrainManager : MonoBehaviour {
 			if (usedHeights.Count != 0) {
 				// if is not the first object, check to make sure it does not overlap with other objects
 				int attemps = 0;
-				while (WallObjectSpawnInvalid(spawnY, usedHeights) && attemps <= 5) {
+				while (WallObjectSpawnInvalid(spawnY, usedHeights) && attemps <= 10) {
 					spawnY = Random.Range (-wallObjectSpawnRange, wallObjectSpawnRange);
 					attemps++;
 				}

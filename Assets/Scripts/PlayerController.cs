@@ -95,11 +95,7 @@ public class PlayerController : MonoBehaviour {
                 PositionWeapon(angleVector.normalized);
                 gun.TryFire();
             }
-            if (Input.GetKeyDown(KeyCode.P)) {
-                // temp for patching leaks
-                StopLeak();
-            }
-
+          
             if (shouldFlip) {
                 TerrainManager.instance.SwitchDirections();
             }
@@ -132,9 +128,9 @@ public class PlayerController : MonoBehaviour {
 
 	void RemoveOxygen (float value) {
 		oxygen -= value * tankMultiplier;
-		if (oxygen < flipThreshold) {
-			flipQued = true;
-		}
+//		if (oxygen < flipThreshold) {
+//			flipQued = true;
+//		}
 		oxygen = Mathf.Clamp (oxygen, 0f, 100f);
 		oxygenText.text = "" + (int)oxygen + "%";
 

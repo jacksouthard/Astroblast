@@ -464,6 +464,7 @@ MonoBehaviour:
   hitWhileLeakingDrain: 20
   oxygenText: {fileID: 0}
   patchAnim: {fileID: 0}
+  patchText: {fileID: 0}
   minPatches: 2
   patches: 0
   minTankMultiplier: 0.333

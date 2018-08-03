@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
     public Text oxygenText;
 	UIFlicker oxygenFlicker;
     public UIAnimator patchAnim;
+	public Text patchText;
 
 	[Header("Upgrades")]
 	public int minPatches;
@@ -227,6 +228,13 @@ public class PlayerController : MonoBehaviour {
 			var leakAngle = Mathf.Atan2 (leakDirection.y, leakDirection.x) * Mathf.Rad2Deg;
 			leakEffect.transform.rotation = Quaternion.AngleAxis (leakAngle, Vector3.forward);
 
+			if (patches > 0) {
+				patchText.text = "Patch Breach" + " x" + patches;
+			} else {
+				patchText.text = "No more patches";
+				patchText.transform.parent.GetComponent<Button> ().enabled = false;
+			}
+
             patchAnim.Show();
 		} else {
 			// hit while already leaking
@@ -236,6 +244,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void StopLeak () {
 		leaking = false;
+		patches--;
 		warningLight.StopFlicker ();
 		oxygenFlicker.StopFlicker ();
 		leakEffect.Stop ();

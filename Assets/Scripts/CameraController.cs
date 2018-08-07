@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void Start () {
-		background = GameObject.Find ("Background").transform;
+		background = GameObject.Find ("LightBackground").transform;
 		farthestY = maxY;
 		transform.position = new Vector3 (transform.position.x, maxY, transform.position.z);
 		curFollowSpeed = baseFollowSpeed;

@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour {
 			leakEffect.transform.rotation = Quaternion.AngleAxis (leakAngle, Vector3.forward);
 
 			if (patches > 0) {
-				patchText.text = "Patch Breach" + " x" + patches;
+				patchText.text = "Patch Breach (x" + patches + ")";
 			} else {
 				patchText.text = "No more patches";
 				patchText.transform.parent.GetComponent<Button> ().enabled = false;

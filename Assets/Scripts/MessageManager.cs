@@ -15,7 +15,6 @@ public class MessageManager : MonoBehaviour {
 	float nextDisplayDepth;
 
 	public GameObject popupBlocker;
-	public Animator popupBackground;
 	public UIPanel messagePanel;
 	public Text bottomText;
 	public Text popupText;
@@ -71,7 +70,6 @@ public class MessageManager : MonoBehaviour {
 		popupBlocker.SetActive (true);
 		popupText.text = curMessage.popupTexts[popupIndex];
 		messagePanel.ShowReport ();	
-		popupBackground.SetBool ("Show", true);
 
 		skipTimer = popupSkipDelay;
 		skipping = true;
@@ -87,7 +85,6 @@ public class MessageManager : MonoBehaviour {
 			Time.timeScale = 1f;
 			popupBlocker.SetActive (false);
 			messagePanel.HideReport ();
-			popupBackground.SetBool ("Show", false);
 
 			if (curMessage.bottomText != "") {
 				ShowBottom ();
@@ -169,10 +166,14 @@ public class MessageManager : MonoBehaviour {
 //	}
 
 	public void OnCollectTreasure () {
-		int curTimesDisplayed = PlayerPrefs.GetInt ("Mtreasure", 0);
-		if (curTimesDisplayed == 0) {
+		if (TerrainManager.instance.curAstroidIndex == 0) {
 			DisplayMessage (collectTreasure);
-			PlayerPrefs.SetInt ("Mtreasure", curTimesDisplayed + 1);		
+		} else {
+			int curTimesDisplayed = PlayerPrefs.GetInt ("Mtreasure", 0);
+			if (curTimesDisplayed == 0) {
+				DisplayMessage (collectTreasure);
+				PlayerPrefs.SetInt ("Mtreasure", curTimesDisplayed + 1);		
+			}
 		}
 	}
 

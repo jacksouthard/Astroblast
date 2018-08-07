@@ -55,48 +55,43 @@ MonoBehaviour:
   - displayDepth: 0
     popupTexts:
     - Welcome Astrominer
-    - In order to make it in this ruthless buisness youll need to know the basics
-      of the trade
-    bottomText: Tap to shoot to propel your miner
+    - In order to make it in this ruthless business, you need to know the basics of
+      the trade
+    bottomText: Tap to shoot and propel yourself
   - displayDepth: -30
     popupTexts: []
-    bottomText: Collect glowing crystals
+    bottomText: Collect the crystals
   - displayDepth: -70
     popupTexts:
-    - Be careful down there. Astromining is a dangerous job
-    - First, shoot or avoid aliens
-    - Secondly, avoid spiky objects
-    - Finally, watch your oxygen
+    - Astromining is a dangerous job
+    - '1: Shoot or avoid aliens'
+    - '2: Avoid spiky objects'
+    - '3: Watch your oxygen'
     bottomText: 
   - displayDepth: -100
     popupTexts:
-    - The risk is worth it though
-    - At the bottom of ever shaft is treasure
-    bottomText: Find the treasure at the bottom
+    - The risk is worth the reward
+    - At the bottom of every shaft a treasure
+    bottomText: Reach the bottom
   popupBlocker: {fileID: 0}
-  popupBackground: {fileID: 0}
   messagePanel: {fileID: 0}
   bottomText: {fileID: 0}
   popupText: {fileID: 0}
-  popupSkipDelay: 0
+  popupSkipDelay: 1
   leak:
     displayDepth: 0
     popupTexts:
-    - Your suit is breached! Quick! Use a patch to repair
+    - Your suit is breached! Use a patch to repair.
     bottomText: 
   openShop:
     displayDepth: 0
     popupTexts:
-    - The shop is essential for upgrading your gear
-    - If you have enough cash you can purchase new weapons and improve your equipment
+    - Purchase weapons and improve your equipment
     bottomText: 
   openMap:
     displayDepth: 0
     popupTexts:
-    - The map allows you to travel to new asteriods
-    - Each new asteriod is more difficult than the previous, but also has better rewards
-    - You unlock new, harder asteriods by extracting treasure from the previous
-    - Travel to a new asteriods by clicking on it
+    - Tap on an asteriod to mine it
     bottomText: 
   collectTreasure:
     displayDepth: 0

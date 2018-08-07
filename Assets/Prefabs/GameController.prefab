@@ -120,11 +120,14 @@ MonoBehaviour:
   farthestAstroid: 0
   currentAstroid: 0
   astroidLocations:
+  - name: T1
+    color: {r: 0.47193062, g: 0.28114185, b: 0.9558824, a: 1}
+    xPosition: 30
   - name: A14
-    color: {r: 0.18836506, g: 0.78743577, b: 0.9852941, a: 1}
+    color: {r: 0.1882353, g: 0.7882353, b: 0.9843137, a: 1}
     xPosition: -200
   - name: B16
-    color: {r: 0.14987026, g: 0.9705882, b: 0.56305945, a: 1}
+    color: {r: 0.14901961, g: 0.972549, b: 0.5647059, a: 1}
     xPosition: 100
   - name: C10
     color: {r: 0.85157794, g: 0.30687717, b: 0.9705882, a: 1}

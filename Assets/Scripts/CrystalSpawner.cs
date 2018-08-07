@@ -28,17 +28,13 @@ public class CrystalSpawner : MonoBehaviour {
 	void Start () {
 		CrystalTeir teir;
 		if (!treasure) { 
-			int highestValue = TerrainManager.instance.curDifficulty + TerrainManager.instance.baseDifficulty;
-			if (highestValue > allCrystalTeirs.Length - 1) {
-				highestValue = allCrystalTeirs.Length - 1;
-			}
-
+			int highestValue = Mathf.Clamp (TerrainManager.instance.curDifficulty + TerrainManager.instance.baseDifficulty, 0, allCrystalTeirs.Length - 1);
+		
 			if (highestValue == 0) {
 				valueTeir = highestValue;
 			} else {
 				valueTeir = Random.Range (highestValue - 1, highestValue + 1);
 			}
-			// TODO valueTeir += baseValue for astroid
 
 			teir = allCrystalTeirs [valueTeir];
 		} else {

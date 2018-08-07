@@ -40,7 +40,8 @@ public class TerrainManager : MonoBehaviour {
 
 	[HideInInspector]
 	public float currentY = 0f;
-	float farthestY = 0f;
+	[HideInInspector]
+	public float farthestY = 0f;
 	Transform persistantObjects;
 	Transform mainCam;
 	float curChunkY = 0f;

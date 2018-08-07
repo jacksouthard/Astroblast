@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class UIAnimator : MonoBehaviour {
     public UnityEvent OnHideComplete;
+//	public UnityEvent OnShowComplete;
     Animator anim;
 
 	void Start() {
@@ -22,4 +23,8 @@ public class UIAnimator : MonoBehaviour {
     void OnHideCompleted() { //called through animation
         OnHideComplete.Invoke();
     }
+
+//	void OnShowCompleted() { //called through animation
+//		OnShowComplete.Invoke();
+//	}
 }

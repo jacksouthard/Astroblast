@@ -60,6 +60,9 @@ public class ShipController : MonoBehaviour {
 				}
                 PlayerEnter(player);
                 GameController.instance.HideGameUI();
+				if (TerrainManager.instance.curAstroidIndex == 0) {
+					MessageManager.instance.EndTutorial ();
+				}
                 //              camCon.StartTracking (transform);
                 camCon.StartZoom(22f, 2f);
                 anim.SetTrigger("Exit");
@@ -81,6 +84,9 @@ public class ShipController : MonoBehaviour {
 
         player.GetComponent<PlayerController>().EquipWeapon();
         GameController.instance.ShowGameUI();
+		if (TerrainManager.instance.curAstroidIndex == 0) {
+			MessageManager.instance.StartTutorial ();
+		}
         player.gameObject.SetActive(true);
         player.position = transform.Find("PlayerSpawn").position;
         camCon.StartTracking(player);

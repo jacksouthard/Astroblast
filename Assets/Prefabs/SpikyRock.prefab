@@ -80,6 +80,11 @@ MonoBehaviour:
     minAliens: 0
     maxAliens: 0
     minCrystals: 0
+    maxCrystals: 1
+  - alienIDs: 
+    minAliens: 0
+    maxAliens: 0
+    minCrystals: 0
     maxCrystals: 2
 --- !u!114 &114939849107018246
 MonoBehaviour:

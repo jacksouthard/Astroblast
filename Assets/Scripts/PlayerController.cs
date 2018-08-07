@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour {
     public float leakForce;
 
     // death
-    bool isDead;
+    bool isDead = false;
 
 	void Awake () {
 		instance = this;
@@ -76,9 +76,6 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         weaponMount = transform.Find("WeaponMount");
         gun = GetComponentInChildren<GunController>();
-        isDead = false;
-
-//		SetTankMultiplier (1, 1); // temp
 
         cam = Camera.main.transform;
         flipHeightThreshold = FindObjectOfType<CameraController>().baseZoom - upperMargin;
@@ -90,7 +87,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if (!isDead) {
+		if (!isDead && Time.timeScale != 0) {
             // leaking
             float amountToRemove = baseDrain;
             if (leaking) {
@@ -232,7 +229,7 @@ public class PlayerController : MonoBehaviour {
     }
 
 	public void HitByDamagingObject (Transform damagingObject) {
-		if (!leaking) {
+		if (!leaking && !isDead) {
 			leaking = true;
 
 			// start leak effect

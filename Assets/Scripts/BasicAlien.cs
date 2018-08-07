@@ -95,15 +95,17 @@ public class BasicAlien : MonoBehaviour {
 	protected virtual void Initiated () {}
 
 	void Update() {
-		if (leaking) {
-			rb.AddForce (-leakDirection * leakForce * Time.deltaTime);
-			leakTimer -= Time.deltaTime;
-			if (leakTimer <= 0f) {
-				StopLeaking ();
+		if (Time.timeScale != 0) {
+			if (leaking) {
+				rb.AddForce (-leakDirection * leakForce * Time.deltaTime);
+				leakTimer -= Time.deltaTime;
+				if (leakTimer <= 0f) {
+					StopLeaking ();
+				}
 			}
-		}
 
-        AlienUpdate();
+		    AlienUpdate();
+		}
 	}
 
     protected virtual void AlienUpdate() {

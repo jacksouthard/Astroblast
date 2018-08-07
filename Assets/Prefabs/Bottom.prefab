@@ -451,6 +451,8 @@ MonoBehaviour:
   crystalPrefab: {fileID: 1514990785414888, guid: d1a2820fd470f42179e7838e7382d2d4,
     type: 2}
   allTreasures:
+  - value: 20
+    prefab: {fileID: 1514990785414888, guid: be6f0e979c17443ba8645ea71b7dc961, type: 2}
   - value: 50
     prefab: {fileID: 1514990785414888, guid: be6f0e979c17443ba8645ea71b7dc961, type: 2}
   - value: 120

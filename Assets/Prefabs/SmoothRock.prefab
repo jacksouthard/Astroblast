@@ -68,15 +68,20 @@ MonoBehaviour:
   allDifficultyData:
   - alienIDs: 0000000002000000
     minAliens: 0
+    maxAliens: 0
+    minCrystals: 0
+    maxCrystals: 1
+  - alienIDs: 000000000000000002000000
+    minAliens: 1
     maxAliens: 1
     minCrystals: 0
     maxCrystals: 1
-  - alienIDs: 00000000010000000200000004000000
+  - alienIDs: 0100000002000000
     minAliens: 1
     maxAliens: 2
     minCrystals: 0
     maxCrystals: 1
-  - alienIDs: 0000000001000000020000000300000000000000
+  - alienIDs: 00000000010000000200000004000000
     minAliens: 1
     maxAliens: 2
     minCrystals: 0

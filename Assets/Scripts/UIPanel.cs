@@ -33,12 +33,20 @@ public class UIPanel : MonoBehaviour {
         bottomAnim.Hide();
     }
 
+	public void ShowReport () {
+		reportWindow.Show();
+	}
+
+	public void HideReport () {
+		reportWindow.Hide ();
+	}
+
     public void ShowAll() {
         ShowTop();
         ShowBottom();
 
         if (reportWindow != null) {
-            reportWindow.Show();
+			ShowReport ();
         }
     }
 
@@ -47,7 +55,7 @@ public class UIPanel : MonoBehaviour {
         HideBottom();
 
         if (reportWindow != null) {
-            reportWindow.Hide();
+			HideReport ();
         }
     }
 }

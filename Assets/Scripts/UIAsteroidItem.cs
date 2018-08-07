@@ -16,7 +16,7 @@ public class UIAsteroidItem : MonoBehaviour {
         text.text = location.name;
 
         bool isUnlocked = GameController.instance.farthestAstroid >= asteroidId;
-        float alpha = (isUnlocked) ? 1f : 0.5f;
+        float alpha = (isUnlocked) ? 1f : 0.25f;
         button.image.color = new Color(location.color.r * alpha, location.color.g * alpha, location.color.b * alpha, 1);
         text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
 

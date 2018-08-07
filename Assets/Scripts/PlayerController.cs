@@ -248,6 +248,8 @@ public class PlayerController : MonoBehaviour {
 			}
 
             patchAnim.Show();
+
+			MessageManager.instance.OnLeak ();
 		} else {
 			// hit while already leaking
 			RemoveOxygen (hitWhileLeakingDrain);

@@ -14,6 +14,8 @@ public class MessageManager : MonoBehaviour {
 
 	float nextDisplayDepth;
 
+	public GameObject popupBlocker;
+	public Animator popupBackground;
 	public UIPanel messagePanel;
 	public Text bottomText;
 	public Text popupText;
@@ -28,6 +30,10 @@ public class MessageManager : MonoBehaviour {
 		instance = this;
 	}
 
+	void Start () {
+		
+	}
+
 	public void StartTutorial () {
 		nextDisplayDepth = tutorialMessages [0].displayDepth;
 		tutorialOver = false;
@@ -38,17 +44,8 @@ public class MessageManager : MonoBehaviour {
 		HideBottom ();
 	}
 
-	void DisplayMessage (int index) {
-//		print ("Displaying " + index);
-		curMessage = tutorialMessages [index];
-			
-		if (curMessage.popupTexts.Length > 0) { // show popup UI with message
-			popupIndex = 0;
-			ShowPopup ();
-		} else if (curMessage.bottomText != "") { // show bottom UI with message
-			ShowBottom();
-		}
-
+	void DisplayNextTutorialMessage (int index) {
+		DisplayMessage (tutorialMessages [index]);
 		if (index >= tutorialMessages.Length - 1) {
 			print ("All messages displayed");
 			tutorialOver = true;
@@ -57,11 +54,24 @@ public class MessageManager : MonoBehaviour {
 		}
 	}
 
+	void DisplayMessage (Message displayMessage) {
+		curMessage = displayMessage;
+
+		if (curMessage.popupTexts.Length > 0) { // show popup UI with message
+			popupIndex = 0;
+			ShowPopup ();
+		} else if (curMessage.bottomText != "") { // show bottom UI with message
+			ShowBottom();
+		}
+	}
+
 	void ShowPopup () {
 //		print ("Popup: " + curMessage.popupText);
 		Time.timeScale = 0f;
+		popupBlocker.SetActive (true);
 		popupText.text = curMessage.popupTexts[popupIndex];
 		messagePanel.ShowReport ();	
+		popupBackground.SetBool ("Show", true);
 
 		skipTimer = popupSkipDelay;
 		skipping = true;
@@ -75,7 +85,9 @@ public class MessageManager : MonoBehaviour {
 			ShowPopup ();
 		} else {
 			Time.timeScale = 1f;
+			popupBlocker.SetActive (false);
 			messagePanel.HideReport ();
+			popupBackground.SetBool ("Show", false);
 
 			if (curMessage.bottomText != "") {
 				ShowBottom ();
@@ -114,10 +126,58 @@ public class MessageManager : MonoBehaviour {
 			}
 				
 			// show new message
-			DisplayMessage (tutorialIndex);
+			DisplayNextTutorialMessage (tutorialIndex);
 			tutorialIndex++;
 		}
-	}		
+	}
+
+	// SITUATIONAL MESSAGES
+	[Header("Situational")]
+	public Message leak;
+	public Message openShop;
+	public Message openMap;
+//	public Message enterPostGame;
+	public Message collectTreasure;
+	//	public Message lowO2;
+
+	public void OnLeak () {
+		int curTimesDisplayed = PlayerPrefs.GetInt ("Mleak", 0);
+		if (curTimesDisplayed == 0) {
+			DisplayMessage (leak);
+			PlayerPrefs.SetInt ("Mleak", curTimesDisplayed + 1);		
+		}
+	}
+		
+	public void OnShopOpened () {
+		int curTimesDisplayed = PlayerPrefs.GetInt ("Mshop", 0);
+		if (curTimesDisplayed == 0) {
+			DisplayMessage (openShop);
+			PlayerPrefs.SetInt ("Mshop", curTimesDisplayed + 1);		
+		}	
+	}
+
+	public void OnMapOpened () {
+		int curTimesDisplayed = PlayerPrefs.GetInt ("Mmap", 0);
+		if (curTimesDisplayed == 0) {
+			DisplayMessage (openMap);
+			PlayerPrefs.SetInt ("Mmap", curTimesDisplayed + 1);		
+		}
+	}
+
+//	public void OnEnterPostGame () {
+//		DisplayMessage (enterPostGame);
+//	}
+
+	public void OnCollectTreasure () {
+		int curTimesDisplayed = PlayerPrefs.GetInt ("Mtreasure", 0);
+		if (curTimesDisplayed == 0) {
+			DisplayMessage (collectTreasure);
+			PlayerPrefs.SetInt ("Mtreasure", curTimesDisplayed + 1);		
+		}
+	}
+
+
+
 
 	[System.Serializable]
 	public struct Message {

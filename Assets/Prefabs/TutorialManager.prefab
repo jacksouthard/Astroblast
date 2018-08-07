@@ -73,12 +73,33 @@ MonoBehaviour:
     - The risk is worth it though
     - At the bottom of ever shaft is treasure
     bottomText: Find the treasure at the bottom
-  - displayDepth: -135
-    popupTexts:
-    - You found it!
-    - Now get back to your ship before your oxygen runs out!
-    bottomText: Get back to the ship
+  popupBlocker: {fileID: 0}
+  popupBackground: {fileID: 0}
   messagePanel: {fileID: 0}
   bottomText: {fileID: 0}
   popupText: {fileID: 0}
   popupSkipDelay: 0
+  leak:
+    displayDepth: 0
+    popupTexts:
+    - Your suit is breached! Quick! Use a patch to repair
+    bottomText: 
+  openShop:
+    displayDepth: 0
+    popupTexts:
+    - The shop is essential for upgrading your gear
+    - If you have enough cash you can purchase new weapons and improve your equipment
+    bottomText: 
+  openMap:
+    displayDepth: 0
+    popupTexts:
+    - The map allows you to travel to new asteriods
+    - Each new asteriod is more difficult than the previous, but also has better rewards
+    - You unlock new, harder asteriods by extracting treasure from the previous
+    - Travel to a new asteriods by clicking on it
+    bottomText: 
+  collectTreasure:
+    displayDepth: 0
+    popupTexts:
+    - You collected the treasure, but you still have to make it back to the ship
+    bottomText: Get back to the ship

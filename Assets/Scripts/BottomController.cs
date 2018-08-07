@@ -60,6 +60,8 @@ public class BottomController : MonoBehaviour {
 
 	public void TreasureCollected () {
 		hasTreasure = true;
+
+		MessageManager.instance.OnCollectTreasure ();
 	}
 
 	public void TreasureExtracted () {

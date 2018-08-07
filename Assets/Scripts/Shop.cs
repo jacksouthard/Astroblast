@@ -117,6 +117,8 @@ public class Shop : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         scrollArea.enabled = true;
         content.anchoredPosition = Vector2.zero;
+
+		MessageManager.instance.OnShopOpened ();
     }
 
     public void OnClose() {

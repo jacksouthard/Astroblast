@@ -179,11 +179,11 @@ public class GameController : MonoBehaviour {
     }
 
     public void EndGame() {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Game");
     }
 
 	public void LoadCheatScene () {
-		SceneManager.LoadScene(1);
+		SceneManager.LoadScene("Cheats");
 	}
 
     public void CollectMoney(int newMoney) {

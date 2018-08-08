@@ -7,29 +7,29 @@ using UnityEngine.SceneManagement;
 public class SceneFader : MonoBehaviour {
 	public static float curFadeAmount { get { return (instance != null) ? instance.fader.color.a : 0; } }
 
-	static SceneFader instance;
+	public static SceneFader instance;
 	public Image fader { get; private set; }
 
 	Color fullColor;
 	Color zeroColor;
 
-	const float fadeSpeed = 10;
+	const float fadeSpeed = 5;
 
 	void Awake() {
 		if (instance == null) {
 			instance = this;
-			DontDestroyOnLoad (instance);
+			DontDestroyOnLoad (this);
 		} else {
 			Destroy (gameObject);
 		}
 	}
 
 	public void FadeToScene(int buildIndex, Color color) {
-		instance.SetColor (color);
-		instance.StartCoroutine (instance.SwitchScenes(buildIndex));
+		SetColor (color);
+		StartCoroutine (SwitchScenes(buildIndex));
 	}
 		
-	public void Init() {
+	void Start() {
 		fader = gameObject.GetComponentInChildren<Image> ();
 	}
 

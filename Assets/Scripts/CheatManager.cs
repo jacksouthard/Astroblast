@@ -29,6 +29,6 @@ public class CheatManager : MonoBehaviour {
 	}
 
 	public void ReturnToGame () {
-		SceneManager.LoadScene (0);
+		SceneManager.LoadScene ("Game");
 	}
 }

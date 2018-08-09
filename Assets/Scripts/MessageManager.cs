@@ -168,12 +168,6 @@ public class MessageManager : MonoBehaviour {
 	public void OnCollectTreasure () {
 		if (TerrainManager.instance.curAstroidIndex == 0) {
 			DisplayMessage (collectTreasure);
-		} else {
-			int curTimesDisplayed = PlayerPrefs.GetInt ("Mtreasure", 0);
-			if (curTimesDisplayed == 0) {
-				DisplayMessage (collectTreasure);
-				PlayerPrefs.SetInt ("Mtreasure", curTimesDisplayed + 1);		
-			}
 		}
 	}
 

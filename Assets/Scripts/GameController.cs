@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour {
     Text postGameMoneyText;
     Text preGameLocationText;
     Text postGameLocationText;
+	Text postGameContinueText;
+	bool unlockedNewAsteriod = false;
 
     public float moneyAddTime;
 
@@ -75,6 +77,7 @@ public class GameController : MonoBehaviour {
         shopMoneyText = GameObject.Find("ShopMoneyText").GetComponent<Text>();
         preGameLocationText = GameObject.Find("PreGameLocationText").GetComponent<Text>();
         postGameLocationText = GameObject.Find("PostGameLocationText").GetComponent<Text>();
+		postGameContinueText = GameObject.Find("PostGameContinueText").GetComponent<Text>(); 
 
         moneyText = FindObjectOfType<MoneyText>();
     }
@@ -121,6 +124,12 @@ public class GameController : MonoBehaviour {
         }
 
         postGameMoneyText.text = totalMoney.ToString();
+
+		if (unlockedNewAsteriod) {
+			postGameContinueText.text = "Continue to next asteriod";
+		} else {
+			postGameContinueText.text = "Continue to next site";
+		}
     }
 
     public void ShowShop() {
@@ -177,6 +186,13 @@ public class GameController : MonoBehaviour {
         gameOverUI.ShowAll();
         StartCoroutine(ShowAddMoney(failMoneyText));
     }
+
+	public void Continue () {
+		if (unlockedNewAsteriod) {
+			unlockedNewAsteriod = false;
+		}
+		EndGame ();
+	}
 
     public void EndGame() {
         SceneManager.LoadScene("Game");
@@ -322,10 +338,12 @@ public class GameController : MonoBehaviour {
 	}
 		
 	public void UnlockNewAstroid (int newFarthestAstroid) {
+		unlockedNewAsteriod = true;
 		int curFarthest = PlayerPrefs.GetInt ("farthest", 0);
 		if (newFarthestAstroid > curFarthest) {
 			print ("Unlocking astroid " + newFarthestAstroid);
 			PlayerPrefs.SetInt ("farthest", newFarthestAstroid);
+			PlayerPrefs.SetInt("Current_Asteroid", newFarthestAstroid);
 			UnpackAstroidLocationMap ();
 			AsteroidMap.instance.Init ();
 		}

@@ -65,8 +65,8 @@ public class BottomController : MonoBehaviour {
 	}
 
 	public void TreasureExtracted () {
-		GameController.instance.CollectMoney (allTreasures [TerrainManager.instance.curAstroidIndex].value);
 		GameController.instance.UnlockNewAstroid (TerrainManager.instance.curAstroidIndex + 1);
+		GameController.instance.CollectMoney (allTreasures [TerrainManager.instance.curAstroidIndex].value);
 		PlayerPrefs.SetInt ("T" + TerrainManager.instance.curAstroidIndex, 1);
 	}
 

@@ -91,7 +91,7 @@ MonoBehaviour:
   openMap:
     displayDepth: 0
     popupTexts:
-    - Tap on an asteriod to mine it
+    - Tap on an asteriod to travel there
     bottomText: 
   collectTreasure:
     displayDepth: 0

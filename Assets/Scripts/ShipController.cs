@@ -62,6 +62,8 @@ public class ShipController : MonoBehaviour {
                 GameController.instance.HideGameUI();
 				if (TerrainManager.instance.curAstroidIndex == 0) {
 					MessageManager.instance.EndTutorial ();
+				} else {
+					MessageManager.instance.HideBottom ();
 				}
                 //              camCon.StartTracking (transform);
                 camCon.StartZoom(22f, 2f);

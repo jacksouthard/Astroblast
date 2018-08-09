@@ -98,7 +98,7 @@ public class MessageManager : MonoBehaviour {
 		messagePanel.ShowBottom ();		
 	}
 
-	void HideBottom () {
+	public void HideBottom () {
 		messagePanel.HideBottom ();		
 	}
 

@@ -86,7 +86,7 @@ MonoBehaviour:
       appearsAfter: 0
       chunkIDs: 00000000
     - difficulty: 1
-      appearsAfter: -70
+      appearsAfter: -40
       chunkIDs: 01000000
   - name: Easy
     baseDifficulty: 1
@@ -157,9 +157,9 @@ MonoBehaviour:
   alienDifficultyData:
   - healthMultiplier: 0.2
     glowColor: {r: 1, g: 0.14901961, b: 0.14901961, a: 1}
-  - healthMultiplier: 1
+  - healthMultiplier: 0.6
     glowColor: {r: 1, g: 0.14901961, b: 0.14901961, a: 1}
-  - healthMultiplier: 1.25
+  - healthMultiplier: 1.1
     glowColor: {r: 0.1764706, g: 1, b: 0.14901961, a: 1}
   - healthMultiplier: 1.5
     glowColor: {r: 1, g: 0.8239351, b: 0.08823532, a: 1}
